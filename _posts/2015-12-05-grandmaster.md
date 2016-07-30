@@ -25,13 +25,12 @@ image:
 
 As a lifelong boxing fan and someone whose everyday job involves analyzing massive amounts of data, I thought it would be interesting to apply some quantitative analysis to a sport which has many subjective aspects to it.
 
-##ELO rating system
+## ELO rating system
 
 The Elo rating system is a method for calculating the relative skill levels of players in competitor-versus-competitor games.   The difference in the ratings between two players serves as a predictor of the outcome of a match. Two players with equal ratings who play against each other are expected to score an equal number of wins. A player whose rating is 100 points greater than their opponents is expected to score 64%; if the difference is 200 points, then the expected score for the stronger player is 76%.
 
 
-
-##Data
+## Data
 
 Boxrec is one source of historical boxing records, though incomplete, it is a good source for historical rankings, fighter biographical data, and match outcomes.  Boxrec even has their own ranking system, which is described here.  For this analysis, I used data from Boxrec to calculate the various rankings.
 
