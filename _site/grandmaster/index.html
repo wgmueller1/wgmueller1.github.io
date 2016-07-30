@@ -1,0 +1,613 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Boxings Grandmasters &#8211; Nullspace</title>
+<meta name="description" content="Analysis of Historical boxing data">
+<meta name="keywords" content="boxing, data, science, elo">
+<!-- Twitter Cards -->
+	
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:image" content=
+			
+				
+						"http://localhost:4000/images/"
+				
+			
+		>
+	
+	<meta name="twitter:title" content="Boxings Grandmasters">
+	<meta name="twitter:description" content="Analysis of Historical boxing data">
+	<meta name="twitter:creator" content="@random_walk">
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Boxings Grandmasters">
+<meta property="og:description" content="Analysis of Historical boxing data">
+<meta property="og:url" content="http://localhost:4000/grandmaster/">
+<meta property="og:site_name" content="Nullspace">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/grandmaster/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Nullspace</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="http://localhost:4000/about/" >About</a></li>
+		        
+				<li><a href="http://localhost:4000/posts/" >Posts</a></li>
+		        
+				<li><a href="http://localhost:4000/links/" >Links</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+<a href="http://twitter.com/random_walk" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/grandmaster/" rel="bookmark" title="Boxings Grandmasters">Boxings Grandmasters</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer">
+<ul id="markdown-toc">
+  <li><a href="#elo-rating-system" id="markdown-toc-elo-rating-system">ELO rating system</a></li>
+  <li><a href="#data" id="markdown-toc-data">Data</a></li>
+</ul>
+
+  </div>
+</section>
+<!-- /#table-of-contents -->
+
+<p>As a lifelong boxing fan and someone whose everyday job involves analyzing massive amounts of data, I thought it would be interesting to apply some quantitative analysis to a sport which has many subjective aspects to it.</p>
+
+<h2 id="elo-rating-system">ELO rating system</h2>
+
+<p>The Elo rating system is a method for calculating the relative skill levels of players in competitor-versus-competitor games.   The difference in the ratings between two players serves as a predictor of the outcome of a match. Two players with equal ratings who play against each other are expected to score an equal number of wins. A player whose rating is 100 points greater than their opponents is expected to score 64%; if the difference is 200 points, then the expected score for the stronger player is 76%.</p>
+
+<h2 id="data">Data</h2>
+
+<p>Boxrec is one source of historical boxing records, though incomplete, it is a good source for historical rankings, fighter biographical data, and match outcomes.  Boxrec even has their own ranking system, which is described here.  For this analysis, I used data from Boxrec to calculate the various rankings.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Rank</th>
+      <th style="text-align: center">Fighter</th>
+      <th style="text-align: center">Elo Max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1.</td>
+      <td style="text-align: center">Sugar Ray Robinson</td>
+      <td style="text-align: center">2069.520867275613</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2.</td>
+      <td style="text-align: center">Harry Greb</td>
+      <td style="text-align: center">2052.8763634156262</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3.</td>
+      <td style="text-align: center">Benny Leonard</td>
+      <td style="text-align: center">2019.7584089617503</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4.</td>
+      <td style="text-align: center">Henry Armstrong</td>
+      <td style="text-align: center">2010.2763179787501</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">5.</td>
+      <td style="text-align: center">Willie Pep</td>
+      <td style="text-align: center">1978.9129880799419</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">6.</td>
+      <td style="text-align: center">Joe Louis</td>
+      <td style="text-align: center">1975.8391908889255</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">7.</td>
+      <td style="text-align: center">Archie Moore</td>
+      <td style="text-align: center">1975.610967270421</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">8.</td>
+      <td style="text-align: center">Freddie Steele</td>
+      <td style="text-align: center">1963.1645149271533</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9.</td>
+      <td style="text-align: center">Ezzard Charles</td>
+      <td style="text-align: center">1962.8868382295352</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">10.</td>
+      <td style="text-align: center">Barney Ross</td>
+      <td style="text-align: center">1947.2447907846429</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">11.</td>
+      <td style="text-align: center">Ike Williams</td>
+      <td style="text-align: center">1946.6548133928763</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">12.</td>
+      <td style="text-align: center">Kid Gavilan</td>
+      <td style="text-align: center">1933.6989348611974</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">13.</td>
+      <td style="text-align: center">Freddie Miller</td>
+      <td style="text-align: center">1933.2904640109389</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">14.</td>
+      <td style="text-align: center">Tony Canzoneri</td>
+      <td style="text-align: center">1932.0925443629635</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">15.</td>
+      <td style="text-align: center">Mickey Walker</td>
+      <td style="text-align: center">1924.6891290386548</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">16.</td>
+      <td style="text-align: center">Lou Ambers</td>
+      <td style="text-align: center">1923.4732567233016</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">17.</td>
+      <td style="text-align: center">Carlos Monzon</td>
+      <td style="text-align: center">1920.3524175170619</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">18.</td>
+      <td style="text-align: center">Tommy Loughran</td>
+      <td style="text-align: center">1918.1457652903396</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">19.</td>
+      <td style="text-align: center">Young Corbett III</td>
+      <td style="text-align: center">1916.5742488712126</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">20.</td>
+      <td style="text-align: center">Muhammad Ali</td>
+      <td style="text-align: center">1909.3184663333086</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">21.</td>
+      <td style="text-align: center">Ceferino Garcia</td>
+      <td style="text-align: center">1907.2591348209057</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">22.</td>
+      <td style="text-align: center">Jose Napoles</td>
+      <td style="text-align: center">1900.5897523420126</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">23.</td>
+      <td style="text-align: center">Bobo Olson</td>
+      <td style="text-align: center">1899.9746585711175</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">24.</td>
+      <td style="text-align: center">Duilio Loi</td>
+      <td style="text-align: center">1898.7037664713662</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">25.</td>
+      <td style="text-align: center">Maxie Rosenbloom</td>
+      <td style="text-align: center">1897.4312977331319</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Rank</th>
+      <th style="text-align: center">Fighter</th>
+      <th style="text-align: center">Elo Average</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1.</td>
+      <td style="text-align: center">Sugar Ray Robinson</td>
+      <td style="text-align: center">1855.0036761450069</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2.</td>
+      <td style="text-align: center">Harry Greb</td>
+      <td style="text-align: center">1817.6155130555853</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3.</td>
+      <td style="text-align: center">Willie Pep</td>
+      <td style="text-align: center">1806.4191626922304</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4.</td>
+      <td style="text-align: center">Henry Armstrong</td>
+      <td style="text-align: center">1759.8612501580649</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">5.</td>
+      <td style="text-align: center">Archie Moore</td>
+      <td style="text-align: center">1756.9155873311097</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">6.</td>
+      <td style="text-align: center">Joe Louis</td>
+      <td style="text-align: center">1739.1950176641708</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">7.</td>
+      <td style="text-align: center">Holman Williams</td>
+      <td style="text-align: center">1732.0182657937196</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">8.</td>
+      <td style="text-align: center">Maxie Rosenbloom</td>
+      <td style="text-align: center">1723.7008910856403</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9.</td>
+      <td style="text-align: center">Luis Manuel Rodriguez</td>
+      <td style="text-align: center">1721.7803226184903</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">10.</td>
+      <td style="text-align: center">Tony Canzoneri</td>
+      <td style="text-align: center">1719.0282741224114</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">11.</td>
+      <td style="text-align: center">Freddie Miller</td>
+      <td style="text-align: center">1716.2742626938314</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">12.</td>
+      <td style="text-align: center">Ezzard Charles</td>
+      <td style="text-align: center">1715.7150720314391</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">13.</td>
+      <td style="text-align: center">Lew Tendler</td>
+      <td style="text-align: center">1712.2352900318194</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">14.</td>
+      <td style="text-align: center">Kid Gavilan</td>
+      <td style="text-align: center">1710.5764454380462</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">15.</td>
+      <td style="text-align: center">Kid Chocolate</td>
+      <td style="text-align: center">1703.2289637348927</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">16.</td>
+      <td style="text-align: center">Young Stribling</td>
+      <td style="text-align: center">1702.7833099927777</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">17.</td>
+      <td style="text-align: center">Ike Williams</td>
+      <td style="text-align: center">1701.0128321834193</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">18.</td>
+      <td style="text-align: center">Benny Leonard</td>
+      <td style="text-align: center">1699.8913675280237</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">19.</td>
+      <td style="text-align: center">Emile Griffith</td>
+      <td style="text-align: center">1699.4161846718416</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">20.</td>
+      <td style="text-align: center">Lou Ambers</td>
+      <td style="text-align: center">1689.3753983513191</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">21.</td>
+      <td style="text-align: center">Jackie Fields</td>
+      <td style="text-align: center">1687.9290334844452</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">22.</td>
+      <td style="text-align: center">Tommy Gibbons</td>
+      <td style="text-align: center">1687.0751035847591</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">23.</td>
+      <td style="text-align: center">Bobo Olson</td>
+      <td style="text-align: center">1685.1010072493598</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">24.</td>
+      <td style="text-align: center">Wesley Ramey</td>
+      <td style="text-align: center">1684.1023652026458</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">25.</td>
+      <td style="text-align: center">Muhammad Ali</td>
+      <td style="text-align: center">1682.4794435437068</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Highest Rated Bouts:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Fighter</th>
+      <th style="text-align: center">Elo</th>
+      <th style="text-align: center">Record</th>
+      <th style="text-align: center">Opponent</th>
+      <th style="text-align: center">Elo</th>
+      <th style="text-align: center">Record</th>
+      <th style="text-align: center">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Jake LaMotta</td>
+      <td style="text-align: center">1845.24</td>
+      <td style="text-align: center">78-14-3</td>
+      <td style="text-align: center">Sugar Ray Robinson (W,TKO)</td>
+      <td style="text-align: center">2058.42</td>
+      <td style="text-align: center">120-1-2</td>
+      <td style="text-align: center">1951-02-14</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Bobo Olson</td>
+      <td style="text-align: center">1885.60</td>
+      <td style="text-align: center">71-8-0</td>
+      <td style="text-align: center">Sugar Ray Robinson (W,KO)</td>
+      <td style="text-align: center">2014.54</td>
+      <td style="text-align: center">137-4-2</td>
+      <td style="text-align: center">1956-05-18</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Sugar Ray Robinson (W,KO)</td>
+      <td style="text-align: center">2003.29</td>
+      <td style="text-align: center">136-4-2</td>
+      <td style="text-align: center">Bobo Olson</td>
+      <td style="text-align: center">1896.84</td>
+      <td style="text-align: center">71-7-0</td>
+      <td style="text-align: center">1955-12-09</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Joe Louis</td>
+      <td style="text-align: center">1966.90</td>
+      <td style="text-align: center">58-1-0</td>
+      <td style="text-align: center">Ezzard Charles (W,UD)</td>
+      <td style="text-align: center">1918.10</td>
+      <td style="text-align: center">66-5-1</td>
+      <td style="text-align: center">1950-09-27</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Henry Armstrong (D,PTS)</td>
+      <td style="text-align: center">1987.04</td>
+      <td style="text-align: center">106-12-6</td>
+      <td style="text-align: center">Ceferino Garcia</td>
+      <td style="text-align: center">1896.12</td>
+      <td style="text-align: center">112-25-12</td>
+      <td style="text-align: center">1940-03-01</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Worst Mismatches:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Fighter</th>
+      <th style="text-align: center">Elo</th>
+      <th style="text-align: center">Record</th>
+      <th style="text-align: center">Opponent</th>
+      <th style="text-align: center">Elo</th>
+      <th style="text-align: center">Record</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Al Benedict</td>
+      <td style="text-align: center">985.94</td>
+      <td style="text-align: center">10-26-0</td>
+      <td style="text-align: center">Harry Greb (W,TKO)</td>
+      <td style="text-align: center">1836.32</td>
+      <td style="text-align: center">61-2-2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Willie Pep (W,PTS)</td>
+      <td style="text-align: center">1898.36</td>
+      <td style="text-align: center">161-4-1</td>
+      <td style="text-align: center">Kenny Leach</td>
+      <td style="text-align: center">1040.90</td>
+      <td style="text-align: center">3-14-0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Willie Pep (W,PTS)</td>
+      <td style="text-align: center">1872.37</td>
+      <td style="text-align: center">185-6-1</td>
+      <td style="text-align: center">Mario Eladio Colon</td>
+      <td style="text-align: center">1043.31</td>
+      <td style="text-align: center">15-47-8</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Johnny Cockfield</td>
+      <td style="text-align: center">10-84-9</td>
+      <td style="text-align: center">867.80</td>
+      <td style="text-align: center">Chalky Wright (W,TKO)</td>
+      <td style="text-align: center">1774.65</td>
+      <td style="text-align: center">153-34-18</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Archie Moore (W,RTD)</td>
+      <td style="text-align: center">1967.89</td>
+      <td style="text-align: center">178-21-9</td>
+      <td style="text-align: center">George Abinet</td>
+      <td style="text-align: center">1073.68</td>
+      <td style="text-align: center">6-14-1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+<a href="http://twitter.com/random_walk" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Boxings Grandmasters</strong> was published on <time datetime="2015-12-05T00:00:00-05:00">December 05, 2015</time> and last modified on <time datetime="2015-12-05">December 05, 2015</time> by <a href="http://localhost:4000/about" title="About Graham Mueller">Graham Mueller</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/deeptime/" title="Deep Learning for Time Series, pt. 1">Deep Learning for Time Series, pt. 1</a></li>
+    
+      <li><a href="http://localhost:4000/spectral-clustering/" title="Spectral clustering">Spectral clustering</a></li>
+    
+      <li><a href="http://localhost:4000/sample-post/" title="Dynamic Time Warping">Dynamic Time Warping</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2016 Graham Mueller. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+	        
+
+</body>
+</html>

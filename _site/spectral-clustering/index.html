@@ -1,0 +1,248 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Spectral clustering &#8211; Nullspace</title>
+<meta name="description" content="Webpage clustering using spectral clustering">
+<meta name="keywords" content="sample post, link post">
+<!-- Twitter Cards -->
+	
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:image" content=
+			
+				
+						"http://localhost:4000/images/"
+				
+			
+		>
+	
+	<meta name="twitter:title" content="Spectral clustering">
+	<meta name="twitter:description" content="Webpage clustering using spectral clustering">
+	<meta name="twitter:creator" content="@random_walk">
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spectral clustering">
+<meta property="og:description" content="Webpage clustering using spectral clustering">
+<meta property="og:url" content="http://localhost:4000/spectral-clustering/">
+<meta property="og:site_name" content="Nullspace">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/spectral-clustering/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Nullspace</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="http://localhost:4000/about/" >About</a></li>
+		        
+				<li><a href="http://localhost:4000/posts/" >Posts</a></li>
+		        
+				<li><a href="http://localhost:4000/links/" >Links</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+<a href="http://twitter.com/random_walk" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/spectral-clustering/" rel="bookmark" title="Spectral clustering">Spectral clustering</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Spectral clustering is an approach to clustering data in which the spectrum (eigenvalues) of a similarity matrix is used to perform dimension reduction.  Given a symmetric similarity or adjacency matrix, <script type="math/tex">A</script>.  The Laplacian matrix is equal to the</p>
+
+<p><script type="math/tex">L=D-A</script> where <script type="math/tex">D</script> is equal to the degree matrix.</p>
+
+<div style="background-color:rgba(0, 0, 0, 0.0470588); vertical-align: middle; padding:40px 0; margin-top:30px">
+
+<ul>
+<li> Input: Similarity matrix, \(S \in \mathbb{R}^{n \times n}\), number k of clusters to construct.</li>
+<li> Construct a similarity graph by one of the ways described in Section 2. Let
+W be its weighted adjacency matrix.</li>
+<li> Compute the unnormalized Laplacian L.</li>
+<li> Compute the first k eigenvectors $u_1,\dots,u_k$ of L</li>
+<li> Let \(U \in \mathbb{R}^{n\times k}\) be the matrix containing the vectors \(u_1,\dots,u_k\) as columns.</li>
+<li> For \(i= 1,\dots,n\), let \(y_i\in \mathbb{R}^k\) be the vector corresponding to the i-th row of U.</li>
+Cluster the points \((yi) i=1,\dots n\) in \(\mathbb{R}^k\) with the k-means algorithm into clusters \(C_1,\dots ,C_k\)
+<li> Output: Clusters \(A_1,\dots,A_k\) with \(A_i=\{j|y_j\in C_i\}\).</li>
+</ul>
+</div>
+
+<h2>Compactness vs Connectivity</h2>
+<p>It is important to think conceptually about what you expect your data to look like when applying clustering algorithms.  With spectral clustering data is projected into a lower dimensional space where it is easily seperable.</p>
+
+<p><img src="/images/index.png" /></p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">SpectralClustering</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">documents</span><span class="o">=</span><span class="p">[]</span>
+
+<span class="c">#file_sample is a list of filenames ... in this case html files</span>
+
+<span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">file_sample</span><span class="p">:</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span><span class="s">'r'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>    
+    <span class="n">documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">clean_html</span><span class="p">(</span><span class="n">raw</span><span class="p">))</span>
+
+<span class="c">#</span>
+<span class="n">vect</span><span class="o">=</span><span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">min_df</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">stop_words</span><span class="o">=</span><span class="s">'english'</span><span class="p">)</span>
+
+<span class="c">#</span>
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
+
+<span class="n">Similarity_Matrix</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">((</span><span class="n">tfidf</span> <span class="o">*</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">A</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">clusters</span><span class="o">=</span><span class="n">SpectralClustering</span><span class="p">(</span><span class="n">Similarity_Matrix</span><span class="p">,</span><span class="n">affinity</span><span class="o">=</span><span class="s">'precomputed'</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">fitted_clusters</span><span class="o">=</span><span class="n">clusters</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">Similarity_Matrix</span><span class="p">)</span>
+<span class="n">c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">fitted_clusters</span><span class="p">)</span>
+<span class="n">sim_sort</span><span class="o">=</span><span class="n">Similarity_Matrix</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">fitted_clusters</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">fitted_clusters</span><span class="p">)):</span>
+        <span class="n">sim_sort</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">Similarity_Matrix</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">c</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span></code></pre></div>
+
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+<a href="http://twitter.com/random_walk" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Spectral clustering</strong> was published on <time datetime="2014-10-04T00:00:00-04:00">October 04, 2014</time> by <a href="http://localhost:4000/about" title="About Graham Mueller">Graham Mueller</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/deeptime/" title="Deep Learning for Time Series, pt. 1">Deep Learning for Time Series, pt. 1</a></li>
+    
+      <li><a href="http://localhost:4000/grandmaster/" title="Boxings Grandmasters">Boxings Grandmasters</a></li>
+    
+      <li><a href="http://localhost:4000/sample-post/" title="Dynamic Time Warping">Dynamic Time Warping</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2016 Graham Mueller. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+	        
+
+</body>
+</html>

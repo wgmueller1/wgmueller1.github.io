@@ -1,0 +1,292 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Deep Learning for Time Series, pt. 1 &#8211; Nullspace</title>
+<meta name="description" content="">
+<meta name="keywords" content="machine, learning, deep, lstm, recurrent, convolutional, time, series">
+<!-- Twitter Cards -->
+	
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:image" content=
+			
+				
+						"http://localhost:4000/images/"
+				
+			
+		>
+	
+	<meta name="twitter:title" content="Deep Learning for Time Series, pt. 1">
+	<meta name="twitter:description" content="">
+	<meta name="twitter:creator" content="@random_walk">
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning for Time Series, pt. 1">
+<meta property="og:description" content="">
+<meta property="og:url" content="http://localhost:4000/deeptime/">
+<meta property="og:site_name" content="Nullspace">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/deeptime/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Nullspace</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="http://localhost:4000/about/" >About</a></li>
+		        
+				<li><a href="http://localhost:4000/posts/" >Posts</a></li>
+		        
+				<li><a href="http://localhost:4000/links/" >Links</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+<a href="http://twitter.com/random_walk" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/deeptime/" rel="bookmark" title="Deep Learning for Time Series, pt. 1">Deep Learning for Time Series, pt. 1</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer">
+<ul id="markdown-toc">
+  <li><a href="#convolutional-neural-networks" id="markdown-toc-convolutional-neural-networks">Convolutional Neural Networks</a></li>
+  <li><a href="#data" id="markdown-toc-data">Data</a></li>
+  <li><a href="#example" id="markdown-toc-example">Example</a></li>
+</ul>
+
+  </div>
+</section>
+<!-- /#table-of-contents -->
+
+<p>Time series data occur almost everywhere.  Much of the recent hype (mostly deserved) around deep learning architectures has been around the state-of-the-art performance produced in the fields of computer vision, natural language processing, and bioinformatics.  Much of “deep learning” is a rebranding of neural networks.  During my second year of graduate school, I became interested in applying machine learning to time series data which I planned to use as my dissertation topic.  I ended up studying reinforcement learning in social graphs, but I’ll save that for another time.</p>
+
+<h3 id="convolutional-neural-networks">Convolutional Neural Networks</h3>
+
+<blockquote>
+  <p>Convolutional Neural Networks (CNN) are biologically-inspired variants of MLPs. From Hubel and Wiesel’s early work on the cat’s visual cortex, we know the visual cortex contains a complex arrangement of cells. These cells are sensitive to small sub-regions of the visual field, called a receptive field. The sub-regions are tiled to cover the entire visual field. These cells act as local filters over the input space and are well-suited to exploit the strong spatially local correlation present in natural images.<sup><a href="#myfootnote1">1</a></sup></p>
+</blockquote>
+
+<p>
+    <center><img src="/images/Typical_cnn.png" /><br />
+    <em>Typical CNN architecture</em></center>
+</p>
+<p><br />
+CNNs may be applied to multivariate time series.  It can be useful to think of a time series as a one-dimensional image.  You don’t need to use an image of the time series as input to the CNN!  I’ve seen several papers which used this approach which seems weird, you just need to use a 1-dimensional convolutional layer instead of the typical 2-D layer.
+<br />
+<br /></p>
+
+<p>
+    <center><img src="/images/1d_convolution_ex" /><br />
+    <em>Example of 1-D Convolution</em></center>
+</p>
+
+<h3 id="data">Data</h3>
+
+<p>I’m going to use the UCI Machine Learning <a href="https://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones">Human Activity Recognition dataset</a> for this example.  The dataset consists of sensor data recorded from 30 subjects performing activities of daily living, specifically, WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING.  The data was collected from 30 individuals who wore a Samsung Galaxy S II on their waist.  The sampling rate was 50Hz and sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window).  If you don’t care about any of this and just want an input into your blackbox, we have 128 observations of a 9-dimensional time series with 6 unique classes.</p>
+
+<p>
+    <center><img src="/images/raw.png" /><br />
+    <em>Raw sensor data from mobile phone</em></center>
+</p>
+
+<h3 id="example">Example</h3>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">keras.layers.core</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">Flat</span>
+<span class="kn">from</span> <span class="nn">keras.layers.convolutional</span> <span class="kn">import</span> <span class="n">Convolution1D</span><span class="p">,</span> <span class="n">MaxPooling1D</span>
+
+<span class="c">#set parameters</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">nb_filter</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">filter_length</span><span class="o">=</span> <span class="mi">128</span> <span class="c">#number of time observations per sample</span>
+<span class="n">hidden_dims</span> <span class="o">=</span> <span class="mi">150</span>
+<span class="n">nb_epoch</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">nb_sensors</span> <span class="o">=</span> <span class="mi">9</span> <span class="c">#input dimension</span>
+<span class="n">classes</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Convolution1D</span><span class="p">(</span><span class="n">nb_filter</span><span class="o">=</span><span class="n">nb_filter</span><span class="p">,</span><span class="n">filter_length</span><span class="o">=</span><span class="n">filter_length</span><span class="p">,</span>\
+<span class="n">border_mode</span><span class="o">=</span><span class="s">'valid'</span><span class="p">,</span><span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">,</span><span class="n">subsample_length</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>\
+<span class="n">input_dim</span><span class="o">=</span><span class="n">nb_sensors</span><span class="p">,</span><span class="n">input_lenght</span><span class="o">=</span><span class="mi">128</span><span class="p">))</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">hidden_dims</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">classes</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s">'softmax'</span><span class="p">))</span>
+
+<span class="n">model</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'rmsprop'</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span><span class="n">ytrain</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span><span class="n">nb_epoch</span><span class="o">=</span><span class="n">nb_epoch</span><span class="p">,</span><span class="n">show_accuracy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></div>
+
+<p>We can look at the distribution and correlations of the extracted features using the following code.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+
+<span class="k">def</span> <span class="nf">get_activations</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">layer_idx</span><span class="p">,</span><span class="n">X</span><span class="o">-</span><span class="n">batch</span><span class="p">):</span>
+	<span class="n">get_activations</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="nb">input</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">learning_phase</span><span class="p">()],</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">layer_idx</span><span class="p">]</span><span class="o">.</span><span class="n">output</span><span class="p">,])</span>
+	<span class="n">activations</span> <span class="o">=</span> <span class="n">get_activations</span><span class="p">([</span><span class="n">X_batch</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+	<span class="k">return</span> <span class="n">activations</span>
+
+<span class="n">feats</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">activations</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">features</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">feats</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">features</span><span class="p">[</span><span class="s">'labels'</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">ytrain</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">features</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s">'labels'</span><span class="p">)</span></code></pre></div>
+
+<p><img src="/images/features.png" /></p>
+
+<p>The confusion matrix</p>
+
+<p><a name="myfootnote1">1</a>: http://deeplearning.net/tutorial/lenet.html</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+<a href="http://twitter.com/random_walk" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Deep Learning for Time Series, pt. 1</strong> was published on <time datetime="2016-07-07T00:00:00-04:00">July 07, 2016</time> and last modified on <time datetime="2016-07-09">July 09, 2016</time> by <a href="http://localhost:4000/about" title="About Graham Mueller">Graham Mueller</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/grandmaster/" title="Boxings Grandmasters">Boxings Grandmasters</a></li>
+    
+      <li><a href="http://localhost:4000/spectral-clustering/" title="Spectral clustering">Spectral clustering</a></li>
+    
+      <li><a href="http://localhost:4000/sample-post/" title="Dynamic Time Warping">Dynamic Time Warping</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2016 Graham Mueller. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+	        
+
+</body>
+</html>

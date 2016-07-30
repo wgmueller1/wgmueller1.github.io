@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+<title type="text">Nullspace</title>
+<generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
+<link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
+<link rel="alternate" type="text/html" href="http://localhost:4000" />
+<updated>2016-07-30T08:06:49-04:00</updated>
+<id>http://localhost:4000/</id>
+<author>
+  <name>Graham Mueller</name>
+  <uri>http://localhost:4000/</uri>
+  <email>wgmueller@gmail.com</email>
+</author>
+
+
+<entry>
+  <title type="html"><![CDATA[Deep Learning for Time Series, pt. 1]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/deeptime/" />
+  <id>http://localhost:4000/deeptime</id>
+  <updated>2016-07-09T00:00:00-00:00</updated>
+  <published>2016-07-07T00:00:00-04:00</published>
+  
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
+  &lt;header&gt;
+    &lt;h3&gt;Contents&lt;/h3&gt;
+  &lt;/header&gt;
+&lt;div id=&quot;drawer&quot;&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#convolutional-neural-networks&quot; id=&quot;markdown-toc-convolutional-neural-networks&quot;&gt;Convolutional Neural Networks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#data&quot; id=&quot;markdown-toc-data&quot;&gt;Data&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#example&quot; id=&quot;markdown-toc-example&quot;&gt;Example&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;!-- /#table-of-contents --&gt;
+
+&lt;p&gt;Time series data occur almost everywhere.  Much of the recent hype (mostly deserved) around deep learning architectures has been around the state-of-the-art performance produced in the fields of computer vision, natural language processing, and bioinformatics.  Much of “deep learning” is a rebranding of neural networks.  During my second year of graduate school, I became interested in applying machine learning to time series data which I planned to use as my dissertation topic.  I ended up studying reinforcement learning in social graphs, but I’ll save that for another time.&lt;/p&gt;
+
+&lt;h3 id=&quot;convolutional-neural-networks&quot;&gt;Convolutional Neural Networks&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Convolutional Neural Networks (CNN) are biologically-inspired variants of MLPs. From Hubel and Wiesel’s early work on the cat’s visual cortex, we know the visual cortex contains a complex arrangement of cells. These cells are sensitive to small sub-regions of the visual field, called a receptive field. The sub-regions are tiled to cover the entire visual field. These cells act as local filters over the input space and are well-suited to exploit the strong spatially local correlation present in natural images.&lt;sup&gt;&lt;a href=&quot;#myfootnote1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;
+    &lt;center&gt;&lt;img src=&quot;/images/Typical_cnn.png&quot; /&gt;&lt;br /&gt;
+    &lt;em&gt;Typical CNN architecture&lt;/em&gt;&lt;/center&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+CNNs may be applied to multivariate time series.  It can be useful to think of a time series as a one-dimensional image.  You don’t need to use an image of the time series as input to the CNN!  I’ve seen several papers which used this approach which seems weird, you just need to use a 1-dimensional convolutional layer instead of the typical 2-D layer.
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;
+    &lt;center&gt;&lt;img src=&quot;/images/1d_convolution_ex&quot; /&gt;&lt;br /&gt;
+    &lt;em&gt;Example of 1-D Convolution&lt;/em&gt;&lt;/center&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&quot;data&quot;&gt;Data&lt;/h3&gt;
+
+&lt;p&gt;I’m going to use the UCI Machine Learning &lt;a href=&quot;https://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones&quot;&gt;Human Activity Recognition dataset&lt;/a&gt; for this example.  The dataset consists of sensor data recorded from 30 subjects performing activities of daily living, specifically, WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING.  The data was collected from 30 individuals who wore a Samsung Galaxy S II on their waist.  The sampling rate was 50Hz and sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window).  If you don’t care about any of this and just want an input into your blackbox, we have 128 observations of a 9-dimensional time series with 6 unique classes.&lt;/p&gt;
+
+&lt;p&gt;
+    &lt;center&gt;&lt;img src=&quot;/images/raw.png&quot; /&gt;&lt;br /&gt;
+    &lt;em&gt;Raw sensor data from mobile phone&lt;/em&gt;&lt;/center&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.models&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.layers.core&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dropout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Activation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Flat&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.layers.convolutional&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Convolution1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MaxPooling1D&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#set parameters&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;nb_filter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;filter_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#number of time observations per sample&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hidden_dims&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;150&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;nb_sensors&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#input dimension&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Convolution1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter_length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;\
+&lt;span class=&quot;n&quot;&gt;border_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;valid&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;relu&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subsample_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;\
+&lt;span class=&quot;n&quot;&gt;input_dim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_sensors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_lenght&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Flatten&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hidden_dims&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Activation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;softmax&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;categorical_crossentropy&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;rmsprop&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xtrain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ytrain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show_accuracy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We can look at the distribution and correlations of the extracted features using the following code.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;seaborn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sns&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;backend&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_activations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;get_activations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;learning_phase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,])&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;activations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_activations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activations&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;feats&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;squeeze&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;features&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;features&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;labels&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ytrain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pairplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;features&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;labels&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/features.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The confusion matrix&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;myfootnote1&quot;&gt;1&lt;/a&gt;: http://deeplearning.net/tutorial/lenet.html&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/deeptime/&quot;&gt;Deep Learning for Time Series, pt. 1&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 07, 2016.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Boxings Grandmasters]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/grandmaster/" />
+  <id>http://localhost:4000/grandmaster</id>
+  <updated>2015-12-05T00:00:00-00:00</updated>
+  <published>2015-12-05T00:00:00-05:00</published>
+  
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
+  &lt;header&gt;
+    &lt;h3&gt;Contents&lt;/h3&gt;
+  &lt;/header&gt;
+&lt;div id=&quot;drawer&quot;&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#elo-rating-system&quot; id=&quot;markdown-toc-elo-rating-system&quot;&gt;ELO rating system&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#data&quot; id=&quot;markdown-toc-data&quot;&gt;Data&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;!-- /#table-of-contents --&gt;
+
+&lt;p&gt;As a lifelong boxing fan and someone whose everyday job involves analyzing massive amounts of data, I thought it would be interesting to apply some quantitative analysis to a sport which has many subjective aspects to it.&lt;/p&gt;
+
+&lt;h2 id=&quot;elo-rating-system&quot;&gt;ELO rating system&lt;/h2&gt;
+
+&lt;p&gt;The Elo rating system is a method for calculating the relative skill levels of players in competitor-versus-competitor games.   The difference in the ratings between two players serves as a predictor of the outcome of a match. Two players with equal ratings who play against each other are expected to score an equal number of wins. A player whose rating is 100 points greater than their opponents is expected to score 64%; if the difference is 200 points, then the expected score for the stronger player is 76%.&lt;/p&gt;
+
+&lt;h2 id=&quot;data&quot;&gt;Data&lt;/h2&gt;
+
+&lt;p&gt;Boxrec is one source of historical boxing records, though incomplete, it is a good source for historical rankings, fighter biographical data, and match outcomes.  Boxrec even has their own ranking system, which is described here.  For this analysis, I used data from Boxrec to calculate the various rankings.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Rank&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Fighter&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Elo Max&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Sugar Ray Robinson&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2069.520867275613&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Harry Greb&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2052.8763634156262&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;3.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Benny Leonard&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2019.7584089617503&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;4.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Henry Armstrong&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2010.2763179787501&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;5.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Willie Pep&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1978.9129880799419&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;6.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Joe Louis&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1975.8391908889255&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;7.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Archie Moore&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1975.610967270421&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;8.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Freddie Steele&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1963.1645149271533&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;9.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Ezzard Charles&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1962.8868382295352&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;10.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Barney Ross&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1947.2447907846429&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;11.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Ike Williams&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1946.6548133928763&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Kid Gavilan&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1933.6989348611974&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;13.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Freddie Miller&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1933.2904640109389&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;14.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Tony Canzoneri&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1932.0925443629635&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;15.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Mickey Walker&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1924.6891290386548&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;16.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Lou Ambers&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1923.4732567233016&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;17.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Carlos Monzon&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1920.3524175170619&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Tommy Loughran&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1918.1457652903396&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;19.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Young Corbett III&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1916.5742488712126&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;20.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Muhammad Ali&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1909.3184663333086&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;21.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Ceferino Garcia&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1907.2591348209057&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;22.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Jose Napoles&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1900.5897523420126&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;23.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Bobo Olson&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1899.9746585711175&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;24.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Duilio Loi&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1898.7037664713662&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;25.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Maxie Rosenbloom&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1897.4312977331319&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Rank&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Fighter&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Elo Average&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Sugar Ray Robinson&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1855.0036761450069&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Harry Greb&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1817.6155130555853&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;3.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Willie Pep&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1806.4191626922304&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;4.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Henry Armstrong&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1759.8612501580649&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;5.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Archie Moore&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1756.9155873311097&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;6.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Joe Louis&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1739.1950176641708&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;7.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Holman Williams&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1732.0182657937196&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;8.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Maxie Rosenbloom&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1723.7008910856403&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;9.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Luis Manuel Rodriguez&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1721.7803226184903&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;10.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Tony Canzoneri&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1719.0282741224114&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;11.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Freddie Miller&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1716.2742626938314&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Ezzard Charles&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1715.7150720314391&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;13.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Lew Tendler&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1712.2352900318194&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;14.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Kid Gavilan&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1710.5764454380462&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;15.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Kid Chocolate&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1703.2289637348927&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;16.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Young Stribling&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1702.7833099927777&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;17.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Ike Williams&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1701.0128321834193&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Benny Leonard&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1699.8913675280237&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;19.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Emile Griffith&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1699.4161846718416&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;20.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Lou Ambers&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1689.3753983513191&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;21.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Jackie Fields&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1687.9290334844452&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;22.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Tommy Gibbons&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1687.0751035847591&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;23.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Bobo Olson&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1685.1010072493598&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;24.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Wesley Ramey&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1684.1023652026458&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;25.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Muhammad Ali&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1682.4794435437068&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Highest Rated Bouts:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Fighter&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Elo&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Record&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Opponent&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Elo&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Record&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Date&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Jake LaMotta&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1845.24&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;78-14-3&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Sugar Ray Robinson (W,TKO)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2058.42&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;120-1-2&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1951-02-14&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Bobo Olson&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1885.60&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;71-8-0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Sugar Ray Robinson (W,KO)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2014.54&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;137-4-2&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1956-05-18&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Sugar Ray Robinson (W,KO)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2003.29&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;136-4-2&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Bobo Olson&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1896.84&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;71-7-0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1955-12-09&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Joe Louis&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1966.90&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;58-1-0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Ezzard Charles (W,UD)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1918.10&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;66-5-1&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1950-09-27&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Henry Armstrong (D,PTS)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1987.04&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;106-12-6&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Ceferino Garcia&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1896.12&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;112-25-12&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1940-03-01&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Worst Mismatches:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Fighter&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Elo&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Record&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Opponent&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Elo&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Record&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Al Benedict&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;985.94&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;10-26-0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Harry Greb (W,TKO)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1836.32&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;61-2-2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Willie Pep (W,PTS)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1898.36&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;161-4-1&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Kenny Leach&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1040.90&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;3-14-0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Willie Pep (W,PTS)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1872.37&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;185-6-1&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Mario Eladio Colon&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1043.31&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;15-47-8&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Johnny Cockfield&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;10-84-9&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;867.80&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Chalky Wright (W,TKO)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1774.65&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;153-34-18&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Archie Moore (W,RTD)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1967.89&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;178-21-9&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;George Abinet&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1073.68&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;6-14-1&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/grandmaster/&quot;&gt;Boxings Grandmasters&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on December 05, 2015.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Spectral clustering]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/spectral-clustering/" />
+  <id>http://localhost:4000/spectral-clustering</id>
+  <published>2014-10-04T00:00:00-04:00</published>
+  <updated>2014-10-04T00:00:00-04:00</updated>
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Spectral clustering is an approach to clustering data in which the spectrum (eigenvalues) of a similarity matrix is used to perform dimension reduction.  Given a symmetric similarity or adjacency matrix, &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;.  The Laplacian matrix is equal to the&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;L=D-A&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;D&lt;/script&gt; is equal to the degree matrix.&lt;/p&gt;
+
+&lt;div style=&quot;background-color:rgba(0, 0, 0, 0.0470588); vertical-align: middle; padding:40px 0; margin-top:30px&quot;&gt;
+
+&lt;ul&gt;
+&lt;li&gt; Input: Similarity matrix, \(S \in \mathbb{R}^{n \times n}\), number k of clusters to construct.&lt;/li&gt;
+&lt;li&gt; Construct a similarity graph by one of the ways described in Section 2. Let
+W be its weighted adjacency matrix.&lt;/li&gt;
+&lt;li&gt; Compute the unnormalized Laplacian L.&lt;/li&gt;
+&lt;li&gt; Compute the first k eigenvectors $u_1,\dots,u_k$ of L&lt;/li&gt;
+&lt;li&gt; Let \(U \in \mathbb{R}^{n\times k}\) be the matrix containing the vectors \(u_1,\dots,u_k\) as columns.&lt;/li&gt;
+&lt;li&gt; For \(i= 1,\dots,n\), let \(y_i\in \mathbb{R}^k\) be the vector corresponding to the i-th row of U.&lt;/li&gt;
+Cluster the points \((yi) i=1,\dots n\) in \(\mathbb{R}^k\) with the k-means algorithm into clusters \(C_1,\dots ,C_k\)
+&lt;li&gt; Output: Clusters \(A_1,\dots,A_k\) with \(A_i=\{j|y_j\in C_i\}\).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Compactness vs Connectivity&lt;/h2&gt;
+&lt;p&gt;It is important to think conceptually about what you expect your data to look like when applying clustering algorithms.  With spectral clustering data is projected into a lower dimensional space where it is easily seperable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/index.png&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.feature_extraction.text&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TfidfVectorizer&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.cluster&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SpectralClustering&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;nltk&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;np&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;documents&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#file_sample is a list of filenames ... in this case html files&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;r&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;    
+    &lt;span class=&quot;n&quot;&gt;documents&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nltk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clean_html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TfidfVectorizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min_df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop_words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;english&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;tfidf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;documents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;asarray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tfidf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tfidf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;clusters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SpectralClustering&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;affinity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;precomputed&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;fitted_clusters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clusters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argsort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fitted_clusters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sim_sort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fitted_clusters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fitted_clusters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sim_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/spectral-clustering/&quot;&gt;Spectral clustering&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on October 04, 2014.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Dynamic Time Warping]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/sample-post/" />
+  <id>http://localhost:4000/sample-post</id>
+  <updated>2014-07-19T00:00:00-00:00</updated>
+  <published>2014-07-20T00:00:00-04:00</published>
+  
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
+  &lt;header&gt;
+    &lt;h3&gt;Contents&lt;/h3&gt;
+  &lt;/header&gt;
+&lt;div id=&quot;drawer&quot;&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#dynamic-time-warping&quot; id=&quot;markdown-toc-dynamic-time-warping&quot;&gt;Dynamic Time Warping&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#temporal-semantic-analysis&quot; id=&quot;markdown-toc-temporal-semantic-analysis&quot;&gt;Temporal Semantic Analysis&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;!-- /#table-of-contents --&gt;
+
+&lt;h2 id=&quot;dynamic-time-warping&quot;&gt;Dynamic Time Warping&lt;/h2&gt;
+
+&lt;p&gt;Dyanmic Time Warping is technique which is often used in classification or clustering of time series.  DTW is used as a measure of similarity for two sequences.  In essence, the DTW algorithm stretches or compresses the sequences locally in order to make the two sequences resememble each other as closely as possible.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Suppose we have two time series which consist of &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;m&lt;/script&gt; observations, these are often referred to as the “query” and the “reference” series.&lt;/p&gt;
+
+&lt;center&gt;
+$$x_t=x_1,x_2,x_3, \dots x_n$$
+$$y_t=y_1,y_2,y_3, \dots y_m$$
+&lt;/center&gt;
+
+&lt;p&gt;We may define a function &lt;script type=&quot;math/tex&quot;&gt;f(x_i,y_j)=d(i,j) \geq 0&lt;/script&gt; as a local dissimilarity measure.  This is the only input required for the DTW algorithm.  Typically, euclidean distance is used as the dissimilarity measure, although there are other definitions which maybe useful as well.&lt;/p&gt;
+
+&lt;p&gt;The key to DTW is what is known as a warping curve &lt;script type=&quot;math/tex&quot;&gt;\phi(k)=(\phi_x(k),\phi_y(k))&lt;/script&gt; which remap the time indices of &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt;.Given the warping curve, &lt;script type=&quot;math/tex&quot;&gt;\phi&lt;/script&gt;, one may compute the average acculmulated distance between two time series.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/RPlot02.png&quot; /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/warp.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;temporal-semantic-analysis&quot;&gt;Temporal Semantic Analysis&lt;/h2&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/sample-post/&quot;&gt;Dynamic Time Warping&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 20, 2014.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[d3 to svg]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/code-highlighting-post/" />
+  <id>http://localhost:4000/code-highlighting-post</id>
+  <published>2013-08-16T00:00:00-04:00</published>
+  <updated>2013-08-16T00:00:00-04:00</updated>
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;I find it hilarious that I am actually doing this crap, but if you ever wanted to know how to render a svg generated by d3 into a downloadable pdf, png, whatever, here is one solution.  This is all based on the work done &lt;a href=&quot;http://d3export.housegordon.org&quot;&gt;here&lt;/a&gt;.  I couldn’t use the perl script on the server side because I’m using &lt;a href=&quot;http://tangelo.kitware.com&quot;&gt;Tangelo&lt;/a&gt; to develop prototype web applications.  At first, I thought I’d just call the perl script through subprocess or pyperl, but that was mainly because I didn’t want to spend anytime understanding what the perl script actually did.&lt;/p&gt;
+
+&lt;h3 id=&quot;pygments-code-blocks&quot;&gt;Pygments Code Blocks&lt;/h3&gt;
+
+&lt;p&gt;To modify styling and highlight colors edit &lt;code&gt;/assets/less/pygments.less&lt;/code&gt; and compile &lt;code&gt;main.less&lt;/code&gt; with your favorite preprocessor. Or edit &lt;code&gt;main.css&lt;/code&gt; if that’s your thing, the classes you want to modify all begin with &lt;code&gt;.highlight&lt;/code&gt;.&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/code-highlighting-post/&quot;&gt;d3 to svg&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on August 16, 2013.&lt;/p&gt;</content>
+</entry>
+
+</feed>
