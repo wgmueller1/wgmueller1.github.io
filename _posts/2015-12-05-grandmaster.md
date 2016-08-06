@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Boxings Grandmasters
+title: Boxing's Grandmasters
 description: "Analysis of Historical boxing data"
-modified: 2015-12-05
+modified: 2016-07-31
 tags: [boxing,data,science,elo]
 comments: true
 published: true
@@ -23,11 +23,39 @@ image:
 </section><!-- /#table-of-contents -->
 
 
-As a lifelong boxing fan and someone whose everyday job involves analyzing massive amounts of data, I thought it would be interesting to apply some quantitative analysis to a sport which has many subjective aspects to it.
+As a lifelong boxing fan and someone whose everyday job involves analyzing large amounts of data, I thought it would be interesting to apply some quantitative analysis to a sport which has many subjective aspects to it.
 
 ## ELO rating system
 
-The Elo rating system is a method for calculating the relative skill levels of players in competitor-versus-competitor games.   The difference in the ratings between two players serves as a predictor of the outcome of a match. Two players with equal ratings who play against each other are expected to score an equal number of wins. A player whose rating is 100 points greater than their opponents is expected to score 64%; if the difference is 200 points, then the expected score for the stronger player is 76%.
+The Elo rating system is a method for calculating the relative skill levels of players in competitor-versus-competitor games.   The difference in the ratings between two players serves as a predictor of the outcome of a match. Two players with equal ratings who play against each other are expected to score an equal number of wins. 
+<br>
+<br>
+If Player A has a rating of $${\displaystyle R_{A}}$$ and Player B a rating of $${\displaystyle R_{B}}$$, the exact formula (using the logistic curve) for the expected score of Player A is
+
+<center>
+$${\displaystyle E_{A}={\frac {1}{1+10^{(R_{B}-R_{A})/400}}}}$$
+</center>
+
+Similarly the expected score for Player B is
+<center>
+$${\displaystyle E_{B}={\frac {1}{1+10^{(R_{A}-R_{B})/400}}}}$$
+</center>
+
+This could also be expressed by
+<center>
+$${\displaystyle E_{A}={\frac {Q_{A}}{Q_{A}+Q_{B}}}} $$
+</center>
+and
+
+<center>
+$${\displaystyle E_{B}={\frac {Q_{B}}{Q_{A}+Q_{B}}}}$$
+</center>
+
+where $${\displaystyle Q_{A}=10^{R_{A}/400}}$$ and  $${\displaystyle Q_{B}=10^{R_{B}/400}}$$.
+
+<br>
+<br>
+A player whose rating is 100 points greater than their opponents is expected to win 64% of the time; if the difference is 200 points, then the expected probability of winning for the stronger player is 76%.  This property of the Elo system allows us to compare fighters of different generations in fantasy match-ups.
 
 
 ## Data
