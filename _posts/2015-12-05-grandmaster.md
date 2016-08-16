@@ -122,7 +122,7 @@ Boxrec is one source of historical boxing records, though incomplete, it is a go
 |25.  |Muhammad Ali| 1682.48|
 
 
-
+Sugar Ray Robinson is widely considered to the greatest pound for pound fighter and his Elo rating reflects that.  The top 25 largely consists of fighters before the 1970s with the exception of Muhammad Ali.  Elo ratings can exhibit an increase (inflation) or decrease (deflation) in the average player rating over time.  Boxing has decreased in popularity over time.  
 
 Highest Rated Bouts:
 
