@@ -2,27 +2,27 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Nullspace</title>
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
-<link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2016-07-30T08:06:49-04:00</updated>
-<id>http://localhost:4000/</id>
+<link rel="self" type="application/atom+xml" href="/feed.xml" />
+<link rel="alternate" type="text/html" href="" />
+<updated>2016-08-20T12:45:42-04:00</updated>
+<id>/</id>
 <author>
   <name>Graham Mueller</name>
-  <uri>http://localhost:4000/</uri>
+  <uri>/</uri>
   <email>wgmueller@gmail.com</email>
 </author>
 
 
 <entry>
   <title type="html"><![CDATA[Deep Learning for Time Series, pt. 1]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/deeptime/" />
-  <id>http://localhost:4000/deeptime</id>
+  <link rel="alternate" type="text/html" href="/deeptime/" />
+  <id>/deeptime</id>
   <updated>2016-07-09T00:00:00-00:00</updated>
   <published>2016-07-07T00:00:00-04:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri></uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -34,6 +34,7 @@
   &lt;li&gt;&lt;a href=&quot;#convolutional-neural-networks&quot; id=&quot;markdown-toc-convolutional-neural-networks&quot;&gt;Convolutional Neural Networks&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#data&quot; id=&quot;markdown-toc-data&quot;&gt;Data&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#example&quot; id=&quot;markdown-toc-example&quot;&gt;Example&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#results&quot; id=&quot;markdown-toc-results&quot;&gt;Results&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
   &lt;/div&gt;
@@ -53,14 +54,28 @@
     &lt;em&gt;Typical CNN architecture&lt;/em&gt;&lt;/center&gt;
 &lt;/p&gt;
 &lt;p&gt;&lt;br /&gt;
-CNNs may be applied to multivariate time series.  It can be useful to think of a time series as a one-dimensional image.  You don’t need to use an image of the time series as input to the CNN!  I’ve seen several papers which used this approach which seems weird, you just need to use a 1-dimensional convolutional layer instead of the typical 2-D layer.
+CNNs may be applied to multivariate time series.  It can be useful to think of a time series as a one-dimensional image.  You don’t need to use an image of the time series as input to the CNN!  I’ve seen several papers which used this approach which seems weird, you just need to use a 1-dimensional convolutional layer instead of the typical 2-D layer.  In the 1D domain, a convolution can be viewed as a filter, capable of removing outliers, filtering the data or acting as a feature detector, defined to respond maximally to specific temporal sequences within the filter length of the convolution. 
 &lt;br /&gt;
+&lt;br /&gt;
+To better understand this, consider the definition of a 1-D convolution.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;y_{k} = \sum_{n = 0}^{N - 1}h_{n}\,\cdot\,x_{k-n}&lt;/script&gt;
+
+&lt;p&gt;There are two input signals, &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;h&lt;/em&gt; and &lt;em&gt;N&lt;/em&gt; is the length of &lt;em&gt;h&lt;/em&gt;. The output vector is &lt;em&gt;y&lt;/em&gt;, &lt;em&gt;h&lt;/em&gt; is known as the kernel or convolution filter and &lt;em&gt;x&lt;/em&gt; is the input data.  The subscripts denote the &lt;em&gt;n&lt;/em&gt;th element of the vector. Here is an example, how the output shall be calculated, when &lt;em style=&quot;line-height: 1.5em;&quot;&gt;h&lt;/em&gt; has three elements:&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;$$&lt;br /&gt;\begin{aligned}&lt;br /&gt;y_{0} &amp;amp; = h_{0} \cdot x_{0} \\&lt;br /&gt;y_{1} &amp;amp; = h_{1} \cdot x_{0} + h_{0} \cdot x_{1} \\&lt;br /&gt;y_{2} &amp;amp; = h_{2} \cdot x_{0} + h_{1} \cdot x_{1} + h_{0} \cdot x_{2} \\&lt;br /&gt;y_{3} &amp;amp; = h_{2} \cdot x_{1} + h_{1} \cdot x_{2} + h_{0} \cdot x_{3} \\&lt;br /&gt;\vdots&lt;br /&gt;\end{aligned}&lt;br /&gt;$$&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+The filter [&lt;script type=&quot;math/tex&quot;&gt;h_2 h_1 h_0&lt;/script&gt;] is slid along the elements of &lt;em&gt;x&lt;/em&gt; and at each step we multiply the elements and sum them: the result will be the corresponding element of the output &lt;em&gt;y&lt;/em&gt; vector.  Here is a concrete example:
+&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;$$&lt;br /&gt;\begin{aligned}&lt;br /&gt;x &amp;amp; = \left[&lt;br /&gt;\begin{array}{c} 1 \, 2 \, 1 \, 3&lt;br /&gt;\end{array}&lt;br /&gt;\right]&lt;br /&gt;\\&lt;br /&gt;h &amp;amp; = \left[&lt;br /&gt;\begin{array}{c}&lt;br /&gt;2 \, 0 \, 1&lt;br /&gt;\end{array}&lt;br /&gt;\right]&lt;br /&gt;\end{aligned}&lt;br /&gt;\\&lt;br /&gt;\begin{array}{c|cccccccc|r}&lt;br /&gt;k &amp;amp; \it{0} &amp;amp; \it{0} &amp;amp; 1 &amp;amp; 2 &amp;amp; 1 &amp;amp; 3 &amp;amp; \it{0} &amp;amp; \it{0} &amp;amp; \it{y_{k}}\\&lt;br /&gt;\hline&lt;br /&gt;0 &amp;amp; 1 &amp;amp; 0 &amp;amp; 2 &amp;amp; &amp;amp; &amp;amp; &amp;amp; &amp;amp; &amp;amp; 2 \cdot 1 = 2\\&lt;br /&gt;1 &amp;amp; &amp;amp; 1 &amp;amp; 0 &amp;amp; 2 &amp;amp; &amp;amp; &amp;amp; &amp;amp; &amp;amp; 2 \cdot 2 = 4\\&lt;br /&gt;2 &amp;amp; &amp;amp; &amp;amp; 1 &amp;amp; 0 &amp;amp; 2 &amp;amp; &amp;amp; &amp;amp; &amp;amp; 2 \cdot 1 + 1 \cdot 1 = 3\\&lt;br /&gt;3 &amp;amp; &amp;amp; &amp;amp; &amp;amp; 1 &amp;amp; 0 &amp;amp; 2 &amp;amp; &amp;amp; &amp;amp; 2 \cdot 3 + 1 \cdot 2 = 8\\&lt;br /&gt;4 &amp;amp; &amp;amp; &amp;amp; &amp;amp; &amp;amp; 1 &amp;amp; 0 &amp;amp; 2 &amp;amp; &amp;amp; 1 \cdot 1 = 1\\&lt;br /&gt;5 &amp;amp; &amp;amp; &amp;amp; &amp;amp; &amp;amp; &amp;amp; 1 &amp;amp; 0 &amp;amp; 2 &amp;amp; 1 \cdot 3 = 3\\&lt;br /&gt;\end{array}&lt;br /&gt;$$&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+It is easy to see that a simple moving average is a special case of a convolution using the following kernel:&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;$$&lt;br /&gt;h = \left[&lt;br /&gt;\begin{array}{c} \dfrac{1}{N} \, \dfrac{1}{N} \, ... \, \dfrac{1}{N}\, \dfrac{1}{N}\end{array}&lt;br /&gt;\right]&lt;br /&gt;$$&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;
-    &lt;center&gt;&lt;img src=&quot;/images/1d_convolution_ex&quot; /&gt;&lt;br /&gt;
-    &lt;em&gt;Example of 1-D Convolution&lt;/em&gt;&lt;/center&gt;
-&lt;/p&gt;
+&lt;p&gt;This gives us a little intuition as to what a one-dimensional convolution does.&lt;/p&gt;
 
 &lt;h3 id=&quot;data&quot;&gt;Data&lt;/h3&gt;
 
@@ -68,7 +83,7 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 
 &lt;p&gt;
     &lt;center&gt;&lt;img src=&quot;/images/raw.png&quot; /&gt;&lt;br /&gt;
-    &lt;em&gt;Raw sensor data from mobile phone&lt;/em&gt;&lt;/center&gt;
+    &lt;em&gt;De-noised sensor data from mobile phone&lt;/em&gt;&lt;/center&gt;
 &lt;/p&gt;
 
 &lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
@@ -77,21 +92,28 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.layers.core&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dropout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Activation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Flat&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.layers.convolutional&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Convolution1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MaxPooling1D&lt;/span&gt;
 
-&lt;span class=&quot;c&quot;&gt;#set parameters&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;nb_filter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;filter_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#number of time observations per sample&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;hidden_dims&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;150&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;nb_sensors&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#input dimension&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#set parameters &lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;nb_filter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;125&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#number of features to learn&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;filter_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#number of time steps&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hidden_dims&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;250&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;n_sensors&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pool_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;subsample_length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+
 
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Convolution1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter_length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;\
-&lt;span class=&quot;n&quot;&gt;border_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;valid&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;relu&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subsample_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;\
-&lt;span class=&quot;n&quot;&gt;input_dim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_sensors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_lenght&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Convolution1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;125&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;filter_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;subsample_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subsample_length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;border_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;same&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# we use standard max pooling (halving the output of the previous layer):&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxPooling1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool_length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# We flatten the output of the conv layer,&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# so that we can add a vanilla dense layer:&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Flatten&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hidden_dims&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
@@ -119,24 +141,59 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 
 &lt;p&gt;&lt;img src=&quot;/images/features.png&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;The confusion matrix&lt;/p&gt;
+&lt;h3 id=&quot;results&quot;&gt;Results&lt;/h3&gt;
 
-&lt;p&gt;&lt;a name=&quot;myfootnote1&quot;&gt;1&lt;/a&gt;: http://deeplearning.net/tutorial/lenet.html&lt;/p&gt;
+&lt;p&gt;Test set summary&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/deeptime/&quot;&gt;Deep Learning for Time Series, pt. 1&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 07, 2016.&lt;/p&gt;</content>
+&lt;p&gt;```
+ class   precision    recall  f1-score   support&lt;/p&gt;
+
+&lt;p&gt;0         0.98      0.92      0.95       496
+ 1         0.95      0.94      0.94       471
+ 2         0.89      1.00      0.94       420
+ 3         0.86      0.92      0.89       491
+ 4         0.96      0.87      0.91       532
+ 5         1.00      1.00      1.00       537&lt;/p&gt;
+
+&lt;p&gt;total      0.94      0.94      0.94      2947&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;Training set summary&lt;/p&gt;
+
+&lt;p&gt;```
+class   precision   recall  f1-score   support&lt;/p&gt;
+
+&lt;p&gt;0         1.00      1.00      1.00      1226
+1         1.00      1.00      1.00      1073
+2         1.00      1.00      1.00       986
+3         0.91      1.00      0.95      1286
+4         1.00      0.91      0.95      1374
+5         1.00      1.00      1.00      1407&lt;/p&gt;
+
+&lt;p&gt;total     0.98      0.98      0.98      7352
+```&lt;/p&gt;
+
+&lt;p&gt;A 1-layer convolutional + max pooling neural network achieves 94% accuracy with somewhat arbitrary hyperparameters.  Not bad, but we can improve performance by adding additional layers.  In part 2, I will discuss adding recurrent layers in order to better capture the temporal dynamics.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+&lt;a name=&quot;myfootnote1&quot;&gt;1&lt;/a&gt;: http://deeplearning.net/tutorial/lenet.html&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;/deeptime/&quot;&gt;Deep Learning for Time Series, pt. 1&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on July 07, 2016.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
-  <title type="html"><![CDATA[Boxings Grandmasters]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/grandmaster/" />
-  <id>http://localhost:4000/grandmaster</id>
-  <updated>2015-12-05T00:00:00-00:00</updated>
+  <title type="html"><![CDATA[Boxing's Grandmasters]]></title>
+  <link rel="alternate" type="text/html" href="/grandmaster/" />
+  <id>/grandmaster</id>
+  <updated>2016-07-31T00:00:00-00:00</updated>
   <published>2015-12-05T00:00:00-05:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri></uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -147,21 +204,52 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 &lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#elo-rating-system&quot; id=&quot;markdown-toc-elo-rating-system&quot;&gt;ELO rating system&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#data&quot; id=&quot;markdown-toc-data&quot;&gt;Data&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#rankings&quot; id=&quot;markdown-toc-rankings&quot;&gt;Rankings&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
   &lt;/div&gt;
 &lt;/section&gt;
 &lt;!-- /#table-of-contents --&gt;
 
-&lt;p&gt;As a lifelong boxing fan and someone whose everyday job involves analyzing massive amounts of data, I thought it would be interesting to apply some quantitative analysis to a sport which has many subjective aspects to it.&lt;/p&gt;
+&lt;p&gt;As a lifelong boxing fan and someone whose everyday job involves analyzing large amounts of data, I thought it would be interesting to apply some quantitative analysis to a sport which has many subjective aspects to it.&lt;/p&gt;
 
 &lt;h2 id=&quot;elo-rating-system&quot;&gt;ELO rating system&lt;/h2&gt;
 
-&lt;p&gt;The Elo rating system is a method for calculating the relative skill levels of players in competitor-versus-competitor games.   The difference in the ratings between two players serves as a predictor of the outcome of a match. Two players with equal ratings who play against each other are expected to score an equal number of wins. A player whose rating is 100 points greater than their opponents is expected to score 64%; if the difference is 200 points, then the expected score for the stronger player is 76%.&lt;/p&gt;
+&lt;p&gt;The Elo rating system is a method for calculating the relative skill levels of players in competitor-versus-competitor games.   The difference in the ratings between two players serves as a predictor of the outcome of a match. Two players with equal ratings who play against each other are expected to score an equal number of wins. 
+&lt;br /&gt;
+&lt;br /&gt;
+If Player A has a rating of &lt;script type=&quot;math/tex&quot;&gt;{\displaystyle R_{A}}&lt;/script&gt; and Player B a rating of &lt;script type=&quot;math/tex&quot;&gt;{\displaystyle R_{B}}&lt;/script&gt;, the exact formula (using the logistic curve) for the expected score of Player A is&lt;/p&gt;
+
+&lt;center&gt;
+$${\displaystyle E_{A}={\frac {1}{1+10^{(R_{B}-R_{A})/400}}}}$$
+&lt;/center&gt;
+
+&lt;p&gt;Similarly the expected score for Player B is&lt;/p&gt;
+&lt;center&gt;
+$${\displaystyle E_{B}={\frac {1}{1+10^{(R_{A}-R_{B})/400}}}}$$
+&lt;/center&gt;
+
+&lt;p&gt;This could also be expressed by&lt;/p&gt;
+&lt;center&gt;
+$${\displaystyle E_{A}={\frac {Q_{A}}{Q_{A}+Q_{B}}}} $$
+&lt;/center&gt;
+&lt;p&gt;and&lt;/p&gt;
+
+&lt;center&gt;
+$${\displaystyle E_{B}={\frac {Q_{B}}{Q_{A}+Q_{B}}}}$$
+&lt;/center&gt;
+
+&lt;p&gt;where &lt;script type=&quot;math/tex&quot;&gt;{\displaystyle Q_{A}=10^{R_{A}/400}}&lt;/script&gt; and  &lt;script type=&quot;math/tex&quot;&gt;{\displaystyle Q_{B}=10^{R_{B}/400}}&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+A player whose rating is 100 points greater than their opponents is expected to win 64% of the time; if the difference is 200 points, then the expected probability of winning for the stronger player is 76%.  This property of the Elo system allows us to compare fighters of different generations in fantasy match-ups.&lt;/p&gt;
 
 &lt;h2 id=&quot;data&quot;&gt;Data&lt;/h2&gt;
 
-&lt;p&gt;Boxrec is one source of historical boxing records, though incomplete, it is a good source for historical rankings, fighter biographical data, and match outcomes.  Boxrec even has their own ranking system, which is described here.  For this analysis, I used data from Boxrec to calculate the various rankings.&lt;/p&gt;
+&lt;p&gt;Boxrec is one source of historical boxing records, though incomplete, it is a good source for historical rankings, fighter biographical data, and match outcomes.  Boxrec even has their own ranking system, which is described here.  For this analysis, I used data from Boxrec to calculate the various rankings.  Keep in mind Boxrec is incomplete and my sample is likely missing records and only goes until December 2014.&lt;/p&gt;
+
+&lt;h2 id=&quot;rankings&quot;&gt;Rankings&lt;/h2&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -175,127 +263,127 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;1.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Sugar Ray Robinson&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;2069.520867275613&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2069.52&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;2.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Harry Greb&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;2052.8763634156262&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2052.88&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;3.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Benny Leonard&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;2019.7584089617503&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2019.76&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;4.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Henry Armstrong&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;2010.2763179787501&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2010.28&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;5.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Willie Pep&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1978.9129880799419&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1978.91&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;6.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Joe Louis&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1975.8391908889255&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1975.84&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;7.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Archie Moore&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1975.610967270421&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1975.61&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;8.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Freddie Steele&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1963.1645149271533&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1963.16&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;9.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Ezzard Charles&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1962.8868382295352&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1962.89&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;10.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Barney Ross&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1947.2447907846429&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1947.24&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;11.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Ike Williams&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1946.6548133928763&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1946.65&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;12.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Kid Gavilan&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1933.6989348611974&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1933.69&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;13.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Freddie Miller&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1933.2904640109389&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1933.29&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;14.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Tony Canzoneri&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1932.0925443629635&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1932.09&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;15.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Mickey Walker&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1924.6891290386548&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1924.69&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;16.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Lou Ambers&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1923.4732567233016&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1923.47&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;17.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Carlos Monzon&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1920.3524175170619&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1920.35&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;18.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Tommy Loughran&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1918.1457652903396&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1918.15&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;19.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Young Corbett III&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1916.5742488712126&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1916.57&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;20.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Muhammad Ali&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1909.3184663333086&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1909.32&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;21.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Ceferino Garcia&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1907.2591348209057&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1907.26&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;22.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Jose Napoles&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1900.5897523420126&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1900.59&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;23.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Bobo Olson&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1899.9746585711175&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1899.97&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;24.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Duilio Loi&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1898.7037664713662&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1898.70&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;25.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Maxie Rosenbloom&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1897.4312977331319&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1897.43&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -312,130 +400,132 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;1.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Sugar Ray Robinson&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1855.0036761450069&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1855.00&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;2.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Harry Greb&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1817.6155130555853&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1817.61&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;3.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Willie Pep&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1806.4191626922304&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1806.41&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;4.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Henry Armstrong&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1759.8612501580649&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1759.86&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;5.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Archie Moore&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1756.9155873311097&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1756.91&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;6.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Joe Louis&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1739.1950176641708&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1739.19&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;7.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Holman Williams&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1732.0182657937196&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1732.01&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;8.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Maxie Rosenbloom&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1723.7008910856403&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1723.70&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;9.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Luis Manuel Rodriguez&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1721.7803226184903&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1721.78&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;10.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Tony Canzoneri&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1719.0282741224114&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1719.02&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;11.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Freddie Miller&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1716.2742626938314&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1716.27&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;12.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Ezzard Charles&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1715.7150720314391&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1715.72&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;13.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Lew Tendler&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1712.2352900318194&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1712.23&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;14.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Kid Gavilan&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1710.5764454380462&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1710.57&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;15.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Kid Chocolate&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1703.2289637348927&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1703.23&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;16.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Young Stribling&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1702.7833099927777&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1702.78&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;17.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Ike Williams&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1701.0128321834193&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1701.01&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;18.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Benny Leonard&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1699.8913675280237&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1699.89&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;19.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Emile Griffith&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1699.4161846718416&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1699.42&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;20.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Lou Ambers&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1689.3753983513191&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1689.37&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;21.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Jackie Fields&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1687.9290334844452&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1687.93&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;22.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Tommy Gibbons&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1687.0751035847591&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1687.08&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;23.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Bobo Olson&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1685.1010072493598&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1685.10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;24.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Wesley Ramey&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1684.1023652026458&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1684.10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;25.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;Muhammad Ali&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1682.4794435437068&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1682.48&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+
+&lt;p&gt;Sugar Ray Robinson is widely considered to the greatest pound for pound fighter and his Elo rating reflects that.  The top 25 largely consists of fighters before the 1970s with the exception of Muhammad Ali.  Elo ratings can exhibit an increase (inflation) or decrease (deflation) in the average player rating over time.  Boxing has decreased in popularity over time.&lt;/p&gt;
 
 &lt;p&gt;Highest Rated Bouts:&lt;/p&gt;
 
@@ -558,19 +648,19 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 &lt;/table&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/grandmaster/&quot;&gt;Boxings Grandmasters&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on December 05, 2015.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/grandmaster/&quot;&gt;Boxing's Grandmasters&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on December 05, 2015.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Spectral clustering]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/spectral-clustering/" />
-  <id>http://localhost:4000/spectral-clustering</id>
+  <link rel="alternate" type="text/html" href="/spectral-clustering/" />
+  <id>/spectral-clustering</id>
   <published>2014-10-04T00:00:00-04:00</published>
   <updated>2014-10-04T00:00:00-04:00</updated>
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri></uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;p&gt;Spectral clustering is an approach to clustering data in which the spectrum (eigenvalues) of a similarity matrix is used to perform dimension reduction.  Given a symmetric similarity or adjacency matrix, &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;.  The Laplacian matrix is equal to the&lt;/p&gt;
@@ -629,20 +719,20 @@ Cluster the points \((yi) i=1,\dots n\) in \(\mathbb{R}^k\) with the k-means alg
         &lt;span class=&quot;n&quot;&gt;sim_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/spectral-clustering/&quot;&gt;Spectral clustering&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on October 04, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/spectral-clustering/&quot;&gt;Spectral clustering&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on October 04, 2014.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Dynamic Time Warping]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/sample-post/" />
-  <id>http://localhost:4000/sample-post</id>
+  <link rel="alternate" type="text/html" href="/sample-post/" />
+  <id>/sample-post</id>
   <updated>2014-07-19T00:00:00-00:00</updated>
   <published>2014-07-20T00:00:00-04:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri></uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -682,19 +772,19 @@ $$y_t=y_1,y_2,y_3, \dots y_m$$
 &lt;h2 id=&quot;temporal-semantic-analysis&quot;&gt;Temporal Semantic Analysis&lt;/h2&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/sample-post/&quot;&gt;Dynamic Time Warping&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 20, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/sample-post/&quot;&gt;Dynamic Time Warping&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on July 20, 2014.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[d3 to svg]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/code-highlighting-post/" />
-  <id>http://localhost:4000/code-highlighting-post</id>
+  <link rel="alternate" type="text/html" href="/code-highlighting-post/" />
+  <id>/code-highlighting-post</id>
   <published>2013-08-16T00:00:00-04:00</published>
   <updated>2013-08-16T00:00:00-04:00</updated>
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri></uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;p&gt;I find it hilarious that I am actually doing this crap, but if you ever wanted to know how to render a svg generated by d3 into a downloadable pdf, png, whatever, here is one solution.  This is all based on the work done &lt;a href=&quot;http://d3export.housegordon.org&quot;&gt;here&lt;/a&gt;.  I couldn’t use the perl script on the server side because I’m using &lt;a href=&quot;http://tangelo.kitware.com&quot;&gt;Tangelo&lt;/a&gt; to develop prototype web applications.  At first, I thought I’d just call the perl script through subprocess or pyperl, but that was mainly because I didn’t want to spend anytime understanding what the perl script actually did.&lt;/p&gt;
@@ -704,7 +794,7 @@ $$y_t=y_1,y_2,y_3, \dots y_m$$
 &lt;p&gt;To modify styling and highlight colors edit &lt;code&gt;/assets/less/pygments.less&lt;/code&gt; and compile &lt;code&gt;main.less&lt;/code&gt; with your favorite preprocessor. Or edit &lt;code&gt;main.css&lt;/code&gt; if that’s your thing, the classes you want to modify all begin with &lt;code&gt;.highlight&lt;/code&gt;.&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/code-highlighting-post/&quot;&gt;d3 to svg&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on August 16, 2013.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;/code-highlighting-post/&quot;&gt;d3 to svg&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on August 16, 2013.&lt;/p&gt;</content>
 </entry>
 
 </feed>

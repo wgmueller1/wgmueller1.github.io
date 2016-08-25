@@ -14,7 +14,7 @@
 		<meta name="twitter:image" content=
 			
 				
-						"http://localhost:4000/images/"
+						"/images/"
 				
 			
 		>
@@ -29,15 +29,15 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Deep Learning for Time Series, pt. 1">
 <meta property="og:description" content="">
-<meta property="og:url" content="http://localhost:4000/deeptime/">
+<meta property="og:url" content="/deeptime/">
 <meta property="og:site_name" content="Nullspace">
 
 
 
 
 
-<link rel="canonical" href="http://localhost:4000/deeptime/">
-<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
+<link rel="canonical" href="/deeptime/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -48,32 +48,32 @@
 <!-- Google Webfonts -->
 <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
 <!-- For all browsers -->
-<link rel="stylesheet" href="http://localhost:4000/assets/css/main.min.css">
+<link rel="stylesheet" href="/assets/css/main.min.css">
 
 <meta http-equiv="cleartype" content="on">
 
 <!-- HTML5 Shiv and Media Query Support -->
 <!--[if lt IE 9]>
-	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
-	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
 <![endif]-->
 
 <!-- Modernizr -->
-<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
 
 <!-- Icons -->
 <!-- 16x16 -->
-<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<link rel="shortcut icon" href="/favicon.ico">
 <!-- 32x32 -->
-<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<link rel="shortcut icon" href="/favicon.png">
 <!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
-<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
 <!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
 <!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
 <!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
 
 </head>
 
@@ -83,17 +83,17 @@
 
 <div class="navigation-wrapper">
 	<div class="site-name">
-		<a href="http://localhost:4000">Nullspace</a>
+		<a href="">Nullspace</a>
 	</div><!-- /.site-name -->
 	<div class="top-navigation">
 		<nav role="navigation" id="site-nav" class="nav">
 		    <ul>
 		        
-				<li><a href="http://localhost:4000/about/" >About</a></li>
+				<li><a href="/about/" >About</a></li>
 		        
-				<li><a href="http://localhost:4000/posts/" >Posts</a></li>
+				<li><a href="/posts/" >Posts</a></li>
 		        
-				<li><a href="http://localhost:4000/links/" >Links</a></li>
+				<li><a href="/links/" >Links</a></li>
 		        
 		    </ul>
 		</nav>
@@ -105,7 +105,7 @@
 <div id="main" role="main">
   <div class="article-author-side">
     
-	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+	<img src="/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
 
 <h3>Graham Mueller</h3>
 <p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
@@ -126,7 +126,7 @@
   <article>
     <div class="headline-wrap">
       
-        <h1><a href="http://localhost:4000/deeptime/" rel="bookmark" title="Deep Learning for Time Series, pt. 1">Deep Learning for Time Series, pt. 1</a></h1>
+        <h1><a href="/deeptime/" rel="bookmark" title="Deep Learning for Time Series, pt. 1">Deep Learning for Time Series, pt. 1</a></h1>
       
     </div><!--/ .headline-wrap -->
     <div class="article-wrap">
@@ -139,6 +139,7 @@
   <li><a href="#convolutional-neural-networks" id="markdown-toc-convolutional-neural-networks">Convolutional Neural Networks</a></li>
   <li><a href="#data" id="markdown-toc-data">Data</a></li>
   <li><a href="#example" id="markdown-toc-example">Example</a></li>
+  <li><a href="#results" id="markdown-toc-results">Results</a></li>
 </ul>
 
   </div>
@@ -158,14 +159,28 @@
     <em>Typical CNN architecture</em></center>
 </p>
 <p><br />
-CNNs may be applied to multivariate time series.  It can be useful to think of a time series as a one-dimensional image.  You don’t need to use an image of the time series as input to the CNN!  I’ve seen several papers which used this approach which seems weird, you just need to use a 1-dimensional convolutional layer instead of the typical 2-D layer.
+CNNs may be applied to multivariate time series.  It can be useful to think of a time series as a one-dimensional image.  You don’t need to use an image of the time series as input to the CNN!  I’ve seen several papers which used this approach which seems weird, you just need to use a 1-dimensional convolutional layer instead of the typical 2-D layer.  In the 1D domain, a convolution can be viewed as a filter, capable of removing outliers, filtering the data or acting as a feature detector, defined to respond maximally to specific temporal sequences within the filter length of the convolution. 
 <br />
+<br />
+To better understand this, consider the definition of a 1-D convolution.</p>
+
+<script type="math/tex; mode=display">y_{k} = \sum_{n = 0}^{N - 1}h_{n}\,\cdot\,x_{k-n}</script>
+
+<p>There are two input signals, <em>x</em> and <em>h</em> and <em>N</em> is the length of <em>h</em>. The output vector is <em>y</em>, <em>h</em> is known as the kernel or convolution filter and <em>x</em> is the input data.  The subscripts denote the <em>n</em>th element of the vector. Here is an example, how the output shall be calculated, when <em style="line-height: 1.5em;">h</em> has three elements:</p>
+<p><br /></p>
+<p>$$<br />\begin{aligned}<br />y_{0} &amp; = h_{0} \cdot x_{0} \\<br />y_{1} &amp; = h_{1} \cdot x_{0} + h_{0} \cdot x_{1} \\<br />y_{2} &amp; = h_{2} \cdot x_{0} + h_{1} \cdot x_{1} + h_{0} \cdot x_{2} \\<br />y_{3} &amp; = h_{2} \cdot x_{1} + h_{1} \cdot x_{2} + h_{0} \cdot x_{3} \\<br />\vdots<br />\end{aligned}<br />$$</p>
+<p><br />
+The filter [<script type="math/tex">h_2 h_1 h_0</script>] is slid along the elements of <em>x</em> and at each step we multiply the elements and sum them: the result will be the corresponding element of the output <em>y</em> vector.  Here is a concrete example:
+<br /></p>
+<p>$$<br />\begin{aligned}<br />x &amp; = \left[<br />\begin{array}{c} 1 \, 2 \, 1 \, 3<br />\end{array}<br />\right]<br />\\<br />h &amp; = \left[<br />\begin{array}{c}<br />2 \, 0 \, 1<br />\end{array}<br />\right]<br />\end{aligned}<br />\\<br />\begin{array}{c|cccccccc|r}<br />k &amp; \it{0} &amp; \it{0} &amp; 1 &amp; 2 &amp; 1 &amp; 3 &amp; \it{0} &amp; \it{0} &amp; \it{y_{k}}\\<br />\hline<br />0 &amp; 1 &amp; 0 &amp; 2 &amp; &amp; &amp; &amp; &amp; &amp; 2 \cdot 1 = 2\\<br />1 &amp; &amp; 1 &amp; 0 &amp; 2 &amp; &amp; &amp; &amp; &amp; 2 \cdot 2 = 4\\<br />2 &amp; &amp; &amp; 1 &amp; 0 &amp; 2 &amp; &amp; &amp; &amp; 2 \cdot 1 + 1 \cdot 1 = 3\\<br />3 &amp; &amp; &amp; &amp; 1 &amp; 0 &amp; 2 &amp; &amp; &amp; 2 \cdot 3 + 1 \cdot 2 = 8\\<br />4 &amp; &amp; &amp; &amp; &amp; 1 &amp; 0 &amp; 2 &amp; &amp; 1 \cdot 1 = 1\\<br />5 &amp; &amp; &amp; &amp; &amp; &amp; 1 &amp; 0 &amp; 2 &amp; 1 \cdot 3 = 3\\<br />\end{array}<br />$$</p>
+<p><br />
+It is easy to see that a simple moving average is a special case of a convolution using the following kernel:<br /></p>
+
+<p>$$<br />h = \left[<br />\begin{array}{c} \dfrac{1}{N} \, \dfrac{1}{N} \, ... \, \dfrac{1}{N}\, \dfrac{1}{N}\end{array}<br />\right]<br />$$</p>
+<p><br />
 <br /></p>
 
-<p>
-    <center><img src="/images/1d_convolution_ex" /><br />
-    <em>Example of 1-D Convolution</em></center>
-</p>
+<p>This gives us a little intuition as to what a one-dimensional convolution does.</p>
 
 <h3 id="data">Data</h3>
 
@@ -173,7 +188,7 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 
 <p>
     <center><img src="/images/raw.png" /><br />
-    <em>Raw sensor data from mobile phone</em></center>
+    <em>De-noised sensor data from mobile phone</em></center>
 </p>
 
 <h3 id="example">Example</h3>
@@ -182,21 +197,28 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 <span class="kn">from</span> <span class="nn">keras.layers.core</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">Flat</span>
 <span class="kn">from</span> <span class="nn">keras.layers.convolutional</span> <span class="kn">import</span> <span class="n">Convolution1D</span><span class="p">,</span> <span class="n">MaxPooling1D</span>
 
-<span class="c">#set parameters</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">nb_filter</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">filter_length</span><span class="o">=</span> <span class="mi">128</span> <span class="c">#number of time observations per sample</span>
-<span class="n">hidden_dims</span> <span class="o">=</span> <span class="mi">150</span>
-<span class="n">nb_epoch</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">nb_sensors</span> <span class="o">=</span> <span class="mi">9</span> <span class="c">#input dimension</span>
+<span class="c">#set parameters </span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">nb_filter</span> <span class="o">=</span> <span class="mi">125</span> <span class="c">#number of features to learn</span>
+<span class="n">filter_length</span> <span class="o">=</span> <span class="mi">10</span> <span class="c">#number of time steps</span>
+<span class="n">hidden_dims</span> <span class="o">=</span> <span class="mi">250</span>
+<span class="n">nb_epoch</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">n_sensors</span> <span class="o">=</span> <span class="mi">9</span>
 <span class="n">classes</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">pool_length</span> <span class="o">=</span><span class="mi">2</span>
+<span class="n">subsample_length</span> <span class="o">=</span><span class="mi">2</span>
+
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
 
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Convolution1D</span><span class="p">(</span><span class="n">nb_filter</span><span class="o">=</span><span class="n">nb_filter</span><span class="p">,</span><span class="n">filter_length</span><span class="o">=</span><span class="n">filter_length</span><span class="p">,</span>\
-<span class="n">border_mode</span><span class="o">=</span><span class="s">'valid'</span><span class="p">,</span><span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">,</span><span class="n">subsample_length</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>\
-<span class="n">input_dim</span><span class="o">=</span><span class="n">nb_sensors</span><span class="p">,</span><span class="n">input_lenght</span><span class="o">=</span><span class="mi">128</span><span class="p">))</span>
-
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Convolution1D</span><span class="p">(</span><span class="n">nb_filter</span><span class="o">=</span><span class="mi">125</span><span class="p">,</span>
+                        <span class="n">filter_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                        <span class="n">subsample_length</span><span class="o">=</span><span class="n">subsample_length</span><span class="p">,</span>
+                        <span class="n">border_mode</span><span class="o">=</span><span class="s">'same'</span><span class="p">,</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
+<span class="c"># we use standard max pooling (halving the output of the previous layer):</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling1D</span><span class="p">(</span><span class="n">pool_length</span><span class="o">=</span><span class="n">pool_length</span><span class="p">))</span>
+<span class="c"># We flatten the output of the conv layer,</span>
+<span class="c"># so that we can add a vanilla dense layer:</span>
 <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
 
 <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">hidden_dims</span><span class="p">))</span>
@@ -224,15 +246,50 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 
 <p><img src="/images/features.png" /></p>
 
-<p>The confusion matrix</p>
+<h3 id="results">Results</h3>
 
-<p><a name="myfootnote1">1</a>: http://deeplearning.net/tutorial/lenet.html</p>
+<p>Test set summary</p>
+
+<p>```
+ class   precision    recall  f1-score   support</p>
+
+<p>0         0.98      0.92      0.95       496
+ 1         0.95      0.94      0.94       471
+ 2         0.89      1.00      0.94       420
+ 3         0.86      0.92      0.89       491
+ 4         0.96      0.87      0.91       532
+ 5         1.00      1.00      1.00       537</p>
+
+<p>total      0.94      0.94      0.94      2947</p>
+
+<p>```</p>
+
+<p>Training set summary</p>
+
+<p>```
+class   precision   recall  f1-score   support</p>
+
+<p>0         1.00      1.00      1.00      1226
+1         1.00      1.00      1.00      1073
+2         1.00      1.00      1.00       986
+3         0.91      1.00      0.95      1286
+4         1.00      0.91      0.95      1374
+5         1.00      1.00      1.00      1407</p>
+
+<p>total     0.98      0.98      0.98      7352
+```</p>
+
+<p>A 1-layer convolutional + max pooling neural network achieves 94% accuracy with somewhat arbitrary hyperparameters.  Not bad, but we can improve performance by adding additional layers.  In part 2, I will discuss adding recurrent layers in order to better capture the temporal dynamics.</p>
+
+<p><br />
+<br />
+<a name="myfootnote1">1</a>: http://deeplearning.net/tutorial/lenet.html</p>
 
       <hr />
       <footer role="contentinfo">
         <div class="article-author-bottom">
           
-	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+	<img src="/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
 
 <h3>Graham Mueller</h3>
 <p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
@@ -250,7 +307,7 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 
 
         </div>
-        <p class="byline"><strong>Deep Learning for Time Series, pt. 1</strong> was published on <time datetime="2016-07-07T00:00:00-04:00">July 07, 2016</time> and last modified on <time datetime="2016-07-09">July 09, 2016</time> by <a href="http://localhost:4000/about" title="About Graham Mueller">Graham Mueller</a>.</p>
+        <p class="byline"><strong>Deep Learning for Time Series, pt. 1</strong> was published on <time datetime="2016-07-07T00:00:00-04:00">July 07, 2016</time> and last modified on <time datetime="2016-07-09">July 09, 2016</time> by <a href="/about" title="About Graham Mueller">Graham Mueller</a>.</p>
       </footer>
     </div><!-- /.article-wrap -->
   
@@ -259,14 +316,14 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 
 <div class="footer-wrap">
   <div class="related-articles">
-  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
     <ul>
     
-      <li><a href="http://localhost:4000/grandmaster/" title="Boxings Grandmasters">Boxings Grandmasters</a></li>
+      <li><a href="/grandmaster/" title="Boxing's Grandmasters">Boxing's Grandmasters</a></li>
     
-      <li><a href="http://localhost:4000/spectral-clustering/" title="Spectral clustering">Spectral clustering</a></li>
+      <li><a href="/spectral-clustering/" title="Spectral clustering">Spectral clustering</a></li>
     
-      <li><a href="http://localhost:4000/sample-post/" title="Dynamic Time Warping">Dynamic Time Warping</a></li>
+      <li><a href="/sample-post/" title="Dynamic Time Warping">Dynamic Time Warping</a></li>
     
     </ul>
     <hr />
@@ -281,8 +338,8 @@ CNNs may be applied to multivariate time series.  It can be useful to think of a
 <script type="text/javascript"
     src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
 
 
   

@@ -60,7 +60,10 @@ A player whose rating is 100 points greater than their opponents is expected to 
 
 ## Data
 
-Boxrec is one source of historical boxing records, though incomplete, it is a good source for historical rankings, fighter biographical data, and match outcomes.  Boxrec even has their own ranking system, which is described here.  For this analysis, I used data from Boxrec to calculate the various rankings.
+Boxrec is one source of historical boxing records, though incomplete, it is a good source for historical rankings, fighter biographical data, and match outcomes.  Boxrec even has their own ranking system, which is described here.  For this analysis, I used data from Boxrec to calculate the various rankings.  Keep in mind Boxrec is incomplete and my sample is likely missing records and only goes until December 2014.
+
+## Rankings
+
 
 | Rank  |      Fighter     |  Elo Max |
 |:----------:|:-------------:|:------:|
