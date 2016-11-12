@@ -146,7 +146,7 @@
 </section>
 <!-- /#table-of-contents -->
 
-<p>Time series data occur almost everywhere.  Much of the recent hype (mostly deserved) around deep learning architectures has been around the state-of-the-art performance produced in the fields of computer vision, natural language processing, and bioinformatics.  Much of “deep learning” is a rebranding of neural networks.  During my second year of graduate school, I became interested in applying machine learning to time series data which I planned to use as my dissertation topic.  I ended up studying reinforcement learning in social graphs, but I’ll save that for another time.</p>
+<p>Time series data occur almost everywhere.  Much of the recent hype (mostly deserved) around deep learning architectures has been around the state-of-the-art performance produced in the fields of computer vision, natural language processing, and bioinformatics.  Much of “deep learning” is a rebranding of neural networks.  During my second year of graduate school, I became interested in applying machine learning to time series data which I planned to use as my dissertation topic.  I ended up studying reinforcement learning in social graphs, but I’ll save that for another time.  In this tutorial, I’ll discuss applying convolutional neural networks to time series data.</p>
 
 <h3 id="convolutional-neural-networks">Convolutional Neural Networks</h3>
 
@@ -230,7 +230,10 @@ It is easy to see that a simple moving average is a special case of a convolutio
 <span class="n">model</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'rmsprop'</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span><span class="n">ytrain</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span><span class="n">nb_epoch</span><span class="o">=</span><span class="n">nb_epoch</span><span class="p">,</span><span class="n">show_accuracy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></div>
 
-<p>After training the model, we can look at the output of each layer using the following code to get a better sense of what is happening inside the neural network.  In this case, the convolutional layer maps the raw input into 64 seperate time series each of length 64 and the max pooling layer condenses these into a single time series of length 64.</p>
+<!--
+After training the model, we can look at the output of each layer using the following code to get a better sense of what is happening inside the neural network.  In this case, the convolutional layer maps the raw input into 64 seperate time series each of length 64 and the max pooling layer condenses these into a single time series of length 64.  
+
+
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
@@ -257,7 +260,20 @@ It is easy to see that a simple moving average is a special case of a convolutio
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
 
-<p><img src="/images/cnn_filters.png" /></p>
+
+<img src="/images/cnn_filters.png">
+-->
+<p>After training the model, we can look at some of the learned filters to get a sense of what types of features the CNN extracts.</p>
+
+<div class="container" style="inline-block">
+    <figure>
+    <img src="/images/filters2.png" width="300" />
+    <img src="/images/filters.png" width="300" />
+    </figure>
+
+   
+
+  </div>
 
 <h3 id="results">Results</h3>
 

@@ -4,7 +4,7 @@
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="/feed.xml" />
 <link rel="alternate" type="text/html" href="" />
-<updated>2016-08-27T12:21:42-04:00</updated>
+<updated>2016-11-12T12:09:51-05:00</updated>
 <id>/</id>
 <author>
   <name>Graham Mueller</name>
@@ -41,7 +41,7 @@
 &lt;/section&gt;
 &lt;!-- /#table-of-contents --&gt;
 
-&lt;p&gt;Time series data occur almost everywhere.  Much of the recent hype (mostly deserved) around deep learning architectures has been around the state-of-the-art performance produced in the fields of computer vision, natural language processing, and bioinformatics.  Much of “deep learning” is a rebranding of neural networks.  During my second year of graduate school, I became interested in applying machine learning to time series data which I planned to use as my dissertation topic.  I ended up studying reinforcement learning in social graphs, but I’ll save that for another time.&lt;/p&gt;
+&lt;p&gt;Time series data occur almost everywhere.  Much of the recent hype (mostly deserved) around deep learning architectures has been around the state-of-the-art performance produced in the fields of computer vision, natural language processing, and bioinformatics.  Much of “deep learning” is a rebranding of neural networks.  During my second year of graduate school, I became interested in applying machine learning to time series data which I planned to use as my dissertation topic.  I ended up studying reinforcement learning in social graphs, but I’ll save that for another time.  In this tutorial, I’ll discuss applying convolutional neural networks to time series data.&lt;/p&gt;
 
 &lt;h3 id=&quot;convolutional-neural-networks&quot;&gt;Convolutional Neural Networks&lt;/h3&gt;
 
@@ -125,7 +125,10 @@ It is easy to see that a simple moving average is a special case of a convolutio
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;categorical_crossentropy&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;rmsprop&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xtrain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ytrain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show_accuracy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;After training the model, we can look at the output of each layer using the following code to get a better sense of what is happening inside the neural network.  In this case, the convolutional layer maps the raw input into 64 seperate time series each of length 64 and the max pooling layer condenses these into a single time series of length 64.&lt;/p&gt;
+&lt;!--
+After training the model, we can look at the output of each layer using the following code to get a better sense of what is happening inside the neural network.  In this case, the convolutional layer maps the raw input into 64 seperate time series each of length 64 and the max pooling layer condenses these into a single time series of length 64.  
+
+
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;seaborn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sns&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pd&lt;/span&gt;
@@ -152,7 +155,20 @@ It is easy to see that a simple moving average is a special case of a convolutio
 
 &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/cnn_filters.png&quot; /&gt;&lt;/p&gt;
+
+&lt;img src=&quot;/images/cnn_filters.png&quot;&gt;
+--&gt;
+&lt;p&gt;After training the model, we can look at some of the learned filters to get a sense of what types of features the CNN extracts.&lt;/p&gt;
+
+&lt;div class=&quot;container&quot; style=&quot;inline-block&quot;&gt;
+    &lt;figure&gt;
+    &lt;img src=&quot;/images/filters2.png&quot; width=&quot;300&quot; /&gt;
+    &lt;img src=&quot;/images/filters.png&quot; width=&quot;300&quot; /&gt;
+    &lt;/figure&gt;
+
+   
+
+  &lt;/div&gt;
 
 &lt;h3 id=&quot;results&quot;&gt;Results&lt;/h3&gt;
 
