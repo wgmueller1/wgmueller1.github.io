@@ -2,27 +2,364 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Nullspace</title>
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="/feed.xml" />
-<link rel="alternate" type="text/html" href="" />
-<updated>2016-11-12T12:09:51-05:00</updated>
-<id>/</id>
+<link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
+<link rel="alternate" type="text/html" href="http://localhost:4000" />
+<updated>2018-01-09T11:18:06-05:00</updated>
+<id>http://localhost:4000/</id>
 <author>
   <name>Graham Mueller</name>
-  <uri>/</uri>
+  <uri>http://localhost:4000/</uri>
   <email>wgmueller@gmail.com</email>
 </author>
 
 
 <entry>
+  <title type="html"><![CDATA[Hebbian Learning]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/hebbian/" />
+  <id>http://localhost:4000/hebbian</id>
+  <updated>2018-01-02T00:00:00-00:00</updated>
+  <published>2018-01-02T00:00:00-05:00</published>
+  
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;h2 id=&quot;on-the-structure-of-scientific-revolutions&quot;&gt;On the structure of scientific revolutions&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A scientific revolution occurs, according to Kuhn, when scientists encounter anomalies that cannot be explained by the 
+universally accepted paradigm within which scientific progress has thereto been made. The paradigm, in Kuhn’s view, is not 
+simply the current theory, but the entire worldview in which it exists, and all of the implications which come with it. 
+This is based on features of landscape of knowledge that scientists can identify around them.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In 2004, I attended a talk by Stephen Smale on the mathematical foundations of learning.  Previously, I hadn’t been exposed to what is now called machine learning.   During my graduate studies, I started applying machine learning methods to time series forecasting and algorithmic game theory.  I was using recurrent neural networks for forecasting back in 2007!  I was blown away by the research of Alan Kirman.  He showed how market structure emerged from individual behavior which did not resemble the macrodynamics at all (i.e. upward sloping demand curves).   Learning and emergence became the themes of my dissertation.  What kinds of social structures emerge when people learn from their past interactions?&lt;/p&gt;
+
+&lt;h2 id=&quot;hebbian-learning&quot;&gt;Hebbian Learning&lt;/h2&gt;
+
+&lt;p&gt;Donald Hebb wrote in 1949:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When an axon in cell A is near enough to excite cell N and repeatedly and persistently takes part in firing it, some 
+growth process or metabolic change takes place in one or both cells such that A’s efficient in firing B is increased.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/hebbian/&quot;&gt;Hebbian Learning&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on January 02, 2018.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Boxing's Grandmasters Part II]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/boxing/" />
+  <id>http://localhost:4000/boxing</id>
+  <updated>2018-01-02T00:00:00-00:00</updated>
+  <published>2018-01-02T00:00:00-05:00</published>
+  
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
+  &lt;header&gt;
+    &lt;h3&gt;Contents&lt;/h3&gt;
+  &lt;/header&gt;
+&lt;div id=&quot;drawer&quot;&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#best-of-a-generation&quot; id=&quot;markdown-toc-best-of-a-generation&quot;&gt;Best of a generation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;!-- /#table-of-contents --&gt;
+
+&lt;h2 id=&quot;best-of-a-generation&quot;&gt;Best of a generation&lt;/h2&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+	&lt;meta charset=&quot;utf-8&quot; /&gt;
+	&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.js&quot;&gt;&lt;/script&gt;
+	&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js&quot;&gt;&lt;/script&gt;
+	&lt;style&gt;
+	.axis-x path {
+		stroke: #000;
+	}
+
+	.line {
+		fill: none;
+		stroke-width: 1.5px;
+		stroke-linejoin: &quot;round&quot;;
+		stroke-linecap: &quot;round&quot;;
+	}
+
+	.line:hover {
+		stroke-width: 6px;
+	}
+
+	.legend {
+	    font-size: 12px;
+	    font-weight: bold;
+	    text-anchor: middle;
+	}
+
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;svg width=&quot;800&quot; height=&quot;400&quot; id=&quot;chart1&quot;&gt;&lt;/svg&gt;
+	&lt;svg width=&quot;800&quot; height=&quot;400&quot; id=&quot;chart2&quot;&gt;&lt;/svg&gt;
+	&lt;svg width=&quot;800&quot; height=&quot;400&quot; id=&quot;chart3&quot;&gt;&lt;/svg&gt;
+	&lt;svg width=&quot;800&quot; height=&quot;400&quot; id=&quot;chart4&quot;&gt;&lt;/svg&gt;
+	&lt;svg width=&quot;800&quot; height=&quot;400&quot; id=&quot;chart5&quot;&gt;&lt;/svg&gt;
+	&lt;script&gt;
+	function loadchart(filename,divid,d1,d2){
+	//define chart margins
+	let svg = d3.select(divid),
+		margin = {top: 50, right: 150, bottom: 40, left: 50},
+		width = svg.attr(&quot;width&quot;) - margin.left - margin.right,
+		height = svg.attr(&quot;height&quot;) - margin.top - margin.bottom,
+		g = svg.append(&quot;g&quot;).attr(&quot;transform&quot;, &quot;translate(&quot; + margin.left + &quot;,&quot; +margin.top + &quot;)&quot;);
+
+	//define time format
+	//let parseYear = d3.timeParse(&quot;%Y&quot;);
+    let parseTime = d3.timeParse(&quot;%Y-%m-%d&quot;);
+	//define scales
+	let x = d3.scaleTime().range([0, width]),
+		y = d3.scaleLinear().range([height, 0]),
+		//color scale
+		z = d3.scaleOrdinal(d3.schemeCategory20);
+
+
+	//define line generator
+	let line = d3.line()
+	 	.defined(function(d) { return d.subscriptionCount != 0; }) 
+		.x(function(d) { return x(d.date); })
+		.y(function(d) { return y(d.subscriptionCount); });
+
+	//load data
+	d3.csv(filename, type, function(error, data) {
+		if(error) throw error;
+		//parse data
+		let countries = data.columns.slice(1).map(function(id) {
+			return {
+				id: id,
+				values: data.map(function(d) {
+					return {date: d.date, subscriptionCount: d[id]};
+				})
+			};
+		});
+
+	  /*var tmp=_.map(data, function(b) {return Object.keys(_.omit(b,'date')).reduce(function(max,key){
+		  return (max === undefined || b[key] &gt; b[max]) ? +key : max;
+		})});*/
+		
+	  maxElo=_.map(data,function(b){return {'date':b.date, 'max':_.max(_.omit(b,'date')),'id': _.max(Object.keys(_.omit(b,'date')), function (o) { return _.omit(b,'date')[o]; })
+			}
+		})
+	  
+		//define x axis
+		//maxElo=_.max(_.map(data, function(d){ return _.values(_.omit(d, 'date'));}))
+
+		x.domain(d3.extent(data, function(d) { return d.date; }));
+		var noZeroes = countries.map(function(c) { return c.values})
+		var vals=noZeroes.map(function(d){return d.map(function(x){return x.subscriptionCount});})
+
+		function flatten(arr) {
+		  return arr.reduce(function (flat, toFlatten) {
+		    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+		  }, []);
+		}
+
+		nz=flatten(vals).filter(function(d){return d!=0});
+		//d3.min(noZeroes, function(d) {return d.houseValues; })
+		//define y axis
+		y.domain([
+			d3.min(nz),
+			d3.max(countries, function(c) { return d3.max(c.values, function(d) { return d.subscriptionCount; }); })
+		]);
+
+		//x.domain([parseTime(d1),parseTime(d2)])
+
+		//define color scale
+		z.domain(countries.map(function(c) { return c.id; }));
+
+	 // Nest the entries by symbol
+	    var dataNest = d3.nest()
+	        .key(function(d) {return d.id;})
+	        .entries(data);
+
+	    // set the colour scale
+	    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+	    legendSpace = height/10 // spacing for the legend
+	 
+	    /*
+	    g.append(&quot;svg:rect&quot;)
+		     .attr(&quot;x&quot;, x(parseTime('2005-01-01')))
+		     .attr(&quot;y&quot;, 0)
+		     .attr(&quot;width&quot;, x(parseTime('2010-10-10')))
+		     .attr(&quot;height&quot;, height)
+		     .attr(&quot;alpha&quot;,0.2)
+		     .attr(&quot;fill&quot;, &quot;#FEF0DB&quot;);
+		     */
+
+		//append x axis
+		g.append(&quot;g&quot;)
+			.attr(&quot;class&quot;, &quot;axis axis-x&quot;)
+			.attr(&quot;transform&quot;, &quot;translate(0,&quot; + height + &quot;)&quot;)
+			.call(d3.axisBottom(x));
+
+		//append y axis
+		g.append(&quot;g&quot;)
+			.attr(&quot;class&quot;, &quot;axis axis-y&quot;)
+			.call(d3.axisLeft(y))
+			.append(&quot;text&quot;)
+			.attr(&quot;transform&quot;, &quot;rotate(-90)&quot;)
+			.attr(&quot;y&quot;, -50)
+			.attr(&quot;x&quot;, -125)
+			.attr(&quot;dy&quot;, &quot;0.9em&quot;)
+			.attr(&quot;fill&quot;, &quot;#000&quot;)
+			.text(&quot;Elo Rating&quot;);
+        
+
+		//append country data to svg
+		let country = g.selectAll(&quot;.country&quot;)
+			.data(countries)
+			.enter()
+			.append(&quot;g&quot;)
+			.attr(&quot;class&quot;, &quot;country&quot;);
+		
+
+
+		eras=[]
+		for(var i = 0; i &lt; maxElo.length-1; i++) {
+			curr_id=maxElo[i].id
+			next_id=maxElo[i+1].id
+			if(i==0){
+				startd=maxElo[i].date
+			}
+			else if(curr_id!=next_id){
+				end=maxElo[i+1].date
+				id=maxElo[i].id
+				eras.push({'startd':startd,'end':end,'id':id})
+				startd=maxElo[i+1].date
+			}
+			else if(i==maxElo.length-2){
+				end=maxElo[i+1].date
+				id=maxElo[i+1].id
+				eras.push({'startd':startd,'end':end,'id':id})
+				console.log(end)
+			}
+			
+
+		}
+		console.log(eras)
+		
+		for(var i=0; i&lt; eras.length;i++){
+	   		 g.append(&quot;svg:rect&quot;)
+		     .attr(&quot;x&quot;, x(eras[i].startd))
+		     .attr(&quot;y&quot;, 0)
+		     .attr(&quot;width&quot;, x(eras[i].end)-x(eras[i].startd))
+		     .attr(&quot;height&quot;, height)
+		     .attr(&quot;opacity&quot;,0.2)
+		     .attr(&quot;fill&quot;, z(eras[i].id))
+		     .attr(&quot;class&quot;,&quot;era_bar&quot;)
+		     .attr(&quot;id&quot;, eras[i].id)
+		    // .attr(&quot;mouseover&quot;,era_select(eras,i))
+		}
+
+		//append country path to svg
+		country.append(&quot;path&quot;)
+			.attr(&quot;class&quot;, &quot;line&quot;)
+      			.attr(&quot;d&quot;, function(d) { return line(d.values); })
+			.style(&quot;stroke&quot;, function(d) { return z(d.id); })
+			.style(&quot;stroke-linecap&quot;, &quot;round&quot;)
+			.attr(&quot;id&quot;,function(d){ return d.id})
+	
+		//append country labels to svg
+		country.append(&quot;text&quot;)
+			.datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
+			//.attr(&quot;transform&quot;, function(d) { return &quot;translate(&quot; + x(d.value.date) + &quot;,&quot; + y(d.value.subscriptionCount) + &quot;)&quot;; })
+			.attr(&quot;y&quot;, function(d,i){return (legendSpace/2)+i*legendSpace;})
+			.attr(&quot;x&quot;, width+(margin.right/2)+5)
+			.style(&quot;fill&quot;, function(d) { // Add the colours dynamically
+                return d.color = z(d.id); })
+			.attr(&quot;class&quot;, &quot;legend&quot;) 
+			.text(function(d) { return d.id; })
+			.on(&quot;mouseover&quot;, function(d, i) {
+			 d3.select(divid).select(&quot;[id='&quot; + d.id + &quot;']&quot;) .style(&quot;stroke-width&quot;, &quot;6px&quot;);
+			 d3.select(divid).selectAll(&quot;rect[id='&quot; + d.id + &quot;']&quot;).style(&quot;opacity&quot;, 0.5);
+			})
+			.on(&quot;mouseout&quot;, function(d, i) {
+			 d3.select(divid).select(&quot;[id='&quot; + d.id + &quot;']&quot;) .style(&quot;stroke-width&quot;, &quot;1.5px&quot;);
+			 d3.select(divid).selectAll(&quot;rect[id='&quot; + d.id + &quot;']&quot;).style(&quot;opacity&quot;, 0.2);
+			})
+
+
+
+	  // Add the Legend
+	 /*data.forEach( function(d,i){
+        country.append(&quot;text&quot;)
+            .attr(&quot;x&quot;, (legendSpace/2)+i*legendSpace)  // space legend
+            .attr(&quot;y&quot;, height + (margin.bottom/2)+ 5)
+            .attr(&quot;class&quot;, &quot;legend&quot;)    // style the legend
+            .style(&quot;fill&quot;, function() { // Add the colours dynamically
+                return d.color = color(d.key); })
+            .text(d.key); 
+        });*/
+
+		
+	});
+
+	//bind with multiseries data
+	function type(d, _, columns) {
+		d.date = parseTime(d.date);
+		//iterate through each column
+		for(var i = 1, n = columns.length, c; i &lt; n; ++i)
+			//bind column data to year
+			d[c = columns[i]] = +d[c];
+			return d;
+	}
+
+
+
+
+	//define chart title
+	let title = svg.append(&quot;g&quot;)
+		.attr(&quot;class&quot;, &quot;title&quot;);
+	title.append(&quot;text&quot;)
+		.attr(&quot;x&quot;, (width/1.75))
+		.attr(&quot;y&quot;, 20)
+		.attr(&quot;text-anchor&quot;, &quot;middle&quot;)
+		.style(&quot;font&quot;, &quot;20px sans-serif&quot;)
+		.text(&quot;Elo ratings&quot;);
+
+  }
+  loadchart('/assets/data/boxing2010s.csv',&quot;#chart1&quot;,'2005-01-01','2017-01-01');
+  loadchart('/assets/data/boxing2000s.csv',&quot;#chart2&quot;,'1995-01-01','2010-01-01');
+  loadchart('/assets/data/boxing1990s.csv',&quot;#chart3&quot;,'1985-01-01','2000-01-01');
+  loadchart('/assets/data/boxing1980s.csv',&quot;#chart4&quot;,'1975-01-01','1990-01-01')
+  loadchart('/assets/data/boxing1970s.csv',&quot;#chart5&quot;,'1975-01-01','1990-01-01')
+	&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/boxing/&quot;&gt;Boxing's Grandmasters Part II&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on January 02, 2018.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
   <title type="html"><![CDATA[Deep Learning for Time Series, pt. 1]]></title>
-  <link rel="alternate" type="text/html" href="/deeptime/" />
-  <id>/deeptime</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/deeptime/" />
+  <id>http://localhost:4000/deeptime</id>
   <updated>2016-07-09T00:00:00-00:00</updated>
   <published>2016-07-07T00:00:00-04:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri></uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -34,6 +371,7 @@
   &lt;li&gt;&lt;a href=&quot;#convolutional-neural-networks&quot; id=&quot;markdown-toc-convolutional-neural-networks&quot;&gt;Convolutional Neural Networks&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#data&quot; id=&quot;markdown-toc-data&quot;&gt;Data&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#example&quot; id=&quot;markdown-toc-example&quot;&gt;Example&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#what-is-happening-inside-the-network&quot; id=&quot;markdown-toc-what-is-happening-inside-the-network&quot;&gt;What is happening inside the network?&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#results&quot; id=&quot;markdown-toc-results&quot;&gt;Results&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -90,7 +428,7 @@ It is easy to see that a simple moving average is a special case of a convolutio
 
 &lt;p&gt;I’m a big fan of the neural networks library &lt;a href=&quot;http://keras.io&quot; target=&quot;_blank&quot;&gt;Keras&lt;/a&gt;.  Keras can run on top of the deep learning libraries Theano and Tensorflow and makes prototyping neural networks very easy.  Here I’ll use Keras to build a convolutional neural network to predict the activities from the sensor data provided by Human Activity Recognition dataset.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.models&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.models&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.layers.core&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dropout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Activation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Flat&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras.layers.convolutional&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Convolution1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MaxPooling1D&lt;/span&gt;
 
@@ -111,7 +449,7 @@ It is easy to see that a simple moving average is a special case of a convolutio
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Convolution1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
                         &lt;span class=&quot;n&quot;&gt;filter_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
                         &lt;span class=&quot;n&quot;&gt;subsample_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subsample_length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                        &lt;span class=&quot;n&quot;&gt;border_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;same&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;border_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'same'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# we use standard max pooling (halving the output of the previous layer):&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxPooling1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool_length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# We flatten the output of the conv layer,&lt;/span&gt;
@@ -120,18 +458,18 @@ It is easy to see that a simple moving average is a special case of a convolutio
 
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hidden_dims&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Activation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;softmax&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Activation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'softmax'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;categorical_crossentropy&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;rmsprop&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xtrain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ytrain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show_accuracy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'categorical_crossentropy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'rmsprop'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xtrain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ytrain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb_epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show_accuracy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;!--
 After training the model, we can look at the output of each layer using the following code to get a better sense of what is happening inside the neural network.  In this case, the convolutional layer maps the raw input into 64 seperate time series each of length 64 and the max pooling layer condenses these into a single time series of length 64.  
 
 
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;seaborn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sns&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pd&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;seaborn&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;keras&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;backend&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_activations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
@@ -151,30 +489,52 @@ After training the model, we can look at the output of each layer using the foll
     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_xlim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_ylim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:]),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:])])&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;off&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'off'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 
 &lt;img src=&quot;/images/cnn_filters.png&quot;&gt;
 --&gt;
+
+&lt;h3 id=&quot;what-is-happening-inside-the-network&quot;&gt;What is happening inside the network?&lt;/h3&gt;
+
+&lt;p&gt;Here are a few examples of some well known filters from digital signal processing:&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.dspguide.com/graphics/F_6_3.gif&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;High and low pass filters remove certain frequencies from the original signal.  You can think of the high-pass filter as removing any underlying trend in the signal and the low-pass filter as smoothing the signal to extract the trend.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.dspguide.com/graphics/F_6_4.gif&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;The derivative of an input signal can be approximated by convolving the derivative of a Gaussian Filter or by using a discrete derivative filter (as shown above).  Since we typically use a max pooling layer after a convolutional layer, we are able to identify the maximum value of the derivative over the time interval of the input.  Inverting attenuators flip the signal and enable us to extract minimum values of the signal’s derivative using a max pooling layer. 
+&lt;br /&gt;&lt;/p&gt;
+
 &lt;p&gt;After training the model, we can look at some of the learned filters to get a sense of what types of features the CNN extracts.&lt;/p&gt;
 
 &lt;div class=&quot;container&quot; style=&quot;inline-block&quot;&gt;
     &lt;figure&gt;
-    &lt;img src=&quot;/images/filters2.png&quot; width=&quot;300&quot; /&gt;
+    &lt;img src=&quot;/images/learned_derivative.png&quot; width=&quot;300&quot; /&gt;
+    &lt;img src=&quot;/images/learned_high_pass.png&quot; width=&quot;300&quot; /&gt;
+    &lt;/figure&gt;   
+&lt;/div&gt;
+
+&lt;p&gt;The filter on the left is learned for the y-axis acceleration and looks very close to a derivative filter.  The filter on the right is similar to a high-pass filter and was learned for the g1 gyroscope axis.  Some of the other filters aren’t as obvious, however, it appears that many of the learned filters are similar to well known techniques from signal processing.&lt;/p&gt;
+
+&lt;div class=&quot;container&quot; style=&quot;inline-block&quot;&gt;
+    &lt;figure&gt;
     &lt;img src=&quot;/images/filters.png&quot; width=&quot;300&quot; /&gt;
-    &lt;/figure&gt;
+    &lt;img src=&quot;/images/filters2.png&quot; width=&quot;300&quot; /&gt;
+    &lt;/figure&gt;   
+&lt;/div&gt;
 
-   
-
-  &lt;/div&gt;
+&lt;p&gt;Images from &lt;a href=&quot;http://www.dspguide.com&quot;&gt;http://www.dspguide.com&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;results&quot;&gt;Results&lt;/h3&gt;
 
 &lt;p&gt;Test set summary:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;class   precision    recall  f1-score   support
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class   precision    recall  f1-score   support
 0         0.98      0.92      0.95       496
 1         0.95      0.94      0.94       471
 2         0.89      1.00      0.94       420
@@ -183,11 +543,11 @@ After training the model, we can look at the output of each layer using the foll
 5         1.00      1.00      1.00       537
 
 total      0.94      0.94      0.94      2947
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Training set summary:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;class   precision   recall  f1-score   support
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class   precision   recall  f1-score   support
 
 0         1.00      1.00      1.00      1226
 1         1.00      1.00      1.00      1073
@@ -197,7 +557,7 @@ total      0.94      0.94      0.94      2947
 5         1.00      1.00      1.00      1407
 
 total     0.98      0.98      0.98      7352
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;A 1-layer convolutional + max pooling neural network achieves 94% accuracy with somewhat arbitrary hyperparameters (I choose the parameters to help simplify the visualizations of each of the activations.) This is a good start, but we can improve performance by adding additional layers.  In part 2, I will discuss adding recurrent layers in order to better capture the temporal dynamics.&lt;/p&gt;
 
@@ -205,20 +565,20 @@ total     0.98      0.98      0.98      7352
 &lt;br /&gt;
 &lt;a name=&quot;myfootnote1&quot;&gt;1&lt;/a&gt;: http://deeplearning.net/tutorial/lenet.html&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;/deeptime/&quot;&gt;Deep Learning for Time Series, pt. 1&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on July 07, 2016.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/deeptime/&quot;&gt;Deep Learning for Time Series, pt. 1&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 07, 2016.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Boxing's Grandmasters]]></title>
-  <link rel="alternate" type="text/html" href="/grandmaster/" />
-  <id>/grandmaster</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/grandmaster/" />
+  <id>http://localhost:4000/grandmaster</id>
   <updated>2016-07-31T00:00:00-00:00</updated>
   <published>2015-12-05T00:00:00-05:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri></uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -673,19 +1033,19 @@ A player whose rating is 100 points greater than their opponents is expected to 
 &lt;/table&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/grandmaster/&quot;&gt;Boxing's Grandmasters&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on December 05, 2015.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/grandmaster/&quot;&gt;Boxing's Grandmasters&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on December 05, 2015.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Spectral clustering]]></title>
-  <link rel="alternate" type="text/html" href="/spectral-clustering/" />
-  <id>/spectral-clustering</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/spectral-clustering/" />
+  <id>http://localhost:4000/spectral-clustering</id>
   <published>2014-10-04T00:00:00-04:00</published>
   <updated>2014-10-04T00:00:00-04:00</updated>
   <author>
     <name>Graham Mueller</name>
-    <uri></uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;p&gt;Spectral clustering is an approach to clustering data in which the spectrum (eigenvalues) of a similarity matrix is used to perform dimension reduction.  Given a symmetric similarity or adjacency matrix, &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt;.  The Laplacian matrix is equal to the&lt;/p&gt;
@@ -712,28 +1072,28 @@ Cluster the points \((yi) i=1,\dots n\) in \(\mathbb{R}^k\) with the k-means alg
 
 &lt;p&gt;&lt;img src=&quot;/images/index.png&quot; /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.feature_extraction.text&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TfidfVectorizer&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.feature_extraction.text&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TfidfVectorizer&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.cluster&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SpectralClustering&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;nltk&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;documents&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#file_sample is a list of filenames ... in this case html files&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;r&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;    
+    &lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;    
     &lt;span class=&quot;n&quot;&gt;documents&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nltk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clean_html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;vect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TfidfVectorizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min_df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop_words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;english&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TfidfVectorizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min_df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stop_words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'english'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;tfidf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;documents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;asarray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tfidf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tfidf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;clusters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SpectralClustering&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;affinity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;precomputed&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;clusters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SpectralClustering&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;affinity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'precomputed'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;fitted_clusters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clusters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argsort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fitted_clusters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -741,23 +1101,23 @@ Cluster the points \((yi) i=1,\dots n\) in \(\mathbb{R}^k\) with the k-means alg
 
 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fitted_clusters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fitted_clusters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;sim_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+        &lt;span class=&quot;n&quot;&gt;sim_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/spectral-clustering/&quot;&gt;Spectral clustering&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on October 04, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/spectral-clustering/&quot;&gt;Spectral clustering&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on October 04, 2014.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Dynamic Time Warping]]></title>
-  <link rel="alternate" type="text/html" href="/sample-post/" />
-  <id>/sample-post</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/sample-post/" />
+  <id>http://localhost:4000/sample-post</id>
   <updated>2014-07-19T00:00:00-00:00</updated>
   <published>2014-07-20T00:00:00-04:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri></uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -797,29 +1157,29 @@ $$y_t=y_1,y_2,y_3, \dots y_m$$
 &lt;h2 id=&quot;temporal-semantic-analysis&quot;&gt;Temporal Semantic Analysis&lt;/h2&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/sample-post/&quot;&gt;Dynamic Time Warping&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on July 20, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/sample-post/&quot;&gt;Dynamic Time Warping&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 20, 2014.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[d3 to svg]]></title>
-  <link rel="alternate" type="text/html" href="/code-highlighting-post/" />
-  <id>/code-highlighting-post</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/code-highlighting-post/" />
+  <id>http://localhost:4000/code-highlighting-post</id>
   <published>2013-08-16T00:00:00-04:00</published>
   <updated>2013-08-16T00:00:00-04:00</updated>
   <author>
     <name>Graham Mueller</name>
-    <uri></uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;p&gt;I find it hilarious that I am actually doing this crap, but if you ever wanted to know how to render a svg generated by d3 into a downloadable pdf, png, whatever, here is one solution.  This is all based on the work done &lt;a href=&quot;http://d3export.housegordon.org&quot;&gt;here&lt;/a&gt;.  I couldn’t use the perl script on the server side because I’m using &lt;a href=&quot;http://tangelo.kitware.com&quot;&gt;Tangelo&lt;/a&gt; to develop prototype web applications.  At first, I thought I’d just call the perl script through subprocess or pyperl, but that was mainly because I didn’t want to spend anytime understanding what the perl script actually did.&lt;/p&gt;
 
 &lt;h3 id=&quot;pygments-code-blocks&quot;&gt;Pygments Code Blocks&lt;/h3&gt;
 
-&lt;p&gt;To modify styling and highlight colors edit &lt;code&gt;/assets/less/pygments.less&lt;/code&gt; and compile &lt;code&gt;main.less&lt;/code&gt; with your favorite preprocessor. Or edit &lt;code&gt;main.css&lt;/code&gt; if that’s your thing, the classes you want to modify all begin with &lt;code&gt;.highlight&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To modify styling and highlight colors edit &lt;code class=&quot;highlighter-rouge&quot;&gt;/assets/less/pygments.less&lt;/code&gt; and compile &lt;code class=&quot;highlighter-rouge&quot;&gt;main.less&lt;/code&gt; with your favorite preprocessor. Or edit &lt;code class=&quot;highlighter-rouge&quot;&gt;main.css&lt;/code&gt; if that’s your thing, the classes you want to modify all begin with &lt;code class=&quot;highlighter-rouge&quot;&gt;.highlight&lt;/code&gt;.&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;/code-highlighting-post/&quot;&gt;d3 to svg&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;&quot;&gt;Nullspace&lt;/a&gt; on August 16, 2013.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/code-highlighting-post/&quot;&gt;d3 to svg&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on August 16, 2013.&lt;/p&gt;</content>
 </entry>
 
 </feed>

@@ -1,0 +1,478 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Boxing's Grandmasters Part II &#8211; Nullspace</title>
+<meta name="description" content="Analysis of Historical boxing data">
+<meta name="keywords" content="boxing, data, science, elo">
+<!-- Twitter Cards -->
+	
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:image" content=
+			
+				
+						"http://localhost:4000/images/"
+				
+			
+		>
+	
+	<meta name="twitter:title" content="Boxing's Grandmasters Part II">
+	<meta name="twitter:description" content="Analysis of Historical boxing data">
+	<meta name="twitter:creator" content="@random_walk">
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Boxing's Grandmasters Part II">
+<meta property="og:description" content="Analysis of Historical boxing data">
+<meta property="og:url" content="http://localhost:4000/boxing/">
+<meta property="og:site_name" content="Nullspace">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/boxing/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Nullspace</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="http://localhost:4000/about/" >About</a></li>
+		        
+				<li><a href="http://localhost:4000/posts/" >Posts</a></li>
+		        
+				<li><a href="http://localhost:4000/links/" >Links</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+<a href="http://twitter.com/random_walk" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/boxing/" rel="bookmark" title="Boxing's Grandmasters Part II">Boxing's Grandmasters Part II</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer">
+<ul id="markdown-toc">
+  <li><a href="#best-of-a-generation" id="markdown-toc-best-of-a-generation">Best of a generation</a></li>
+</ul>
+
+  </div>
+</section>
+<!-- /#table-of-contents -->
+
+<h2 id="best-of-a-generation">Best of a generation</h2>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<style>
+	.axis-x path {
+		stroke: #000;
+	}
+
+	.line {
+		fill: none;
+		stroke-width: 1.5px;
+		stroke-linejoin: "round";
+		stroke-linecap: "round";
+	}
+
+	.line:hover {
+		stroke-width: 6px;
+	}
+
+	.legend {
+	    font-size: 12px;
+	    font-weight: bold;
+	    text-anchor: middle;
+	}
+
+</style>
+</head>
+<body>
+	<svg width="800" height="400" id="chart1"></svg>
+	<svg width="800" height="400" id="chart2"></svg>
+	<svg width="800" height="400" id="chart3"></svg>
+	<svg width="800" height="400" id="chart4"></svg>
+	<svg width="800" height="400" id="chart5"></svg>
+	<script>
+	function loadchart(filename,divid,d1,d2){
+	//define chart margins
+	let svg = d3.select(divid),
+		margin = {top: 50, right: 150, bottom: 40, left: 50},
+		width = svg.attr("width") - margin.left - margin.right,
+		height = svg.attr("height") - margin.top - margin.bottom,
+		g = svg.append("g").attr("transform", "translate(" + margin.left + "," +margin.top + ")");
+
+	//define time format
+	//let parseYear = d3.timeParse("%Y");
+    let parseTime = d3.timeParse("%Y-%m-%d");
+	//define scales
+	let x = d3.scaleTime().range([0, width]),
+		y = d3.scaleLinear().range([height, 0]),
+		//color scale
+		z = d3.scaleOrdinal(d3.schemeCategory20);
+
+
+	//define line generator
+	let line = d3.line()
+	 	.defined(function(d) { return d.subscriptionCount != 0; }) 
+		.x(function(d) { return x(d.date); })
+		.y(function(d) { return y(d.subscriptionCount); });
+
+	//load data
+	d3.csv(filename, type, function(error, data) {
+		if(error) throw error;
+		//parse data
+		let countries = data.columns.slice(1).map(function(id) {
+			return {
+				id: id,
+				values: data.map(function(d) {
+					return {date: d.date, subscriptionCount: d[id]};
+				})
+			};
+		});
+
+	  /*var tmp=_.map(data, function(b) {return Object.keys(_.omit(b,'date')).reduce(function(max,key){
+		  return (max === undefined || b[key] > b[max]) ? +key : max;
+		})});*/
+		
+	  maxElo=_.map(data,function(b){return {'date':b.date, 'max':_.max(_.omit(b,'date')),'id': _.max(Object.keys(_.omit(b,'date')), function (o) { return _.omit(b,'date')[o]; })
+			}
+		})
+	  
+		//define x axis
+		//maxElo=_.max(_.map(data, function(d){ return _.values(_.omit(d, 'date'));}))
+
+		x.domain(d3.extent(data, function(d) { return d.date; }));
+		var noZeroes = countries.map(function(c) { return c.values})
+		var vals=noZeroes.map(function(d){return d.map(function(x){return x.subscriptionCount});})
+
+		function flatten(arr) {
+		  return arr.reduce(function (flat, toFlatten) {
+		    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+		  }, []);
+		}
+
+		nz=flatten(vals).filter(function(d){return d!=0});
+		//d3.min(noZeroes, function(d) {return d.houseValues; })
+		//define y axis
+		y.domain([
+			d3.min(nz),
+			d3.max(countries, function(c) { return d3.max(c.values, function(d) { return d.subscriptionCount; }); })
+		]);
+
+		//x.domain([parseTime(d1),parseTime(d2)])
+
+		//define color scale
+		z.domain(countries.map(function(c) { return c.id; }));
+
+	 // Nest the entries by symbol
+	    var dataNest = d3.nest()
+	        .key(function(d) {return d.id;})
+	        .entries(data);
+
+	    // set the colour scale
+	    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+	    legendSpace = height/10 // spacing for the legend
+	 
+	    /*
+	    g.append("svg:rect")
+		     .attr("x", x(parseTime('2005-01-01')))
+		     .attr("y", 0)
+		     .attr("width", x(parseTime('2010-10-10')))
+		     .attr("height", height)
+		     .attr("alpha",0.2)
+		     .attr("fill", "#FEF0DB");
+		     */
+
+		//append x axis
+		g.append("g")
+			.attr("class", "axis axis-x")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x));
+
+		//append y axis
+		g.append("g")
+			.attr("class", "axis axis-y")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", -50)
+			.attr("x", -125)
+			.attr("dy", "0.9em")
+			.attr("fill", "#000")
+			.text("Elo Rating");
+        
+
+		//append country data to svg
+		let country = g.selectAll(".country")
+			.data(countries)
+			.enter()
+			.append("g")
+			.attr("class", "country");
+		
+
+
+		eras=[]
+		for(var i = 0; i < maxElo.length-1; i++) {
+			curr_id=maxElo[i].id
+			next_id=maxElo[i+1].id
+			if(i==0){
+				startd=maxElo[i].date
+			}
+			else if(curr_id!=next_id){
+				end=maxElo[i+1].date
+				id=maxElo[i].id
+				eras.push({'startd':startd,'end':end,'id':id})
+				startd=maxElo[i+1].date
+			}
+			else if(i==maxElo.length-2){
+				end=maxElo[i+1].date
+				id=maxElo[i+1].id
+				eras.push({'startd':startd,'end':end,'id':id})
+				console.log(end)
+			}
+			
+
+		}
+		console.log(eras)
+		
+		for(var i=0; i< eras.length;i++){
+	   		 g.append("svg:rect")
+		     .attr("x", x(eras[i].startd))
+		     .attr("y", 0)
+		     .attr("width", x(eras[i].end)-x(eras[i].startd))
+		     .attr("height", height)
+		     .attr("opacity",0.2)
+		     .attr("fill", z(eras[i].id))
+		     .attr("class","era_bar")
+		     .attr("id", eras[i].id)
+		    // .attr("mouseover",era_select(eras,i))
+		}
+
+		//append country path to svg
+		country.append("path")
+			.attr("class", "line")
+      			.attr("d", function(d) { return line(d.values); })
+			.style("stroke", function(d) { return z(d.id); })
+			.style("stroke-linecap", "round")
+			.attr("id",function(d){ return d.id})
+	
+		//append country labels to svg
+		country.append("text")
+			.datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
+			//.attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.subscriptionCount) + ")"; })
+			.attr("y", function(d,i){return (legendSpace/2)+i*legendSpace;})
+			.attr("x", width+(margin.right/2)+5)
+			.style("fill", function(d) { // Add the colours dynamically
+                return d.color = z(d.id); })
+			.attr("class", "legend") 
+			.text(function(d) { return d.id; })
+			.on("mouseover", function(d, i) {
+			 d3.select(divid).select("[id='" + d.id + "']") .style("stroke-width", "6px");
+			 d3.select(divid).selectAll("rect[id='" + d.id + "']").style("opacity", 0.5);
+			})
+			.on("mouseout", function(d, i) {
+			 d3.select(divid).select("[id='" + d.id + "']") .style("stroke-width", "1.5px");
+			 d3.select(divid).selectAll("rect[id='" + d.id + "']").style("opacity", 0.2);
+			})
+
+
+
+	  // Add the Legend
+	 /*data.forEach( function(d,i){
+        country.append("text")
+            .attr("x", (legendSpace/2)+i*legendSpace)  // space legend
+            .attr("y", height + (margin.bottom/2)+ 5)
+            .attr("class", "legend")    // style the legend
+            .style("fill", function() { // Add the colours dynamically
+                return d.color = color(d.key); })
+            .text(d.key); 
+        });*/
+
+		
+	});
+
+	//bind with multiseries data
+	function type(d, _, columns) {
+		d.date = parseTime(d.date);
+		//iterate through each column
+		for(var i = 1, n = columns.length, c; i < n; ++i)
+			//bind column data to year
+			d[c = columns[i]] = +d[c];
+			return d;
+	}
+
+
+
+
+	//define chart title
+	let title = svg.append("g")
+		.attr("class", "title");
+	title.append("text")
+		.attr("x", (width/1.75))
+		.attr("y", 20)
+		.attr("text-anchor", "middle")
+		.style("font", "20px sans-serif")
+		.text("Elo ratings");
+
+  }
+  loadchart('/assets/data/boxing2010s.csv',"#chart1",'2005-01-01','2017-01-01');
+  loadchart('/assets/data/boxing2000s.csv',"#chart2",'1995-01-01','2010-01-01');
+  loadchart('/assets/data/boxing1990s.csv',"#chart3",'1985-01-01','2000-01-01');
+  loadchart('/assets/data/boxing1980s.csv',"#chart4",'1975-01-01','1990-01-01')
+  loadchart('/assets/data/boxing1970s.csv',"#chart5",'1975-01-01','1990-01-01')
+	</script>
+</body>
+</html>
+
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+<a href="http://twitter.com/random_walk" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Boxing's Grandmasters Part II</strong> was published on <time datetime="2018-01-02T00:00:00-05:00">January 02, 2018</time> and last modified on <time datetime="2018-01-02">January 02, 2018</time> by <a href="http://localhost:4000/about" title="About Graham Mueller">Graham Mueller</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/hebbian/" title="Hebbian Learning">Hebbian Learning</a></li>
+    
+      <li><a href="http://localhost:4000/deeptime/" title="Deep Learning for Time Series, pt. 1">Deep Learning for Time Series, pt. 1</a></li>
+    
+      <li><a href="http://localhost:4000/grandmaster/" title="Boxing's Grandmasters">Boxing's Grandmasters</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2018 Graham Mueller. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+	        
+
+</body>
+</html>

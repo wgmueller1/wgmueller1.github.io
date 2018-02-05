@@ -14,7 +14,7 @@
 		<meta name="twitter:image" content=
 			
 				
-						"/images/"
+						"http://localhost:4000/images/"
 				
 			
 		>
@@ -29,15 +29,15 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Deep Learning for Time Series, pt. 1">
 <meta property="og:description" content="">
-<meta property="og:url" content="/deeptime/">
+<meta property="og:url" content="http://localhost:4000/deeptime/">
 <meta property="og:site_name" content="Nullspace">
 
 
 
 
 
-<link rel="canonical" href="/deeptime/">
-<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
+<link rel="canonical" href="http://localhost:4000/deeptime/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -48,32 +48,32 @@
 <!-- Google Webfonts -->
 <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
 <!-- For all browsers -->
-<link rel="stylesheet" href="/assets/css/main.min.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.min.css">
 
 <meta http-equiv="cleartype" content="on">
 
 <!-- HTML5 Shiv and Media Query Support -->
 <!--[if lt IE 9]>
-	<script src="/assets/js/vendor/html5shiv.min.js"></script>
-	<script src="/assets/js/vendor/respond.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
 <![endif]-->
 
 <!-- Modernizr -->
-<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
 
 <!-- Icons -->
 <!-- 16x16 -->
-<link rel="shortcut icon" href="/favicon.ico">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
 <!-- 32x32 -->
-<link rel="shortcut icon" href="/favicon.png">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
 <!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
-<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
 <!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
 <!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
 <!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
 
 </head>
 
@@ -83,17 +83,17 @@
 
 <div class="navigation-wrapper">
 	<div class="site-name">
-		<a href="">Nullspace</a>
+		<a href="http://localhost:4000">Nullspace</a>
 	</div><!-- /.site-name -->
 	<div class="top-navigation">
 		<nav role="navigation" id="site-nav" class="nav">
 		    <ul>
 		        
-				<li><a href="/about/" >About</a></li>
+				<li><a href="http://localhost:4000/about/" >About</a></li>
 		        
-				<li><a href="/posts/" >Posts</a></li>
+				<li><a href="http://localhost:4000/posts/" >Posts</a></li>
 		        
-				<li><a href="/links/" >Links</a></li>
+				<li><a href="http://localhost:4000/links/" >Links</a></li>
 		        
 		    </ul>
 		</nav>
@@ -105,7 +105,7 @@
 <div id="main" role="main">
   <div class="article-author-side">
     
-	<img src="/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
 
 <h3>Graham Mueller</h3>
 <p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
@@ -126,7 +126,7 @@
   <article>
     <div class="headline-wrap">
       
-        <h1><a href="/deeptime/" rel="bookmark" title="Deep Learning for Time Series, pt. 1">Deep Learning for Time Series, pt. 1</a></h1>
+        <h1><a href="http://localhost:4000/deeptime/" rel="bookmark" title="Deep Learning for Time Series, pt. 1">Deep Learning for Time Series, pt. 1</a></h1>
       
     </div><!--/ .headline-wrap -->
     <div class="article-wrap">
@@ -139,6 +139,7 @@
   <li><a href="#convolutional-neural-networks" id="markdown-toc-convolutional-neural-networks">Convolutional Neural Networks</a></li>
   <li><a href="#data" id="markdown-toc-data">Data</a></li>
   <li><a href="#example" id="markdown-toc-example">Example</a></li>
+  <li><a href="#what-is-happening-inside-the-network" id="markdown-toc-what-is-happening-inside-the-network">What is happening inside the network?</a></li>
   <li><a href="#results" id="markdown-toc-results">Results</a></li>
 </ul>
 
@@ -195,7 +196,7 @@ It is easy to see that a simple moving average is a special case of a convolutio
 
 <p>I’m a big fan of the neural networks library <a href="http://keras.io" target="_blank">Keras</a>.  Keras can run on top of the deep learning libraries Theano and Tensorflow and makes prototyping neural networks very easy.  Here I’ll use Keras to build a convolutional neural network to predict the activities from the sensor data provided by Human Activity Recognition dataset.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
 <span class="kn">from</span> <span class="nn">keras.layers.core</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">Flat</span>
 <span class="kn">from</span> <span class="nn">keras.layers.convolutional</span> <span class="kn">import</span> <span class="n">Convolution1D</span><span class="p">,</span> <span class="n">MaxPooling1D</span>
 
@@ -228,15 +229,15 @@ It is easy to see that a simple moving average is a special case of a convolutio
 <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s">'softmax'</span><span class="p">))</span>
 
 <span class="n">model</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'rmsprop'</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span><span class="n">ytrain</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span><span class="n">nb_epoch</span><span class="o">=</span><span class="n">nb_epoch</span><span class="p">,</span><span class="n">show_accuracy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></div>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xtrain</span><span class="p">,</span><span class="n">ytrain</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span><span class="n">nb_epoch</span><span class="o">=</span><span class="n">nb_epoch</span><span class="p">,</span><span class="n">show_accuracy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></figure>
 
 <!--
 After training the model, we can look at the output of each layer using the following code to get a better sense of what is happening inside the neural network.  In this case, the convolutional layer maps the raw input into 64 seperate time series each of length 64 and the max pooling layer condenses these into a single time series of length 64.  
 
 
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
 <span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
 
 <span class="k">def</span> <span class="nf">get_activations</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">layer_idx</span><span class="p">,</span><span class="n">X</span><span class="o">-</span><span class="n">batch</span><span class="p">):</span>
@@ -258,28 +259,50 @@ After training the model, we can look at the output of each layer using the foll
     <span class="n">a</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="nb">min</span><span class="p">(</span><span class="n">activations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">np</span><span class="o">.</span><span class="nb">max</span><span class="p">(</span><span class="n">activations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">,:])])</span>
     <span class="n">a</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
 
 
 <img src="/images/cnn_filters.png">
 -->
+
+<h3 id="what-is-happening-inside-the-network">What is happening inside the network?</h3>
+
+<p>Here are a few examples of some well known filters from digital signal processing:<br /></p>
+
+<p><img src="http://www.dspguide.com/graphics/F_6_3.gif" /><br /></p>
+
+<p>High and low pass filters remove certain frequencies from the original signal.  You can think of the high-pass filter as removing any underlying trend in the signal and the low-pass filter as smoothing the signal to extract the trend.</p>
+
+<p><img src="http://www.dspguide.com/graphics/F_6_4.gif" /><br /></p>
+
+<p>The derivative of an input signal can be approximated by convolving the derivative of a Gaussian Filter or by using a discrete derivative filter (as shown above).  Since we typically use a max pooling layer after a convolutional layer, we are able to identify the maximum value of the derivative over the time interval of the input.  Inverting attenuators flip the signal and enable us to extract minimum values of the signal’s derivative using a max pooling layer. 
+<br /></p>
+
 <p>After training the model, we can look at some of the learned filters to get a sense of what types of features the CNN extracts.</p>
 
 <div class="container" style="inline-block">
     <figure>
-    <img src="/images/filters2.png" width="300" />
+    <img src="/images/learned_derivative.png" width="300" />
+    <img src="/images/learned_high_pass.png" width="300" />
+    </figure>   
+</div>
+
+<p>The filter on the left is learned for the y-axis acceleration and looks very close to a derivative filter.  The filter on the right is similar to a high-pass filter and was learned for the g1 gyroscope axis.  Some of the other filters aren’t as obvious, however, it appears that many of the learned filters are similar to well known techniques from signal processing.</p>
+
+<div class="container" style="inline-block">
+    <figure>
     <img src="/images/filters.png" width="300" />
-    </figure>
+    <img src="/images/filters2.png" width="300" />
+    </figure>   
+</div>
 
-   
-
-  </div>
+<p>Images from <a href="http://www.dspguide.com">http://www.dspguide.com</a></p>
 
 <h3 id="results">Results</h3>
 
 <p>Test set summary:</p>
 
-<pre><code>class   precision    recall  f1-score   support
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class   precision    recall  f1-score   support
 0         0.98      0.92      0.95       496
 1         0.95      0.94      0.94       471
 2         0.89      1.00      0.94       420
@@ -288,11 +311,11 @@ After training the model, we can look at the output of each layer using the foll
 5         1.00      1.00      1.00       537
 
 total      0.94      0.94      0.94      2947
-</code></pre>
+</code></pre></div></div>
 
 <p>Training set summary:</p>
 
-<pre><code>class   precision   recall  f1-score   support
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class   precision   recall  f1-score   support
 
 0         1.00      1.00      1.00      1226
 1         1.00      1.00      1.00      1073
@@ -302,7 +325,7 @@ total      0.94      0.94      0.94      2947
 5         1.00      1.00      1.00      1407
 
 total     0.98      0.98      0.98      7352
-</code></pre>
+</code></pre></div></div>
 
 <p>A 1-layer convolutional + max pooling neural network achieves 94% accuracy with somewhat arbitrary hyperparameters (I choose the parameters to help simplify the visualizations of each of the activations.) This is a good start, but we can improve performance by adding additional layers.  In part 2, I will discuss adding recurrent layers in order to better capture the temporal dynamics.</p>
 
@@ -314,7 +337,7 @@ total     0.98      0.98      0.98      7352
       <footer role="contentinfo">
         <div class="article-author-bottom">
           
-	<img src="/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
 
 <h3>Graham Mueller</h3>
 <p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
@@ -332,7 +355,7 @@ total     0.98      0.98      0.98      7352
 
 
         </div>
-        <p class="byline"><strong>Deep Learning for Time Series, pt. 1</strong> was published on <time datetime="2016-07-07T00:00:00-04:00">July 07, 2016</time> and last modified on <time datetime="2016-07-09">July 09, 2016</time> by <a href="/about" title="About Graham Mueller">Graham Mueller</a>.</p>
+        <p class="byline"><strong>Deep Learning for Time Series, pt. 1</strong> was published on <time datetime="2016-07-07T00:00:00-04:00">July 07, 2016</time> and last modified on <time datetime="2016-07-09">July 09, 2016</time> by <a href="http://localhost:4000/about" title="About Graham Mueller">Graham Mueller</a>.</p>
       </footer>
     </div><!-- /.article-wrap -->
   
@@ -341,20 +364,20 @@ total     0.98      0.98      0.98      7352
 
 <div class="footer-wrap">
   <div class="related-articles">
-  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
     <ul>
     
-      <li><a href="/grandmaster/" title="Boxing's Grandmasters">Boxing's Grandmasters</a></li>
+      <li><a href="http://localhost:4000/hebbian/" title="Hebbian Learning">Hebbian Learning</a></li>
     
-      <li><a href="/spectral-clustering/" title="Spectral clustering">Spectral clustering</a></li>
+      <li><a href="http://localhost:4000/boxing/" title="Boxing's Grandmasters Part II">Boxing's Grandmasters Part II</a></li>
     
-      <li><a href="/sample-post/" title="Dynamic Time Warping">Dynamic Time Warping</a></li>
+      <li><a href="http://localhost:4000/grandmaster/" title="Boxing's Grandmasters">Boxing's Grandmasters</a></li>
     
     </ul>
     <hr />
   </div><!-- /.related-articles -->
   <footer>
-    <span>&copy; 2016 Graham Mueller. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+    <span>&copy; 2018 Graham Mueller. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
 
   </footer>
 </div><!-- /.footer-wrap -->
@@ -363,8 +386,8 @@ total     0.98      0.98      0.98      7352
 <script type="text/javascript"
     src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="/assets/js/scripts.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
 
 
   
