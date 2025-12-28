@@ -2,27 +2,27 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Nullspace</title>
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
-<link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2025-12-28T15:21:33-05:00</updated>
-<id>http://localhost:4000/</id>
+<link rel="self" type="application/atom+xml" href="https://wgmueller1.github.io/feed.xml" />
+<link rel="alternate" type="text/html" href="https://wgmueller1.github.io" />
+<updated>2025-12-28T15:29:02-05:00</updated>
+<id>https://wgmueller1.github.io/</id>
 <author>
   <name>Graham Mueller</name>
-  <uri>http://localhost:4000/</uri>
+  <uri>https://wgmueller1.github.io/</uri>
   <email>wgmueller@gmail.com</email>
 </author>
 
 
 <entry>
   <title type="html"><![CDATA[Boxing's Grandmasters Part II]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/boxing/" />
-  <id>http://localhost:4000/boxing</id>
+  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/boxing/" />
+  <id>https://wgmueller1.github.io/boxing</id>
   <updated>2018-01-02T00:00:00-00:00</updated>
   <published>2018-01-02T00:00:00-05:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri>https://wgmueller1.github.io</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -309,20 +309,20 @@
 &lt;/html&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/boxing/&quot;&gt;Boxing's Grandmasters Part II&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on January 02, 2018.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/boxing/&quot;&gt;Boxing's Grandmasters Part II&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on January 02, 2018.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Deep Learning for Time Series, pt. 1]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/deeptime/" />
-  <id>http://localhost:4000/deeptime</id>
+  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/deeptime/" />
+  <id>https://wgmueller1.github.io/deeptime</id>
   <updated>2016-07-09T00:00:00-00:00</updated>
   <published>2016-07-07T00:00:00-04:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri>https://wgmueller1.github.io</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -528,20 +528,20 @@ total     0.98      0.98      0.98      7352
 &lt;br /&gt;
 &lt;a name=&quot;myfootnote1&quot;&gt;1&lt;/a&gt;: https://deeplearning.net/tutorial/lenet.html&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/deeptime/&quot;&gt;Deep Learning for Time Series, pt. 1&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 07, 2016.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/deeptime/&quot;&gt;Deep Learning for Time Series, pt. 1&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on July 07, 2016.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Boxing's Grandmasters]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/grandmaster/" />
-  <id>http://localhost:4000/grandmaster</id>
+  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/grandmaster/" />
+  <id>https://wgmueller1.github.io/grandmaster</id>
   <updated>2016-07-31T00:00:00-00:00</updated>
   <published>2015-12-05T00:00:00-05:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri>https://wgmueller1.github.io</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -996,19 +996,19 @@ A player whose rating is 100 points greater than their opponents is expected to 
 &lt;/table&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/grandmaster/&quot;&gt;Boxing's Grandmasters&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on December 05, 2015.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/grandmaster/&quot;&gt;Boxing's Grandmasters&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on December 05, 2015.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Spectral clustering]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/spectral-clustering/" />
-  <id>http://localhost:4000/spectral-clustering</id>
+  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/spectral-clustering/" />
+  <id>https://wgmueller1.github.io/spectral-clustering</id>
   <published>2014-10-04T00:00:00-04:00</published>
   <updated>2014-10-04T00:00:00-04:00</updated>
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri>https://wgmueller1.github.io</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;p&gt;Spectral clustering is an approach to clustering data in which the spectrum (eigenvalues) of a similarity matrix is used to perform dimension reduction.  Given a symmetric similarity or adjacency matrix, \(A\).  The Laplacian matrix is equal to the&lt;/p&gt;
@@ -1067,20 +1067,20 @@ Cluster the points \((yi) i=1,\dots n\) in \(\mathbb{R}^k\) with the k-means alg
         &lt;span class=&quot;n&quot;&gt;sim_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/spectral-clustering/&quot;&gt;Spectral clustering&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on October 04, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/spectral-clustering/&quot;&gt;Spectral clustering&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on October 04, 2014.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Dynamic Time Warping]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/sample-post/" />
-  <id>http://localhost:4000/sample-post</id>
+  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/sample-post/" />
+  <id>https://wgmueller1.github.io/sample-post</id>
   <updated>2014-07-19T00:00:00-00:00</updated>
   <published>2014-07-20T00:00:00-04:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri>https://wgmueller1.github.io</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -1120,19 +1120,19 @@ $$y_t=y_1,y_2,y_3, \dots y_m$$
 &lt;h2 id=&quot;temporal-semantic-analysis&quot;&gt;Temporal Semantic Analysis&lt;/h2&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/sample-post/&quot;&gt;Dynamic Time Warping&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 20, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/sample-post/&quot;&gt;Dynamic Time Warping&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on July 20, 2014.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[d3 to svg]]></title>
-  <link rel="alternate" type="text/html" href="http://localhost:4000/code-highlighting-post/" />
-  <id>http://localhost:4000/code-highlighting-post</id>
+  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/code-highlighting-post/" />
+  <id>https://wgmueller1.github.io/code-highlighting-post</id>
   <published>2013-08-16T00:00:00-04:00</published>
   <updated>2013-08-16T00:00:00-04:00</updated>
   <author>
     <name>Graham Mueller</name>
-    <uri>http://localhost:4000</uri>
+    <uri>https://wgmueller1.github.io</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;p&gt;I find it hilarious that I am actually doing this crap, but if you ever wanted to know how to render a svg generated by d3 into a downloadable pdf, png, whatever, here is one solution.  This is all based on the work done &lt;a href=&quot;http://d3export.housegordon.org&quot;&gt;here&lt;/a&gt;.  I couldn’t use the perl script on the server side because I’m using &lt;a href=&quot;http://tangelo.kitware.com&quot;&gt;Tangelo&lt;/a&gt; to develop prototype web applications.  At first, I thought I’d just call the perl script through subprocess or pyperl, but that was mainly because I didn’t want to spend anytime understanding what the perl script actually did.&lt;/p&gt;
@@ -1142,7 +1142,7 @@ $$y_t=y_1,y_2,y_3, \dots y_m$$
 &lt;p&gt;To modify styling and highlight colors edit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/assets/less/pygments.less&lt;/code&gt; and compile &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.less&lt;/code&gt; with your favorite preprocessor. Or edit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.css&lt;/code&gt; if that’s your thing, the classes you want to modify all begin with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.highlight&lt;/code&gt;.&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/code-highlighting-post/&quot;&gt;d3 to svg&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on August 16, 2013.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/code-highlighting-post/&quot;&gt;d3 to svg&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on August 16, 2013.&lt;/p&gt;</content>
 </entry>
 
 </feed>
