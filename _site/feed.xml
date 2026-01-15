@@ -2,27 +2,713 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Nullspace</title>
 <generator uri="https://github.com/jekyll/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="https://wgmueller1.github.io/feed.xml" />
-<link rel="alternate" type="text/html" href="https://wgmueller1.github.io" />
-<updated>2025-12-28T15:35:36-05:00</updated>
-<id>https://wgmueller1.github.io/</id>
+<link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
+<link rel="alternate" type="text/html" href="http://localhost:4000" />
+<updated>2026-01-05T14:43:19-05:00</updated>
+<id>http://localhost:4000/</id>
 <author>
   <name>Graham Mueller</name>
-  <uri>https://wgmueller1.github.io/</uri>
+  <uri>http://localhost:4000/</uri>
   <email>wgmueller@gmail.com</email>
 </author>
 
 
 <entry>
+  <title type="html"><![CDATA[Differentiable Community Detection with GNNs and Stochastic Block Models]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/community-detection-viz/" />
+  <id>http://localhost:4000/community-detection-viz</id>
+  <updated>2025-12-28T00:00:00-00:00</updated>
+  <published>2025-12-28T00:00:00-05:00</published>
+  
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Community detection is a fundamental problem in network analysis - identifying groups of nodes that are more densely connected internally than to the rest of the network. In our recent &lt;a href=&quot;https://openreview.net/forum?id=T1vdfm1THf&quot; target=&quot;_blank&quot;&gt;paper&lt;/a&gt; presented at the Learning on Graphs Conference (LoG 2025), we propose a novel approach that combines Graph Neural Networks (GNNs) with Stochastic Block Models (SBMs) to create a differentiable, architecture-agnostic framework for community detection.&lt;/p&gt;
+
+&lt;div id=&quot;graph&quot;&gt;&lt;/div&gt;
+
+&lt;style&gt;
+#graph {
+  width: 100%;
+  height: 300px;
+  border: none;
+  margin: 20px 0;
+}
+
+.node {
+  stroke: #fff;
+  stroke-width: 2px;
+  cursor: pointer;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.node:hover {
+  stroke: #000;
+  stroke-width: 3px;
+}
+
+.node-label {
+  font-size: 10px;
+  pointer-events: none;
+  text-anchor: middle;
+}
+&lt;/style&gt;
+
+&lt;script src=&quot;https://d3js.org/d3.v7.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+// Network with three communities
+const data = {
+  nodes: [
+    // Community 0 (blue) - nodes 0-9
+    {id: 0, community: 0}, {id: 1, community: 0}, {id: 2, community: 0}, {id: 3, community: 0},
+    {id: 4, community: 0}, {id: 5, community: 0}, {id: 6, community: 0}, {id: 7, community: 0},
+    {id: 8, community: 0}, {id: 9, community: 0},
+    // Community 1 (orange) - nodes 10-19
+    {id: 10, community: 1}, {id: 11, community: 1}, {id: 12, community: 1}, {id: 13, community: 1},
+    {id: 14, community: 1}, {id: 15, community: 1}, {id: 16, community: 1}, {id: 17, community: 1},
+    {id: 18, community: 1}, {id: 19, community: 1},
+    // Community 2 (green) - nodes 20-29
+    {id: 20, community: 2}, {id: 21, community: 2}, {id: 22, community: 2}, {id: 23, community: 2},
+    {id: 24, community: 2}, {id: 25, community: 2}, {id: 26, community: 2}, {id: 27, community: 2},
+    {id: 28, community: 2}, {id: 29, community: 2}
+  ],
+  links: [
+    // Community 0 internal edges
+    {source: 0, target: 1}, {source: 0, target: 2}, {source: 0, target: 3}, {source: 0, target: 4},
+    {source: 1, target: 2}, {source: 1, target: 3}, {source: 1, target: 5}, {source: 2, target: 3},
+    {source: 2, target: 6}, {source: 3, target: 4}, {source: 3, target: 7}, {source: 4, target: 5},
+    {source: 5, target: 6}, {source: 5, target: 8}, {source: 6, target: 7}, {source: 7, target: 8},
+    {source: 7, target: 9}, {source: 8, target: 9},
+
+    // Community 1 internal edges
+    {source: 10, target: 11}, {source: 10, target: 12}, {source: 10, target: 13}, {source: 10, target: 14},
+    {source: 11, target: 12}, {source: 11, target: 13}, {source: 11, target: 15}, {source: 12, target: 13},
+    {source: 12, target: 16}, {source: 13, target: 14}, {source: 13, target: 17}, {source: 14, target: 15},
+    {source: 15, target: 16}, {source: 15, target: 18}, {source: 16, target: 17}, {source: 17, target: 18},
+    {source: 17, target: 19}, {source: 18, target: 19},
+
+    // Community 2 internal edges
+    {source: 20, target: 21}, {source: 20, target: 22}, {source: 20, target: 23}, {source: 20, target: 24},
+    {source: 21, target: 22}, {source: 21, target: 23}, {source: 21, target: 25}, {source: 22, target: 23},
+    {source: 22, target: 26}, {source: 23, target: 24}, {source: 23, target: 27}, {source: 24, target: 25},
+    {source: 25, target: 26}, {source: 25, target: 28}, {source: 26, target: 27}, {source: 27, target: 28},
+    {source: 27, target: 29}, {source: 28, target: 29},
+
+    // Inter-community edges (bridge connections)
+    {source: 4, target: 10}, {source: 9, target: 15}, {source: 6, target: 11},
+    {source: 14, target: 20}, {source: 19, target: 25}, {source: 16, target: 21},
+    {source: 3, target: 23}, {source: 8, target: 18}
+  ]
+};
+
+// Color scale for three communities
+const colorScale = d3.scaleOrdinal()
+  .domain([0, 1, 2])
+  .range([&apos;#1f77b4&apos;, &apos;#ff7f0e&apos;, &apos;#2ca02c&apos;]);
+
+// Set up SVG
+const width = document.getElementById(&apos;graph&apos;).clientWidth;
+const height = 300;
+
+const svg = d3.select(&apos;#graph&apos;)
+  .append(&apos;svg&apos;)
+  .attr(&apos;width&apos;, width)
+  .attr(&apos;height&apos;, height)
+  .attr(&apos;viewBox&apos;, `0 0 ${width * 2.5} ${height * 2.5}`)
+  .attr(&apos;preserveAspectRatio&apos;, &apos;xMidYMid meet&apos;);
+
+// Create force simulation
+const viewBoxWidth = width * 2.5;
+const viewBoxHeight = height * 2.5;
+const simulation = d3.forceSimulation(data.nodes)
+  .force(&apos;link&apos;, d3.forceLink(data.links).id(d =&gt; d.id).distance(50))
+  .force(&apos;charge&apos;, d3.forceManyBody().strength(-300))
+  .force(&apos;center&apos;, d3.forceCenter(viewBoxWidth / 2, viewBoxHeight / 2))
+  .force(&apos;collision&apos;, d3.forceCollide().radius(25));
+
+// Create links
+const link = svg.append(&apos;g&apos;)
+  .selectAll(&apos;line&apos;)
+  .data(data.links)
+  .join(&apos;line&apos;)
+  .attr(&apos;class&apos;, &apos;link&apos;)
+  .attr(&apos;stroke-width&apos;, 2);
+
+// Create nodes
+const node = svg.append(&apos;g&apos;)
+  .selectAll(&apos;circle&apos;)
+  .data(data.nodes)
+  .join(&apos;circle&apos;)
+  .attr(&apos;class&apos;, &apos;node&apos;)
+  .attr(&apos;r&apos;, 12)
+  .attr(&apos;fill&apos;, d =&gt; colorScale(d.community))
+  .call(drag(simulation));
+
+// Add labels
+const label = svg.append(&apos;g&apos;)
+  .selectAll(&apos;text&apos;)
+  .data(data.nodes)
+  .join(&apos;text&apos;)
+  .attr(&apos;class&apos;, &apos;node-label&apos;)
+  .text(d =&gt; d.id)
+  .attr(&apos;dy&apos;, 4);
+
+// Add tooltip
+node.append(&apos;title&apos;)
+  .text(d =&gt; `Node ${d.id}\nCommunity ${d.community}`);
+
+// Update positions on tick
+simulation.on(&apos;tick&apos;, () =&gt; {
+  link
+    .attr(&apos;x1&apos;, d =&gt; d.source.x)
+    .attr(&apos;y1&apos;, d =&gt; d.source.y)
+    .attr(&apos;x2&apos;, d =&gt; d.target.x)
+    .attr(&apos;y2&apos;, d =&gt; d.target.y);
+
+  node
+    .attr(&apos;cx&apos;, d =&gt; d.x)
+    .attr(&apos;cy&apos;, d =&gt; d.y);
+
+  label
+    .attr(&apos;x&apos;, d =&gt; d.x)
+    .attr(&apos;y&apos;, d =&gt; d.y);
+});
+
+// Drag functionality
+function drag(simulation) {
+  function dragstarted(event) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    event.subject.fx = event.subject.x;
+    event.subject.fy = event.subject.y;
+  }
+
+  function dragged(event) {
+    event.subject.fx = event.x;
+    event.subject.fy = event.y;
+  }
+
+  function dragended(event) {
+    if (!event.active) simulation.alphaTarget(0);
+    event.subject.fx = null;
+    event.subject.fy = null;
+  }
+
+  return d3.drag()
+    .on(&apos;start&apos;, dragstarted)
+    .on(&apos;drag&apos;, dragged)
+    .on(&apos;end&apos;, dragended);
+}
+&lt;/script&gt;
+
+&lt;h2 id=&quot;our-approach-sbm-based-loss-functions-for-gnns&quot;&gt;Our Approach: SBM-Based Loss Functions for GNNs&lt;/h2&gt;
+
+&lt;p&gt;Traditional community detection methods like Louvain and spectral clustering are effective but don’t leverage the representation learning capabilities of Graph Neural Networks. Meanwhile, existing GNN approaches for community detection often use heuristic loss functions that may not directly optimize for community structure quality.&lt;/p&gt;
+
+&lt;h3 id=&quot;stochastic-block-models-as-loss-functions&quot;&gt;Stochastic Block Models as Loss Functions&lt;/h3&gt;
+
+&lt;p&gt;Our key insight is that &lt;strong&gt;Stochastic Block Models (SBMs)&lt;/strong&gt; provide a principled way to evaluate partition quality through their likelihood functions. SBMs are generative models that describe how random graphs are created based on community structure. Since SBM likelihood functions are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Well-defined&lt;/strong&gt;: They measure how well a partition explains the observed graph structure&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Differentiable&lt;/strong&gt;: They can be used as loss functions for gradient-based optimization&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Theoretically grounded&lt;/strong&gt;: They’re based on statistical principles rather than heuristics&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We can use them directly as loss functions for training GNNs in an unsupervised manner.&lt;/p&gt;
+
+&lt;h3 id=&quot;architecture-agnostic-framework&quot;&gt;Architecture-Agnostic Framework&lt;/h3&gt;
+
+&lt;p&gt;Our approach is architecture-agnostic - it works with any GNN that outputs node embeddings. The training process:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;GNN produces node embeddings from the input graph&lt;/li&gt;
+  &lt;li&gt;Embeddings are mapped to soft community assignments&lt;/li&gt;
+  &lt;li&gt;SBM likelihood evaluates the quality of these assignments&lt;/li&gt;
+  &lt;li&gt;Gradients flow back through the network to improve embeddings&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This framework allows different GNN architectures (GCN, GAT, GraphSAINT, etc.) to be trained for community detection without modifying their core structure.&lt;/p&gt;
+
+&lt;h3 id=&quot;results&quot;&gt;Results&lt;/h3&gt;
+
+&lt;p&gt;Our experiments across multiple datasets show that SBM-based loss functions produce competitive results compared to existing community detection methods, while providing the benefits of:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;End-to-end training&lt;/strong&gt;: No separate clustering step needed&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Scalability&lt;/strong&gt;: Leverages mini-batching and GPU acceleration&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Flexibility&lt;/strong&gt;: Works with various GNN architectures&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Interpretability&lt;/strong&gt;: Loss directly measures partition quality via statistical likelihood&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;why-this-matters&quot;&gt;Why This Matters&lt;/h2&gt;
+
+&lt;p&gt;Community detection is crucial for understanding network structure in domains ranging from social networks to biological systems. By combining the representation learning power of GNNs with the theoretical foundation of SBMs, we create a framework that’s both principled and practical.&lt;/p&gt;
+
+&lt;p&gt;The code and experiments are available in our &lt;a href=&quot;https://openreview.net/forum?id=T1vdfm1THf&quot; target=&quot;_blank&quot;&gt;LoG 2025 paper&lt;/a&gt;.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/community-detection-viz/&quot;&gt;Differentiable Community Detection with GNNs and Stochastic Block Models&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on December 28, 2025.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Using Hypervectors for Efficient Anomaly Detection in Graph Streams]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/hypervector-anomaly-detection/" />
+  <id>http://localhost:4000/hypervector-anomaly-detection</id>
+  <updated>2024-11-04T00:00:00-00:00</updated>
+  <published>2024-11-04T00:00:00-05:00</published>
+  
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Network security in the era of Zero Trust architectures requires reliable real-time anomaly detection. In our recent &lt;a href=&quot;https://ieeexplore.ieee.org/abstract/document/10722819&quot; target=&quot;_blank&quot;&gt;paper&lt;/a&gt; presented at IEEE DSAA 2024, we introduce HDSGA (HyperDimensional Streaming Graph Anomaly detection), a novel approach that leverages Hyperdimensional Computing to detect anomalies in computer network traffic with exceptional speed and accuracy.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-problem&quot;&gt;The Problem&lt;/h2&gt;
+
+&lt;p&gt;Computer networks naturally represent as dynamic graphs where nodes are endpoints (servers, workstations, devices) and edges are communications between them. Network anomalies - whether from cyberattacks, malware, or intrusions - manifest as unusual patterns in this graph structure: edges that deviate from the baseline topology.&lt;/p&gt;
+
+&lt;p&gt;
+    &lt;center&gt;&lt;img src=&quot;/images/snapshot_vis.png&quot; /&gt;&lt;br /&gt;
+    &lt;em&gt;Example of anomaly detection in graph snapshots. The sequence shows snapshots sampled from an underlying windmill graph (t=1, 2, 4). At t=3, the snapshot is sampled from a complete graph and is therefore anomalous.&lt;/em&gt;&lt;/center&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Traditional anomaly detection faces significant challenges:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Scale&lt;/strong&gt;: Real-world networks are extremely large with millions of connections&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Speed&lt;/strong&gt;: Decisions must be made in real time&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Memory&lt;/strong&gt;: Storing full network histories is impractical&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Interpretability&lt;/strong&gt;: Security teams need confidence scores, not just binary predictions&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Deep learning models, while powerful, often struggle with the streaming nature of network data and the need for sub-linear memory usage.&lt;/p&gt;
+
+&lt;h2 id=&quot;our-approach-hyperdimensional-computing-for-graphs&quot;&gt;Our Approach: Hyperdimensional Computing for Graphs&lt;/h2&gt;
+
+&lt;h3 id=&quot;what-is-hyperdimensional-computing&quot;&gt;What is Hyperdimensional Computing?&lt;/h3&gt;
+
+&lt;p&gt;Hyperdimensional Computing (HDC), also known as Vector Symbolic Architectures, represents information as very high-dimensional vectors (typically 1,000-10,000 dimensions). HDC has shown promise in online learning due to its “embarrassingly parallel” operations and ability to work with symbolic representations.&lt;/p&gt;
+
+&lt;h3 id=&quot;graph-encoding-with-hypervectors&quot;&gt;Graph Encoding with Hypervectors&lt;/h3&gt;
+
+&lt;p&gt;Our method encodes graph snapshots into hyperdimensional space using the following approach:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Node Representation&lt;/strong&gt;: Each network endpoint gets two random binary hypervectors:
+    &lt;ul&gt;
+      &lt;li&gt;Ĥᵤ represents node u as a source&lt;/li&gt;
+      &lt;li&gt;Ȟᵤ represents node u as a destination&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Edge Encoding&lt;/strong&gt;: A connection from u to v is encoded as the Hadamard product (element-wise multiplication): H̄ᵤᵥ = Ĥᵤ ⊙ Ȟᵥ&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Graph Snapshot&lt;/strong&gt;: The complete network state at time t is the weighted sum of all edge encodings:&lt;/p&gt;
+
+    &lt;p&gt;xₜ = Σ w(u,v)ₜ · Ĥᵤ ⊙ Ȟᵥ&lt;/p&gt;
+
+    &lt;p&gt;where w(u,v) is the number of communications between u and v&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;standardization-and-theory&quot;&gt;Standardization and Theory&lt;/h3&gt;
+
+&lt;p&gt;We prove that under reasonable assumptions about the baseline edge-generating process, the standardized encoding follows a known distribution. This allows us to perform non-parametric hypothesis testing to detect anomalies.&lt;/p&gt;
+
+&lt;p&gt;The standardized encoding is:&lt;/p&gt;
+
+&lt;p&gt;zₜ = (xₜ - E[xₜ]) / √var[xₜ]&lt;/p&gt;
+
+&lt;p&gt;When the network behaves normally (edges sampled uniformly), each element of zₜ approximately follows a standard normal distribution.&lt;/p&gt;
+
+&lt;h3 id=&quot;anomaly-detection&quot;&gt;Anomaly Detection&lt;/h3&gt;
+
+&lt;p&gt;We compute an &lt;strong&gt;anomaly score primitive&lt;/strong&gt; by counting how many elements of zₜ deviate significantly from expectation:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;s̄ₜ = max(Σ 𝟙{&lt;/td&gt;
+      &lt;td&gt;zₜ,ᵢ&lt;/td&gt;
+      &lt;td&gt;&amp;lt; θₗ}, Σ 𝟙{&lt;/td&gt;
+      &lt;td&gt;zₜ,ᵢ&lt;/td&gt;
+      &lt;td&gt;&amp;gt; θᵤ})&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;This captures two types of anomalies:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Graphs that are &lt;strong&gt;more random&lt;/strong&gt; than baseline (equivalence testing)&lt;/li&gt;
+  &lt;li&gt;Graphs that are &lt;strong&gt;less random&lt;/strong&gt; than baseline (hypothesis testing)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;confidence-scores&quot;&gt;Confidence Scores&lt;/h3&gt;
+
+&lt;p&gt;The primitive scores are converted to interpretable &lt;strong&gt;Bayesian confidence estimates&lt;/strong&gt; using a Beta prior. This provides security analysts with probabilistic assessments of whether a network snapshot is anomalous.&lt;/p&gt;
+
+&lt;p&gt;The confidence score πₜ tells us: “With probability πₜ, this network activity is anomalous.”&lt;/p&gt;
+
+&lt;h2 id=&quot;key-advantages&quot;&gt;Key Advantages&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-constant-memory&quot;&gt;1. Constant Memory&lt;/h3&gt;
+&lt;p&gt;Unlike methods that store historical data, HDSGA maintains only:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A (d+1)-dimensional counter vector for score frequencies&lt;/li&gt;
+  &lt;li&gt;Fixed-size hypervector representations for nodes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This enables deployment on resource-constrained edge devices.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-real-time-operation&quot;&gt;2. Real-Time Operation&lt;/h3&gt;
+&lt;p&gt;The algorithm runs in O(dk) time for k edges and d dimensions. Computation can be further optimized by updating only changed edges.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-online-learning&quot;&gt;3. Online Learning&lt;/h3&gt;
+&lt;p&gt;Each snapshot is scored independently - no batch processing required. The confidence estimate updates incrementally as new data arrives.&lt;/p&gt;
+
+&lt;h3 id=&quot;4-interpretability&quot;&gt;4. Interpretability&lt;/h3&gt;
+&lt;p&gt;Unlike black-box models, HDSGA provides:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Probabilistic confidence scores&lt;/li&gt;
+  &lt;li&gt;Clear anomaly primitives&lt;/li&gt;
+  &lt;li&gt;Transparent decision logic for security audits&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;experimental-results&quot;&gt;Experimental Results&lt;/h2&gt;
+
+&lt;p&gt;We evaluated HDSGA on four datasets:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;SIMARGL 2021&lt;/strong&gt;: 23M observations, 3,886 snapshots&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;DARPA 1998&lt;/strong&gt;: 4.5M observations, 970 snapshots&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;APPRAISE H2020&lt;/strong&gt;: 15M observations, 294 snapshots&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Simulated (TabMT)&lt;/strong&gt;: 80K observations, 303 snapshots&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;detection-performance&quot;&gt;Detection Performance&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Method&lt;/th&gt;
+      &lt;th&gt;Average AUC-ROC&lt;/th&gt;
+      &lt;th&gt;Average AUC-PR&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;HDSGA-p&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;95.73%&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;90.20%&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;HDSGA-c&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;93.65%&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;85.08%&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SpotLight&lt;/td&gt;
+      &lt;td&gt;85.55%&lt;/td&gt;
+      &lt;td&gt;62.40%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;AnoGraph&lt;/td&gt;
+      &lt;td&gt;91.95%&lt;/td&gt;
+      &lt;td&gt;85.17%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MIDAS&lt;/td&gt;
+      &lt;td&gt;90.84%&lt;/td&gt;
+      &lt;td&gt;81.69%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MIDAS-R&lt;/td&gt;
+      &lt;td&gt;94.14%&lt;/td&gt;
+      &lt;td&gt;89.14%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;HDSGA achieved the highest average AUC-ROC across all datasets.&lt;/p&gt;
+
+&lt;h3 id=&quot;runtime-performance&quot;&gt;Runtime Performance&lt;/h3&gt;
+
+&lt;p&gt;On average, HDSGA ran &lt;strong&gt;1.88× faster&lt;/strong&gt; than the next fastest method. For example, on the SIMARGL dataset:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Method&lt;/th&gt;
+      &lt;th&gt;Runtime (seconds)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;HDSGA&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;374.9&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SpotLight&lt;/td&gt;
+      &lt;td&gt;543.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;AnoGraph&lt;/td&gt;
+      &lt;td&gt;1,456.5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MIDAS&lt;/td&gt;
+      &lt;td&gt;1,352.4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MIDAS-R&lt;/td&gt;
+      &lt;td&gt;2,392.3&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;visualization-results&quot;&gt;Visualization Results&lt;/h3&gt;
+
+&lt;p&gt;Our experiments on the SIMARGL dataset revealed that different attack types (DoS, port scanning, malware) map to distinct clusters in the hyperdimensional encoding space. This demonstrates that HDSGA not only detects anomalies but also preserves structural information about different types of attacks.&lt;/p&gt;
+
+&lt;p&gt;
+    &lt;center&gt;&lt;img src=&quot;/images/simargl.png&quot; width=&quot;100%&quot; /&gt;&lt;br /&gt;
+    &lt;em&gt;Left: Anomaly detection results on SIMARGL dataset showing ground truth (top row) and detection scores from various methods. Right: 2D projection (PCA) of binary encodings showing how different attack types (DoS, port scanning) cluster separately from benign traffic.&lt;/em&gt;&lt;/center&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;synthetic-data-insights&quot;&gt;Synthetic Data Insights&lt;/h2&gt;
+
+&lt;p&gt;We tested HDSGA on synthetic graphs with known structures (complete, caveman, star, wheel, windmill). The encodings successfully distinguished between different graph topologies, with similar structures mapping to nearby regions in the encoding space.&lt;/p&gt;
+
+&lt;p&gt;This validates that the hyperdimensional encoding captures meaningful graph properties beyond simple randomness.&lt;/p&gt;
+
+&lt;h2 id=&quot;zero-trust-architecture&quot;&gt;Zero Trust Architecture&lt;/h2&gt;
+
+&lt;p&gt;HDSGA was developed as part of Leidos’ Zero Trust Mission Cloud Initiative. In Zero Trust frameworks, network access is never implicitly trusted - every connection must be verified. Real-time anomaly detection is critical for:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Behavioral monitoring&lt;/strong&gt;: Detecting unusual patterns in authorized connections&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Threat hunting&lt;/strong&gt;: Identifying lateral movement and command-and-control traffic&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Incident response&lt;/strong&gt;: Rapidly flagging suspicious activity for investigation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;HDSGA’s constant memory footprint and real-time operation make it ideal for distributed Zero Trust deployments across large enterprise networks.&lt;/p&gt;
+
+&lt;h2 id=&quot;technical-deep-dive-the-mathematics&quot;&gt;Technical Deep Dive: The Mathematics&lt;/h2&gt;
+
+&lt;p&gt;For those interested in the theoretical foundations, our paper proves several key results:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Encoding Distribution&lt;/strong&gt;: Under uniform sampling, the encoding follows a weighted sum of Bernoulli random variables&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Central Limit Theorem&lt;/strong&gt;: The standardized encoding converges to standard normal as dimensionality increases (via Lyapunov CLT)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Finite Graph Corrections&lt;/strong&gt;: We provide exact variance formulas accounting for sampling without replacement in finite networks&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;These theoretical guarantees ensure that our anomaly detection has well-calibrated false positive rates.&lt;/p&gt;
+
+&lt;h2 id=&quot;hyperparameters&quot;&gt;Hyperparameters&lt;/h2&gt;
+
+&lt;p&gt;The main tuning parameters are:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;p, q&lt;/strong&gt;: Source and destination mapping probabilities (typically 0.1-0.3)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;θₗ, θᵤ&lt;/strong&gt;: Lower and upper anomaly thresholds (typically 0-4 standard deviations)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;d&lt;/strong&gt;: Hypervector dimension (2¹⁰ = 1024 in our experiments)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;γ&lt;/strong&gt;: Expected contamination rate (fraction of anomalous snapshots)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We provide guidance in the paper for setting these based on empirical percentiles of a small calibration set.&lt;/p&gt;
+
+&lt;h2 id=&quot;limitations-and-future-work&quot;&gt;Limitations and Future Work&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Current Limitations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Assumes baseline generating process exists (though it need not be uniform)&lt;/li&gt;
+  &lt;li&gt;Very similar graph structures may be confused (e.g., caveman vs. complete graphs)&lt;/li&gt;
+  &lt;li&gt;Requires bounded edge weights for theoretical guarantees&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Future Directions:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Multi-language support for node identifiers&lt;/li&gt;
+  &lt;li&gt;Integration with existing SIEM platforms&lt;/li&gt;
+  &lt;li&gt;Explainability features identifying which edges contribute most to anomaly scores&lt;/li&gt;
+  &lt;li&gt;Adaptive threshold learning&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;implementation&quot;&gt;Implementation&lt;/h2&gt;
+
+&lt;p&gt;We implemented HDSGA in Python with experiments conducted on AWS WorkSpaces (Amazon Linux 2, 7.7GB RAM, 2.5GHz Intel Xeon). The code leverages:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;NumPy for efficient vector operations&lt;/li&gt;
+  &lt;li&gt;Sparse representations for memory efficiency&lt;/li&gt;
+  &lt;li&gt;Parallel processing for large-scale networks&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The approach is architecture-agnostic and can be deployed on various platforms from edge devices to cloud infrastructure.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;By combining the theoretical foundations of Stochastic Block Models with the computational efficiency of Hyperdimensional Computing, HDSGA provides a practical solution for real-time network anomaly detection. Our results demonstrate that principled mathematical approaches can match or exceed the performance of complex deep learning models while offering superior speed, interpretability, and memory efficiency.&lt;/p&gt;
+
+&lt;p&gt;As organizations adopt Zero Trust architectures, tools like HDSGA will become increasingly critical for maintaining security without sacrificing performance.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;This research was conducted under Leidos’ Office of Technology Zero Trust Mission Cloud Initiative (approval 24-LEIDOS-0430-27761) and presented at IEEE DSAA 2024.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Read the full paper&lt;/strong&gt;: &lt;a href=&quot;https://ieeexplore.ieee.org/document/10814464&quot; target=&quot;_blank&quot;&gt;IEEE Xplore&lt;/a&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/hypervector-anomaly-detection/&quot;&gt;Using Hypervectors for Efficient Anomaly Detection in Graph Streams&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on November 04, 2024.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Using Machine Learning to Predict Critical Security Vulnerabilities from Twitter]]></title>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/twitter-security-threats/" />
+  <id>http://localhost:4000/twitter-security-threats</id>
+  <updated>2019-03-11T00:00:00-00:00</updated>
+  <published>2019-03-11T00:00:00-04:00</published>
+  
+  <author>
+    <name>Graham Mueller</name>
+    <uri>http://localhost:4000</uri>
+    <email>wgmueller@gmail.com</email>
+  </author>
+  <content type="html">&lt;p&gt;I’m excited to share that our paper on using machine learning to analyze cybersecurity threats discussed on Twitter was recently &lt;a href=&quot;https://www.wired.com/story/machine-learning-tweets-critical-security-flaws/&quot; target=&quot;_blank&quot;&gt;featured in Wired Magazine&lt;/a&gt;! The work was also covered by &lt;a href=&quot;https://securitytoday.com/articles/2019/03/11/new-system-uses-machine-learning-to-scan-tweets-for-security-flaws.aspx&quot; target=&quot;_blank&quot;&gt;Security Today&lt;/a&gt; and &lt;a href=&quot;https://cse.osu.edu/news/2019/03/ohio-state-researchers-use-natural-language-processing-identify-critical-security&quot; target=&quot;_blank&quot;&gt;Ohio State University&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;
+  &lt;center&gt;&lt;img src=&quot;/images/wired.png&quot; /&gt;&lt;br /&gt;
+  &lt;/center&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Paper&lt;/strong&gt;: &lt;a href=&quot;https://arxiv.org/abs/1902.10680&quot; target=&quot;_blank&quot;&gt;Analyzing the Perceived Severity of Cybersecurity Threats Reported on Social Media&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Authors&lt;/strong&gt;: Shi Zong, Alan Ritter, Graham Mueller, Evan Wright&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Published&lt;/strong&gt;: NAACL 2019 (Conference of the North American Chapter of the Association for Computational Linguistics)&lt;/p&gt;
+
+&lt;h2 id=&quot;the-problem&quot;&gt;The Problem&lt;/h2&gt;
+
+&lt;p&gt;When a new software vulnerability is discovered, security professionals need to quickly assess its severity to prioritize patching efforts. However, vulnerabilities are often discussed on social media days or even weeks before they appear in official databases like the National Vulnerability Database (NVD). This creates a critical window where organizations could be vulnerable without realizing it.&lt;/p&gt;
+
+&lt;p&gt;Traditional approaches rely on manual analysis or waiting for official CVE (Common Vulnerabilities and Exposures) reports, which can take time. Meanwhile, security researchers, hackers, and developers are actively discussing these threats on Twitter, sharing insights about their severity and potential impact.&lt;/p&gt;
+
+&lt;h2 id=&quot;our-approach&quot;&gt;Our Approach&lt;/h2&gt;
+
+&lt;p&gt;We developed a machine learning system that:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Monitors Twitter&lt;/strong&gt; for discussions about software vulnerabilities&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Links tweets to CVEs&lt;/strong&gt; in the National Vulnerability Database&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Analyzes user opinions&lt;/strong&gt; about vulnerability severity using natural language processing&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Predicts which vulnerabilities will be rated “high” or “critical”&lt;/strong&gt; before official ratings are published&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;dataset&quot;&gt;Dataset&lt;/h3&gt;
+
+&lt;p&gt;We created a dataset of &lt;strong&gt;6,000 annotated tweets&lt;/strong&gt; discussing software vulnerabilities, each labeled with perceived severity. This involved:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Identifying tweets mentioning specific CVEs&lt;/li&gt;
+  &lt;li&gt;Extracting user opinions about threat severity&lt;/li&gt;
+  &lt;li&gt;Linking social media discussions to official vulnerability records&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;model-performance&quot;&gt;Model Performance&lt;/h3&gt;
+
+&lt;p&gt;Our model achieved impressive results:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Precision@50 of 0.86&lt;/strong&gt; when forecasting high severity vulnerabilities&lt;/li&gt;
+  &lt;li&gt;Successfully predicted which vulnerabilities would receive official “high” or “critical” severity ratings with &lt;strong&gt;over 80% accuracy&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Substantially outperformed baseline methods&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;key-findings&quot;&gt;Key Findings&lt;/h2&gt;
+
+&lt;h3 id=&quot;early-warning-system&quot;&gt;Early Warning System&lt;/h3&gt;
+
+&lt;p&gt;Twitter discussions can predict the majority of security flaws that appear in the National Vulnerability Database days later. This means security teams could get advance warning about critical threats before official CVE reports are published.&lt;/p&gt;
+
+&lt;h3 id=&quot;severity-prediction&quot;&gt;Severity Prediction&lt;/h3&gt;
+
+&lt;p&gt;By analyzing the language used in tweets - how urgently people discuss a vulnerability, what words they use, and the context of the discussion - we can accurately predict official severity ratings. This is valuable because:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Official severity scores sometimes take days or weeks to be published&lt;/li&gt;
+  &lt;li&gt;The crowd’s assessment often aligns with expert evaluations&lt;/li&gt;
+  &lt;li&gt;Early severity estimates help prioritize incident response&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;exploit-prediction&quot;&gt;Exploit Prediction&lt;/h3&gt;
+
+&lt;p&gt;Perhaps most importantly, we found that social media discussions about severe vulnerabilities can predict real-world exploit activity. When people on Twitter are discussing a vulnerability with urgency, it’s often a signal that exploits are being developed or are imminent.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-this-matters&quot;&gt;Why This Matters&lt;/h2&gt;
+
+&lt;h3 id=&quot;for-security-teams&quot;&gt;For Security Teams&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Proactive defense&lt;/strong&gt;: Get early warnings about critical vulnerabilities before they’re officially rated&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Better prioritization&lt;/strong&gt;: Focus limited resources on the threats that matter most&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Faster response&lt;/strong&gt;: Start patching efforts before exploits appear in the wild&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;for-researchers&quot;&gt;For Researchers&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Novel data source&lt;/strong&gt;: Social media provides real-time, crowd-sourced threat intelligence&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;NLP applications&lt;/strong&gt;: Demonstrates the value of natural language processing for cybersecurity&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Early warning signals&lt;/strong&gt;: Shows that online discussions contain predictive signals about real-world security events&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;future-directions&quot;&gt;Future Directions&lt;/h2&gt;
+
+&lt;p&gt;This research opens several exciting directions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Real-time monitoring systems&lt;/strong&gt;: Deploying models that continuously scan social media for emerging threats&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Multi-language support&lt;/strong&gt;: Extending beyond English tweets to capture global threat discussions&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Integration with security tools&lt;/strong&gt;: Incorporating social media signals into existing vulnerability management platforms&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Exploit prediction&lt;/strong&gt;: Further work on predicting not just severity, but actual exploit development and deployment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;try-it-yourself&quot;&gt;Try It Yourself&lt;/h2&gt;
+
+&lt;p&gt;The paper and additional materials are available on &lt;a href=&quot;https://arxiv.org/abs/1902.10680&quot; target=&quot;_blank&quot;&gt;arXiv&lt;/a&gt;. The work was presented at NAACL 2019, one of the premier conferences in natural language processing.&lt;/p&gt;
+
+&lt;p&gt;By combining machine learning, natural language processing, and cybersecurity expertise, we demonstrated that social media contains valuable signals for predicting and prioritizing security threats. As the security landscape continues to evolve, leveraging these data sources will become increasingly important for staying ahead of emerging vulnerabilities.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;This post summarizes our NAACL 2019 paper: “Analyzing the Perceived Severity of Cybersecurity Threats Reported on Social Media” by Shi Zong, Alan Ritter, Graham Mueller, and Evan Wright.&lt;/em&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/twitter-security-threats/&quot;&gt;Using Machine Learning to Predict Critical Security Vulnerabilities from Twitter&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on March 11, 2019.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
   <title type="html"><![CDATA[Boxing's Grandmasters Part II]]></title>
-  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/boxing/" />
-  <id>https://wgmueller1.github.io/boxing</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/boxing/" />
+  <id>http://localhost:4000/boxing</id>
   <updated>2018-01-02T00:00:00-00:00</updated>
   <published>2018-01-02T00:00:00-05:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>https://wgmueller1.github.io</uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -309,20 +995,20 @@
 &lt;/html&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/boxing/&quot;&gt;Boxing's Grandmasters Part II&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on January 02, 2018.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/boxing/&quot;&gt;Boxing's Grandmasters Part II&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on January 02, 2018.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Deep Learning for Time Series, pt. 1]]></title>
-  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/deeptime/" />
-  <id>https://wgmueller1.github.io/deeptime</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/deeptime/" />
+  <id>http://localhost:4000/deeptime</id>
   <updated>2016-07-09T00:00:00-00:00</updated>
   <published>2016-07-07T00:00:00-04:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>https://wgmueller1.github.io</uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -528,20 +1214,20 @@ total     0.98      0.98      0.98      7352
 &lt;br /&gt;
 &lt;a name=&quot;myfootnote1&quot;&gt;1&lt;/a&gt;: https://deeplearning.net/tutorial/lenet.html&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/deeptime/&quot;&gt;Deep Learning for Time Series, pt. 1&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on July 07, 2016.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/deeptime/&quot;&gt;Deep Learning for Time Series, pt. 1&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 07, 2016.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Boxing's Grandmasters]]></title>
-  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/grandmaster/" />
-  <id>https://wgmueller1.github.io/grandmaster</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/grandmaster/" />
+  <id>http://localhost:4000/grandmaster</id>
   <updated>2016-07-31T00:00:00-00:00</updated>
   <published>2015-12-05T00:00:00-05:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>https://wgmueller1.github.io</uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -996,19 +1682,19 @@ A player whose rating is 100 points greater than their opponents is expected to 
 &lt;/table&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/grandmaster/&quot;&gt;Boxing's Grandmasters&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on December 05, 2015.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/grandmaster/&quot;&gt;Boxing's Grandmasters&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on December 05, 2015.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Spectral clustering]]></title>
-  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/spectral-clustering/" />
-  <id>https://wgmueller1.github.io/spectral-clustering</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/spectral-clustering/" />
+  <id>http://localhost:4000/spectral-clustering</id>
   <published>2014-10-04T00:00:00-04:00</published>
   <updated>2014-10-04T00:00:00-04:00</updated>
   <author>
     <name>Graham Mueller</name>
-    <uri>https://wgmueller1.github.io</uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;p&gt;Spectral clustering is an approach to clustering data in which the spectrum (eigenvalues) of a similarity matrix is used to perform dimension reduction.  Given a symmetric similarity or adjacency matrix, \(A\).  The Laplacian matrix is equal to the&lt;/p&gt;
@@ -1067,20 +1753,20 @@ Cluster the points \((yi) i=1,\dots n\) in \(\mathbb{R}^k\) with the k-means alg
         &lt;span class=&quot;n&quot;&gt;sim_sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Similarity_Matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/spectral-clustering/&quot;&gt;Spectral clustering&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on October 04, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/spectral-clustering/&quot;&gt;Spectral clustering&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on October 04, 2014.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Dynamic Time Warping]]></title>
-  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/sample-post/" />
-  <id>https://wgmueller1.github.io/sample-post</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/sample-post/" />
+  <id>http://localhost:4000/sample-post</id>
   <updated>2014-07-19T00:00:00-00:00</updated>
   <published>2014-07-20T00:00:00-04:00</published>
   
   <author>
     <name>Graham Mueller</name>
-    <uri>https://wgmueller1.github.io</uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;section id=&quot;table-of-contents&quot; class=&quot;toc&quot;&gt;
@@ -1120,19 +1806,19 @@ $$y_t=y_1,y_2,y_3, \dots y_m$$
 &lt;h2 id=&quot;temporal-semantic-analysis&quot;&gt;Temporal Semantic Analysis&lt;/h2&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/sample-post/&quot;&gt;Dynamic Time Warping&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on July 20, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/sample-post/&quot;&gt;Dynamic Time Warping&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on July 20, 2014.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[d3 to svg]]></title>
-  <link rel="alternate" type="text/html" href="https://wgmueller1.github.io/code-highlighting-post/" />
-  <id>https://wgmueller1.github.io/code-highlighting-post</id>
+  <link rel="alternate" type="text/html" href="http://localhost:4000/code-highlighting-post/" />
+  <id>http://localhost:4000/code-highlighting-post</id>
   <published>2013-08-16T00:00:00-04:00</published>
   <updated>2013-08-16T00:00:00-04:00</updated>
   <author>
     <name>Graham Mueller</name>
-    <uri>https://wgmueller1.github.io</uri>
+    <uri>http://localhost:4000</uri>
     <email>wgmueller@gmail.com</email>
   </author>
   <content type="html">&lt;p&gt;I find it hilarious that I am actually doing this crap, but if you ever wanted to know how to render a svg generated by d3 into a downloadable pdf, png, whatever, here is one solution.  This is all based on the work done &lt;a href=&quot;http://d3export.housegordon.org&quot;&gt;here&lt;/a&gt;.  I couldn’t use the perl script on the server side because I’m using &lt;a href=&quot;http://tangelo.kitware.com&quot;&gt;Tangelo&lt;/a&gt; to develop prototype web applications.  At first, I thought I’d just call the perl script through subprocess or pyperl, but that was mainly because I didn’t want to spend anytime understanding what the perl script actually did.&lt;/p&gt;
@@ -1142,7 +1828,7 @@ $$y_t=y_1,y_2,y_3, \dots y_m$$
 &lt;p&gt;To modify styling and highlight colors edit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/assets/less/pygments.less&lt;/code&gt; and compile &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.less&lt;/code&gt; with your favorite preprocessor. Or edit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.css&lt;/code&gt; if that’s your thing, the classes you want to modify all begin with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.highlight&lt;/code&gt;.&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;https://wgmueller1.github.io/code-highlighting-post/&quot;&gt;d3 to svg&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;https://wgmueller1.github.io&quot;&gt;Nullspace&lt;/a&gt; on August 16, 2013.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/code-highlighting-post/&quot;&gt;d3 to svg&lt;/a&gt; was originally published by Graham Mueller at &lt;a href=&quot;http://localhost:4000&quot;&gt;Nullspace&lt;/a&gt; on August 16, 2013.&lt;/p&gt;</content>
 </entry>
 
 </feed>

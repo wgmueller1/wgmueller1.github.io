@@ -1,0 +1,289 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Using Machine Learning to Predict Critical Security Vulnerabilities from Twitter &#8211; Nullspace</title>
+<meta name="description" content="Our NAACL 2019 paper on analyzing cybersecurity threats on social media was featured in Wired">
+<meta name="keywords" content="machine, learning, nlp, security, twitter, social, media, cybersecurity">
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Machine Learning to Predict Critical Security Vulnerabilities from Twitter">
+<meta property="og:description" content="Our NAACL 2019 paper on analyzing cybersecurity threats on social media was featured in Wired">
+<meta property="og:url" content="http://localhost:4000/twitter-security-threats/">
+<meta property="og:site_name" content="Nullspace">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/twitter-security-threats/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Nullspace</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="http://localhost:4000/about/" >About</a></li>
+		        
+				<li><a href="http://localhost:4000/posts/" >Posts</a></li>
+		        
+				<li><a href="http://localhost:4000/links/" >Links</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+
+
+
+<a href="https://linkedin.com/in/graham-mueller-4836b11a" class="author-social" target="_blank"><i class="fa fa-linkedin-square"></i> LinkedIn</a>
+
+
+<a href="https://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/twitter-security-threats/" rel="bookmark" title="Using Machine Learning to Predict Critical Security Vulnerabilities from Twitter">Using Machine Learning to Predict Critical Security Vulnerabilities from Twitter</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>I’m excited to share that our paper on using machine learning to analyze cybersecurity threats discussed on Twitter was recently <a href="https://www.wired.com/story/machine-learning-tweets-critical-security-flaws/" target="_blank">featured in Wired Magazine</a>! The work was also covered by <a href="https://securitytoday.com/articles/2019/03/11/new-system-uses-machine-learning-to-scan-tweets-for-security-flaws.aspx" target="_blank">Security Today</a> and <a href="https://cse.osu.edu/news/2019/03/ohio-state-researchers-use-natural-language-processing-identify-critical-security" target="_blank">Ohio State University</a>.</p>
+
+<p>
+  <center><img src="/images/wired.png" /><br />
+  </center>
+</p>
+
+<p><strong>Paper</strong>: <a href="https://arxiv.org/abs/1902.10680" target="_blank">Analyzing the Perceived Severity of Cybersecurity Threats Reported on Social Media</a></p>
+
+<p><strong>Authors</strong>: Shi Zong, Alan Ritter, Graham Mueller, Evan Wright</p>
+
+<p><strong>Published</strong>: NAACL 2019 (Conference of the North American Chapter of the Association for Computational Linguistics)</p>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>When a new software vulnerability is discovered, security professionals need to quickly assess its severity to prioritize patching efforts. However, vulnerabilities are often discussed on social media days or even weeks before they appear in official databases like the National Vulnerability Database (NVD). This creates a critical window where organizations could be vulnerable without realizing it.</p>
+
+<p>Traditional approaches rely on manual analysis or waiting for official CVE (Common Vulnerabilities and Exposures) reports, which can take time. Meanwhile, security researchers, hackers, and developers are actively discussing these threats on Twitter, sharing insights about their severity and potential impact.</p>
+
+<h2 id="our-approach">Our Approach</h2>
+
+<p>We developed a machine learning system that:</p>
+
+<ol>
+  <li><strong>Monitors Twitter</strong> for discussions about software vulnerabilities</li>
+  <li><strong>Links tweets to CVEs</strong> in the National Vulnerability Database</li>
+  <li><strong>Analyzes user opinions</strong> about vulnerability severity using natural language processing</li>
+  <li><strong>Predicts which vulnerabilities will be rated “high” or “critical”</strong> before official ratings are published</li>
+</ol>
+
+<h3 id="dataset">Dataset</h3>
+
+<p>We created a dataset of <strong>6,000 annotated tweets</strong> discussing software vulnerabilities, each labeled with perceived severity. This involved:</p>
+
+<ul>
+  <li>Identifying tweets mentioning specific CVEs</li>
+  <li>Extracting user opinions about threat severity</li>
+  <li>Linking social media discussions to official vulnerability records</li>
+</ul>
+
+<h3 id="model-performance">Model Performance</h3>
+
+<p>Our model achieved impressive results:</p>
+
+<ul>
+  <li><strong>Precision@50 of 0.86</strong> when forecasting high severity vulnerabilities</li>
+  <li>Successfully predicted which vulnerabilities would receive official “high” or “critical” severity ratings with <strong>over 80% accuracy</strong></li>
+  <li>Substantially outperformed baseline methods</li>
+</ul>
+
+<h2 id="key-findings">Key Findings</h2>
+
+<h3 id="early-warning-system">Early Warning System</h3>
+
+<p>Twitter discussions can predict the majority of security flaws that appear in the National Vulnerability Database days later. This means security teams could get advance warning about critical threats before official CVE reports are published.</p>
+
+<h3 id="severity-prediction">Severity Prediction</h3>
+
+<p>By analyzing the language used in tweets - how urgently people discuss a vulnerability, what words they use, and the context of the discussion - we can accurately predict official severity ratings. This is valuable because:</p>
+
+<ul>
+  <li>Official severity scores sometimes take days or weeks to be published</li>
+  <li>The crowd’s assessment often aligns with expert evaluations</li>
+  <li>Early severity estimates help prioritize incident response</li>
+</ul>
+
+<h3 id="exploit-prediction">Exploit Prediction</h3>
+
+<p>Perhaps most importantly, we found that social media discussions about severe vulnerabilities can predict real-world exploit activity. When people on Twitter are discussing a vulnerability with urgency, it’s often a signal that exploits are being developed or are imminent.</p>
+
+<h2 id="why-this-matters">Why This Matters</h2>
+
+<h3 id="for-security-teams">For Security Teams</h3>
+
+<ul>
+  <li><strong>Proactive defense</strong>: Get early warnings about critical vulnerabilities before they’re officially rated</li>
+  <li><strong>Better prioritization</strong>: Focus limited resources on the threats that matter most</li>
+  <li><strong>Faster response</strong>: Start patching efforts before exploits appear in the wild</li>
+</ul>
+
+<h3 id="for-researchers">For Researchers</h3>
+
+<ul>
+  <li><strong>Novel data source</strong>: Social media provides real-time, crowd-sourced threat intelligence</li>
+  <li><strong>NLP applications</strong>: Demonstrates the value of natural language processing for cybersecurity</li>
+  <li><strong>Early warning signals</strong>: Shows that online discussions contain predictive signals about real-world security events</li>
+</ul>
+
+<h2 id="future-directions">Future Directions</h2>
+
+<p>This research opens several exciting directions:</p>
+
+<ul>
+  <li><strong>Real-time monitoring systems</strong>: Deploying models that continuously scan social media for emerging threats</li>
+  <li><strong>Multi-language support</strong>: Extending beyond English tweets to capture global threat discussions</li>
+  <li><strong>Integration with security tools</strong>: Incorporating social media signals into existing vulnerability management platforms</li>
+  <li><strong>Exploit prediction</strong>: Further work on predicting not just severity, but actual exploit development and deployment</li>
+</ul>
+
+<h2 id="try-it-yourself">Try It Yourself</h2>
+
+<p>The paper and additional materials are available on <a href="https://arxiv.org/abs/1902.10680" target="_blank">arXiv</a>. The work was presented at NAACL 2019, one of the premier conferences in natural language processing.</p>
+
+<p>By combining machine learning, natural language processing, and cybersecurity expertise, we demonstrated that social media contains valuable signals for predicting and prioritizing security threats. As the security landscape continues to evolve, leveraging these data sources will become increasingly important for staying ahead of emerging vulnerabilities.</p>
+
+<hr />
+
+<p><em>This post summarizes our NAACL 2019 paper: “Analyzing the Perceived Severity of Cybersecurity Threats Reported on Social Media” by Shi Zong, Alan Ritter, Graham Mueller, and Evan Wright.</em></p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+
+
+
+<a href="https://linkedin.com/in/graham-mueller-4836b11a" class="author-social" target="_blank"><i class="fa fa-linkedin-square"></i> LinkedIn</a>
+
+
+<a href="https://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Using Machine Learning to Predict Critical Security Vulnerabilities from Twitter</strong> was published on <time datetime="2019-03-11T00:00:00-04:00">March 11, 2019</time> and last modified on <time datetime="2019-03-11">March 11, 2019</time> by <a href="http://localhost:4000/about" title="About Graham Mueller">Graham Mueller</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/community-detection-viz/" title="Differentiable Community Detection with GNNs and Stochastic Block Models">Differentiable Community Detection with GNNs and Stochastic Block Models</a></li>
+    
+      <li><a href="http://localhost:4000/hypervector-anomaly-detection/" title="Using Hypervectors for Efficient Anomaly Detection in Graph Streams">Using Hypervectors for Efficient Anomaly Detection in Graph Streams</a></li>
+    
+      <li><a href="http://localhost:4000/boxing/" title="Boxing's Grandmasters Part II">Boxing's Grandmasters Part II</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2026 Graham Mueller. Powered by <a href="https://jekyllrb.com">Jekyll</a> using the <a href="https://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+	        
+
+</body>
+</html>

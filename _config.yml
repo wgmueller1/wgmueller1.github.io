@@ -11,18 +11,10 @@ owner:
   bio:            "Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory."
   email:          wgmueller@gmail.com
   # Social networking links are used in author-bio sidebar. Update and remove as you like.
-  twitter: random_walk
+  twitter: 
   facebook:
   github: wgmueller1
-  stackoverflow:
-  linkedin:
-  instagram:
-  lastfm:
-  tumblr:
-  pinterest:
-  foursquare:
-  steam:
-  dribbble:
+  linkedin: graham-mueller-4836b11a
   # For Google Authorship https://plus.google.com/authorship
   google_plus:
 

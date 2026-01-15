@@ -1,0 +1,481 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Using Hypervectors for Efficient Anomaly Detection in Graph Streams &#8211; Nullspace</title>
+<meta name="description" content="Real-time network anomaly detection with Hyperdimensional Computing">
+<meta name="keywords" content="hyperdimensional, computing, graph, anomaly, detection, network, security, zero, trust">
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Hypervectors for Efficient Anomaly Detection in Graph Streams">
+<meta property="og:description" content="Real-time network anomaly detection with Hyperdimensional Computing">
+<meta property="og:url" content="http://localhost:4000/hypervector-anomaly-detection/">
+<meta property="og:site_name" content="Nullspace">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/hypervector-anomaly-detection/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Nullspace Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Webfonts -->
+<link href='https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.min.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Nullspace</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				<li><a href="http://localhost:4000/about/" >About</a></li>
+		        
+				<li><a href="http://localhost:4000/posts/" >Posts</a></li>
+		        
+				<li><a href="http://localhost:4000/links/" >Links</a></li>
+		        
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+
+
+
+<a href="https://linkedin.com/in/graham-mueller-4836b11a" class="author-social" target="_blank"><i class="fa fa-linkedin-square"></i> LinkedIn</a>
+
+
+<a href="https://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+  </div>
+  <article>
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/hypervector-anomaly-detection/" rel="bookmark" title="Using Hypervectors for Efficient Anomaly Detection in Graph Streams">Using Hypervectors for Efficient Anomaly Detection in Graph Streams</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p>Network security in the era of Zero Trust architectures requires reliable real-time anomaly detection. In our recent <a href="https://ieeexplore.ieee.org/abstract/document/10722819" target="_blank">paper</a> presented at IEEE DSAA 2024, we introduce HDSGA (HyperDimensional Streaming Graph Anomaly detection), a novel approach that leverages Hyperdimensional Computing to detect anomalies in computer network traffic with exceptional speed and accuracy.</p>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>Computer networks naturally represent as dynamic graphs where nodes are endpoints (servers, workstations, devices) and edges are communications between them. Network anomalies - whether from cyberattacks, malware, or intrusions - manifest as unusual patterns in this graph structure: edges that deviate from the baseline topology.</p>
+
+<p>
+    <center><img src="/images/snapshot_vis.png" /><br />
+    <em>Example of anomaly detection in graph snapshots. The sequence shows snapshots sampled from an underlying windmill graph (t=1, 2, 4). At t=3, the snapshot is sampled from a complete graph and is therefore anomalous.</em></center>
+</p>
+
+<p>Traditional anomaly detection faces significant challenges:</p>
+<ul>
+  <li><strong>Scale</strong>: Real-world networks are extremely large with millions of connections</li>
+  <li><strong>Speed</strong>: Decisions must be made in real time</li>
+  <li><strong>Memory</strong>: Storing full network histories is impractical</li>
+  <li><strong>Interpretability</strong>: Security teams need confidence scores, not just binary predictions</li>
+</ul>
+
+<p>Deep learning models, while powerful, often struggle with the streaming nature of network data and the need for sub-linear memory usage.</p>
+
+<h2 id="our-approach-hyperdimensional-computing-for-graphs">Our Approach: Hyperdimensional Computing for Graphs</h2>
+
+<h3 id="what-is-hyperdimensional-computing">What is Hyperdimensional Computing?</h3>
+
+<p>Hyperdimensional Computing (HDC), also known as Vector Symbolic Architectures, represents information as very high-dimensional vectors (typically 1,000-10,000 dimensions). HDC has shown promise in online learning due to its “embarrassingly parallel” operations and ability to work with symbolic representations.</p>
+
+<h3 id="graph-encoding-with-hypervectors">Graph Encoding with Hypervectors</h3>
+
+<p>Our method encodes graph snapshots into hyperdimensional space using the following approach:</p>
+
+<ol>
+  <li><strong>Node Representation</strong>: Each network endpoint gets two random binary hypervectors:
+    <ul>
+      <li>Ĥᵤ represents node u as a source</li>
+      <li>Ȟᵤ represents node u as a destination</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Edge Encoding</strong>: A connection from u to v is encoded as the Hadamard product (element-wise multiplication): H̄ᵤᵥ = Ĥᵤ ⊙ Ȟᵥ</p>
+  </li>
+  <li>
+    <p><strong>Graph Snapshot</strong>: The complete network state at time t is the weighted sum of all edge encodings:</p>
+
+    <p>xₜ = Σ w(u,v)ₜ · Ĥᵤ ⊙ Ȟᵥ</p>
+
+    <p>where w(u,v) is the number of communications between u and v</p>
+  </li>
+</ol>
+
+<h3 id="standardization-and-theory">Standardization and Theory</h3>
+
+<p>We prove that under reasonable assumptions about the baseline edge-generating process, the standardized encoding follows a known distribution. This allows us to perform non-parametric hypothesis testing to detect anomalies.</p>
+
+<p>The standardized encoding is:</p>
+
+<p>zₜ = (xₜ - E[xₜ]) / √var[xₜ]</p>
+
+<p>When the network behaves normally (edges sampled uniformly), each element of zₜ approximately follows a standard normal distribution.</p>
+
+<h3 id="anomaly-detection">Anomaly Detection</h3>
+
+<p>We compute an <strong>anomaly score primitive</strong> by counting how many elements of zₜ deviate significantly from expectation:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>s̄ₜ = max(Σ 𝟙{</td>
+      <td>zₜ,ᵢ</td>
+      <td>&lt; θₗ}, Σ 𝟙{</td>
+      <td>zₜ,ᵢ</td>
+      <td>&gt; θᵤ})</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This captures two types of anomalies:</p>
+<ul>
+  <li>Graphs that are <strong>more random</strong> than baseline (equivalence testing)</li>
+  <li>Graphs that are <strong>less random</strong> than baseline (hypothesis testing)</li>
+</ul>
+
+<h3 id="confidence-scores">Confidence Scores</h3>
+
+<p>The primitive scores are converted to interpretable <strong>Bayesian confidence estimates</strong> using a Beta prior. This provides security analysts with probabilistic assessments of whether a network snapshot is anomalous.</p>
+
+<p>The confidence score πₜ tells us: “With probability πₜ, this network activity is anomalous.”</p>
+
+<h2 id="key-advantages">Key Advantages</h2>
+
+<h3 id="1-constant-memory">1. Constant Memory</h3>
+<p>Unlike methods that store historical data, HDSGA maintains only:</p>
+<ul>
+  <li>A (d+1)-dimensional counter vector for score frequencies</li>
+  <li>Fixed-size hypervector representations for nodes</li>
+</ul>
+
+<p>This enables deployment on resource-constrained edge devices.</p>
+
+<h3 id="2-real-time-operation">2. Real-Time Operation</h3>
+<p>The algorithm runs in O(dk) time for k edges and d dimensions. Computation can be further optimized by updating only changed edges.</p>
+
+<h3 id="3-online-learning">3. Online Learning</h3>
+<p>Each snapshot is scored independently - no batch processing required. The confidence estimate updates incrementally as new data arrives.</p>
+
+<h3 id="4-interpretability">4. Interpretability</h3>
+<p>Unlike black-box models, HDSGA provides:</p>
+<ul>
+  <li>Probabilistic confidence scores</li>
+  <li>Clear anomaly primitives</li>
+  <li>Transparent decision logic for security audits</li>
+</ul>
+
+<h2 id="experimental-results">Experimental Results</h2>
+
+<p>We evaluated HDSGA on four datasets:</p>
+<ul>
+  <li><strong>SIMARGL 2021</strong>: 23M observations, 3,886 snapshots</li>
+  <li><strong>DARPA 1998</strong>: 4.5M observations, 970 snapshots</li>
+  <li><strong>APPRAISE H2020</strong>: 15M observations, 294 snapshots</li>
+  <li><strong>Simulated (TabMT)</strong>: 80K observations, 303 snapshots</li>
+</ul>
+
+<h3 id="detection-performance">Detection Performance</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Average AUC-ROC</th>
+      <th>Average AUC-PR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>HDSGA-p</strong></td>
+      <td><strong>95.73%</strong></td>
+      <td><strong>90.20%</strong></td>
+    </tr>
+    <tr>
+      <td><strong>HDSGA-c</strong></td>
+      <td><strong>93.65%</strong></td>
+      <td><strong>85.08%</strong></td>
+    </tr>
+    <tr>
+      <td>SpotLight</td>
+      <td>85.55%</td>
+      <td>62.40%</td>
+    </tr>
+    <tr>
+      <td>AnoGraph</td>
+      <td>91.95%</td>
+      <td>85.17%</td>
+    </tr>
+    <tr>
+      <td>MIDAS</td>
+      <td>90.84%</td>
+      <td>81.69%</td>
+    </tr>
+    <tr>
+      <td>MIDAS-R</td>
+      <td>94.14%</td>
+      <td>89.14%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>HDSGA achieved the highest average AUC-ROC across all datasets.</p>
+
+<h3 id="runtime-performance">Runtime Performance</h3>
+
+<p>On average, HDSGA ran <strong>1.88× faster</strong> than the next fastest method. For example, on the SIMARGL dataset:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Runtime (seconds)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>HDSGA</strong></td>
+      <td><strong>374.9</strong></td>
+    </tr>
+    <tr>
+      <td>SpotLight</td>
+      <td>543.0</td>
+    </tr>
+    <tr>
+      <td>AnoGraph</td>
+      <td>1,456.5</td>
+    </tr>
+    <tr>
+      <td>MIDAS</td>
+      <td>1,352.4</td>
+    </tr>
+    <tr>
+      <td>MIDAS-R</td>
+      <td>2,392.3</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="visualization-results">Visualization Results</h3>
+
+<p>Our experiments on the SIMARGL dataset revealed that different attack types (DoS, port scanning, malware) map to distinct clusters in the hyperdimensional encoding space. This demonstrates that HDSGA not only detects anomalies but also preserves structural information about different types of attacks.</p>
+
+<p>
+    <center><img src="/images/simargl.png" width="100%" /><br />
+    <em>Left: Anomaly detection results on SIMARGL dataset showing ground truth (top row) and detection scores from various methods. Right: 2D projection (PCA) of binary encodings showing how different attack types (DoS, port scanning) cluster separately from benign traffic.</em></center>
+</p>
+
+<h2 id="synthetic-data-insights">Synthetic Data Insights</h2>
+
+<p>We tested HDSGA on synthetic graphs with known structures (complete, caveman, star, wheel, windmill). The encodings successfully distinguished between different graph topologies, with similar structures mapping to nearby regions in the encoding space.</p>
+
+<p>This validates that the hyperdimensional encoding captures meaningful graph properties beyond simple randomness.</p>
+
+<h2 id="zero-trust-architecture">Zero Trust Architecture</h2>
+
+<p>HDSGA was developed as part of Leidos’ Zero Trust Mission Cloud Initiative. In Zero Trust frameworks, network access is never implicitly trusted - every connection must be verified. Real-time anomaly detection is critical for:</p>
+
+<ul>
+  <li><strong>Behavioral monitoring</strong>: Detecting unusual patterns in authorized connections</li>
+  <li><strong>Threat hunting</strong>: Identifying lateral movement and command-and-control traffic</li>
+  <li><strong>Incident response</strong>: Rapidly flagging suspicious activity for investigation</li>
+</ul>
+
+<p>HDSGA’s constant memory footprint and real-time operation make it ideal for distributed Zero Trust deployments across large enterprise networks.</p>
+
+<h2 id="technical-deep-dive-the-mathematics">Technical Deep Dive: The Mathematics</h2>
+
+<p>For those interested in the theoretical foundations, our paper proves several key results:</p>
+
+<ol>
+  <li>
+    <p><strong>Encoding Distribution</strong>: Under uniform sampling, the encoding follows a weighted sum of Bernoulli random variables</p>
+  </li>
+  <li>
+    <p><strong>Central Limit Theorem</strong>: The standardized encoding converges to standard normal as dimensionality increases (via Lyapunov CLT)</p>
+  </li>
+  <li>
+    <p><strong>Finite Graph Corrections</strong>: We provide exact variance formulas accounting for sampling without replacement in finite networks</p>
+  </li>
+</ol>
+
+<p>These theoretical guarantees ensure that our anomaly detection has well-calibrated false positive rates.</p>
+
+<h2 id="hyperparameters">Hyperparameters</h2>
+
+<p>The main tuning parameters are:</p>
+<ul>
+  <li><strong>p, q</strong>: Source and destination mapping probabilities (typically 0.1-0.3)</li>
+  <li><strong>θₗ, θᵤ</strong>: Lower and upper anomaly thresholds (typically 0-4 standard deviations)</li>
+  <li><strong>d</strong>: Hypervector dimension (2¹⁰ = 1024 in our experiments)</li>
+  <li><strong>γ</strong>: Expected contamination rate (fraction of anomalous snapshots)</li>
+</ul>
+
+<p>We provide guidance in the paper for setting these based on empirical percentiles of a small calibration set.</p>
+
+<h2 id="limitations-and-future-work">Limitations and Future Work</h2>
+
+<p><strong>Current Limitations:</strong></p>
+<ul>
+  <li>Assumes baseline generating process exists (though it need not be uniform)</li>
+  <li>Very similar graph structures may be confused (e.g., caveman vs. complete graphs)</li>
+  <li>Requires bounded edge weights for theoretical guarantees</li>
+</ul>
+
+<p><strong>Future Directions:</strong></p>
+<ul>
+  <li>Multi-language support for node identifiers</li>
+  <li>Integration with existing SIEM platforms</li>
+  <li>Explainability features identifying which edges contribute most to anomaly scores</li>
+  <li>Adaptive threshold learning</li>
+</ul>
+
+<h2 id="implementation">Implementation</h2>
+
+<p>We implemented HDSGA in Python with experiments conducted on AWS WorkSpaces (Amazon Linux 2, 7.7GB RAM, 2.5GHz Intel Xeon). The code leverages:</p>
+<ul>
+  <li>NumPy for efficient vector operations</li>
+  <li>Sparse representations for memory efficiency</li>
+  <li>Parallel processing for large-scale networks</li>
+</ul>
+
+<p>The approach is architecture-agnostic and can be deployed on various platforms from edge devices to cloud infrastructure.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>By combining the theoretical foundations of Stochastic Block Models with the computational efficiency of Hyperdimensional Computing, HDSGA provides a practical solution for real-time network anomaly detection. Our results demonstrate that principled mathematical approaches can match or exceed the performance of complex deep learning models while offering superior speed, interpretability, and memory efficiency.</p>
+
+<p>As organizations adopt Zero Trust architectures, tools like HDSGA will become increasingly critical for maintaining security without sacrificing performance.</p>
+
+<hr />
+
+<p><em>This research was conducted under Leidos’ Office of Technology Zero Trust Mission Cloud Initiative (approval 24-LEIDOS-0430-27761) and presented at IEEE DSAA 2024.</em></p>
+
+<p><strong>Read the full paper</strong>: <a href="https://ieeexplore.ieee.org/document/10814464" target="_blank">IEEE Xplore</a></p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+	<img src="http://localhost:4000/images/wgm3.jpg" class="bio-photo" alt="Graham Mueller bio photo"></a>
+
+<h3>Graham Mueller</h3>
+<p>Applied mathematics refugee, PhD economist, interested in time series, machine learning and graph theory.</p>
+
+
+
+<a href="https://linkedin.com/in/graham-mueller-4836b11a" class="author-social" target="_blank"><i class="fa fa-linkedin-square"></i> LinkedIn</a>
+
+
+<a href="https://github.com/wgmueller1" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+
+
+
+
+
+
+        </div>
+        <p class="byline"><strong>Using Hypervectors for Efficient Anomaly Detection in Graph Streams</strong> was published on <time datetime="2024-11-04T00:00:00-05:00">November 04, 2024</time> and last modified on <time datetime="2024-11-04">November 04, 2024</time> by <a href="http://localhost:4000/about" title="About Graham Mueller">Graham Mueller</a>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/community-detection-viz/" title="Differentiable Community Detection with GNNs and Stochastic Block Models">Differentiable Community Detection with GNNs and Stochastic Block Models</a></li>
+    
+      <li><a href="http://localhost:4000/twitter-security-threats/" title="Using Machine Learning to Predict Critical Security Vulnerabilities from Twitter">Using Machine Learning to Predict Critical Security Vulnerabilities from Twitter</a></li>
+    
+      <li><a href="http://localhost:4000/boxing/" title="Boxing's Grandmasters Part II">Boxing's Grandmasters Part II</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    <span>&copy; 2026 Graham Mueller. Powered by <a href="https://jekyllrb.com">Jekyll</a> using the <a href="https://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+	        
+
+</body>
+</html>

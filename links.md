@@ -7,7 +7,6 @@ comments: true
 
 Some interesting links:<br>
 <a href="https://www.flowingdata.com" target="_blank">Flowing Data</a><br>
-<a href="https://www.r-bloggers.com" target="_blank">R-Bloggers</a><br>
 <a href="https://andrewgelman.com" target="_blank">Statistical Modeling, Causal Inference, and Social Science</a><br>
 
 
