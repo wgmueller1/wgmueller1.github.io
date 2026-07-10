@@ -145,7 +145,7 @@ Worst Mismatches:
 |Al Benedict|  985.94 |10-26-0|Harry Greb (W,TKO) | 1836.32  |61-2-2|
 |Willie Pep (W,PTS)| 1898.36|161-4-1|Kenny Leach | 1040.90 |3-14-0|  
 |Willie Pep (W,PTS)| 1872.37|185-6-1| Mario Eladio Colon | 1043.31  |15-47-8|
-|Johnny Cockfield |10-84-9|  867.80  | Chalky Wright (W,TKO) | 1774.65 |  153-34-18|
+|Johnny Cockfield |  867.80  |10-84-9| Chalky Wright (W,TKO) | 1774.65 |  153-34-18|
 |Archie Moore (W,RTD) | 1967.89    |178-21-9|     George Abinet  |1073.68|6-14-1|  
 
 

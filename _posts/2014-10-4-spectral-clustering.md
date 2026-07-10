@@ -18,10 +18,10 @@ $$L=D-A$$ where $$D$$ is equal to the degree matrix.
 <li> Construct a similarity graph by one of the ways described in Section 2. Let
 W be its weighted adjacency matrix.</li>
 <li> Compute the unnormalized Laplacian L.</li>
-<li> Compute the first k eigenvectors $u_1,\dots,u_k$ of L</li>
+<li> Compute the first k eigenvectors \(u_1,\dots,u_k\) of L</li>
 <li> Let \(U \in \mathbb{R}^{n\times k}\) be the matrix containing the vectors \(u_1,\dots,u_k\) as columns.</li>
 <li> For \(i= 1,\dots,n\), let \(y_i\in \mathbb{R}^k\) be the vector corresponding to the i-th row of U.</li>
-Cluster the points \((yi) i=1,\dots n\) in \(\mathbb{R}^k\) with the k-means algorithm into clusters \(C_1,\dots ,C_k\)
+<li> Cluster the points \((y_i)_{i=1,\dots,n}\) in \(\mathbb{R}^k\) with the k-means algorithm into clusters \(C_1,\dots,C_k\).</li>
 <li> Output: Clusters \(A_1,\dots,A_k\) with \(A_i=\{j|y_j\in C_i\}\).</li>
 </ul>
 </div>
