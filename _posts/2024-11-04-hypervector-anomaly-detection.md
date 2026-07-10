@@ -67,7 +67,7 @@ When the network behaves normally (edges sampled uniformly), each element of z�
 
 We compute an **anomaly score primitive** by counting how many elements of zₜ deviate significantly from expectation:
 
-s̄ₜ = max(Σ 𝟙{|zₜ,ᵢ| < θₗ}, Σ 𝟙{|zₜ,ᵢ| > θᵤ})
+s̄ₜ = max(Σ 𝟙{\|zₜ,ᵢ\| < θₗ}, Σ 𝟙{\|zₜ,ᵢ\| > θᵤ})
 
 This captures two types of anomalies:
 - Graphs that are **more random** than baseline (equivalence testing)
