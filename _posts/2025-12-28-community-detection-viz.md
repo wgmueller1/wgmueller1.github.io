@@ -12,6 +12,16 @@ image:
   creditlink:
 ---
 
+<section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer" markdown="1">
+*  Auto generated table of contents
+{:toc}
+</div>
+</section><!-- /#table-of-contents -->
+
 Community detection is a fundamental problem in network analysis - identifying groups of nodes that are more densely connected internally than to the rest of the network. In our recent <a href="https://openreview.net/forum?id=T1vdfm1THf" target="_blank">paper</a> presented at the Learning on Graphs Conference (LoG 2025), we propose a novel approach that combines Graph Neural Networks (GNNs) with Stochastic Block Models (SBMs) to create a differentiable, architecture-agnostic framework for community detection.
 
 

@@ -12,6 +12,16 @@ image:
   creditlink:
 ---
 
+<section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer" markdown="1">
+*  Auto generated table of contents
+{:toc}
+</div>
+</section><!-- /#table-of-contents -->
+
 Network security in the era of Zero Trust architectures requires reliable real-time anomaly detection. In our recent <a href="https://ieeexplore.ieee.org/abstract/document/10722819" target="_blank">paper</a> presented at IEEE DSAA 2024, we introduce HDSGA (HyperDimensional Streaming Graph Anomaly detection), a novel approach that leverages Hyperdimensional Computing to detect anomalies in computer network traffic with exceptional speed and accuracy.
 
 ## The Problem

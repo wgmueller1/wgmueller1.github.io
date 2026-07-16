@@ -12,7 +12,15 @@ image:
   creditlink:
 ---
 
-
+<section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer" markdown="1">
+*  Auto generated table of contents
+{:toc}
+</div>
+</section><!-- /#table-of-contents -->
 
 I'm excited to share that our paper on using machine learning to analyze cybersecurity threats discussed on Twitter was recently <a href="https://www.wired.com/story/machine-learning-tweets-critical-security-flaws/" target="_blank">featured in Wired Magazine</a>! The work was also covered by <a href="https://securitytoday.com/articles/2019/03/11/new-system-uses-machine-learning-to-scan-tweets-for-security-flaws.aspx" target="_blank">Security Today</a> and <a href="https://cse.osu.edu/news/2019/03/ohio-state-researchers-use-natural-language-processing-identify-critical-security" target="_blank">Ohio State University</a>.
 

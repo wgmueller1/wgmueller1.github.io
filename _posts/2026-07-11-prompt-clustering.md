@@ -12,6 +12,16 @@ image:
   creditlink:
 ---
 
+<section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer" markdown="1">
+*  Auto generated table of contents
+{:toc}
+</div>
+</section><!-- /#table-of-contents -->
+
 Uber's CTO recently disclosed that the company burned through its <em>entire 2026 AI coding budget in four months</em>. By March, 84% of Uber's engineers had adopted Claude Code, and roughly 70% of newly committed code at the company was AI-authored — impressive adoption, and an entirely predictable way to blow through a budget that was sized for a different usage pattern. One unnamed enterprise reportedly ran up a <strong>$500 million bill in a single month</strong> on Claude usage after nobody had set per-employee usage caps. Nvidia's Bryan Catanzaro has said plainly that for many of his own workflows, "the cost of compute...now far exceeds what the company spends on the employees using it." Jensen Huang's own recommendation — a $250,000 annual token budget per $500,000 engineer — is itself an admission that AI inference is now a line item comparable to headcount, not a rounding error under it. (<a href="https://www.forbes.com/sites/jemmagreen/2026/07/02/ai-costs-more-than-the-people-it-replaced/" target="_blank">Forbes</a>)
 
 None of this is a fringe problem. <a href="https://www.techradar.com/pro/ceos-are-being-left-baffled-at-the-high-cost-of-moving-to-ai-shockingly-enough-sacking-human-workers-isnt-resulting-in-huge-savings" target="_blank">TechRadar reported</a> on a KPMG survey in which 29% of senior leaders across 20 countries said they were struggling to understand the rise in their own operating costs as they scaled AI, and close to half of organizations surveyed said they'd had to rephase AI deployments after costs outweighed the expected value. An MIT study cited in the same reporting found AI automation is currently economically justified in only about 23% of roles it's being pointed at. Companies are laying off workers to fund tools that, in a lot of these cases, cost more than the workers they replaced.

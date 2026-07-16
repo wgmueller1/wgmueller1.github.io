@@ -7,6 +7,16 @@ share: true
  
 ---
 
+<section id="table-of-contents" class="toc">
+  <header>
+    <h3>Contents</h3>
+  </header>
+<div id="drawer" markdown="1">
+*  Auto generated table of contents
+{:toc}
+</div>
+</section><!-- /#table-of-contents -->
+
 Spectral clustering is an approach to clustering data in which the spectrum (eigenvalues) of a similarity matrix is used to perform dimension reduction.  Given a symmetric similarity or adjacency matrix, $$A$$.  The Laplacian matrix is equal to the 
 
 $$L=D-A$$ where $$D$$ is equal to the degree matrix.
