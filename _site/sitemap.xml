@@ -40,6 +40,10 @@
 
     
     <url>
+        <loc>http://localhost:4000/prompt-clustering/</loc>
+    </url>
+    
+    <url>
         <loc>http://localhost:4000/community-detection-viz/</loc>
     </url>
     
